@@ -14,6 +14,7 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 | Se você quer… | Abra |
 |---|---|
 | **A apresentação dos três diagramas + resumo do projeto** | [`apresentacao/APRESENTACAO.md`](apresentacao/APRESENTACAO.md) |
+| **Os slides prontos para projetar** (21 slides) | https://claude.ai/artifact/HCE8uftTYYjjWZoe6phcds |
 | O roteiro de fala do **Paulo** | [`apresentacao/roteiro-paulo.txt`](apresentacao/roteiro-paulo.txt) |
 | O roteiro de fala do **Júlio César** | [`apresentacao/roteiro-julio-cesar.txt`](apresentacao/roteiro-julio-cesar.txt) |
 | Criar o banco de dados agora | [`banco/schema.sql`](banco/schema.sql) |
