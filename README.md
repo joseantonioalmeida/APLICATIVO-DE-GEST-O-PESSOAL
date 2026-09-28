@@ -14,10 +14,13 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 | Se você quer… | Abra |
 |---|---|
 | **A apresentação dos três diagramas + resumo do projeto** | [`apresentacao/APRESENTACAO.md`](apresentacao/APRESENTACAO.md) |
-| **Os slides prontos para projetar** (21 slides) | https://claude.ai/artifact/HCE8uftTYYjjWZoe6phcds |
-| O roteiro de fala do **Paulo** | [`apresentacao/roteiro-paulo.txt`](apresentacao/roteiro-paulo.txt) |
-| O roteiro de fala do **Júlio César** | [`apresentacao/roteiro-julio-cesar.txt`](apresentacao/roteiro-julio-cesar.txt) |
+| **Os slides prontos para projetar** (9 slides · 6 min) | https://claude.ai/artifact/HCE8uftTYYjjWZoe6phcds |
+| O roteiro de fala do **Paulo** (2min46) | [`apresentacao/roteiro-paulo-6min.txt`](apresentacao/roteiro-paulo-6min.txt) |
+| O roteiro de fala do **Júlio César** (2min53) | [`apresentacao/roteiro-julio-cesar-6min.txt`](apresentacao/roteiro-julio-cesar-6min.txt) |
 | Criar o banco de dados agora | [`banco/schema.sql`](banco/schema.sql) |
+
+> ⏱️ **A apresentação foi calibrada para 6 minutos** — 9 slides, Paulo nos slides 1 a 5 e Júlio César nos 6 a 9.
+> Os roteiros longos (`roteiro-paulo.txt` e `roteiro-julio-cesar.txt`, ~20 min) continuam no repositório como material de estudo e preparo para a arguição.
 
 ---
 

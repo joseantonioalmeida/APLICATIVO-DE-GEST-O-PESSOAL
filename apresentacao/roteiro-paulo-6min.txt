@@ -1,0 +1,151 @@
+================================================================================
+              MINHAVIDA - ROTEIRO CURTO (6 MINUTOS) - PAULO
+================================================================================
+
+  SUA PARTE: slides 1 a 5  |  TEMPO: 2min35  |  Depois passa para o Julio.
+  Apresentacao inteira: 6 minutos. Nao ultrapasse os 3.
+
+  COMO USAR
+  - [colchetes] = instrucao para voce, nao se fala.
+  - Texto normal = o que voce fala.
+  - (pausa) = pare de verdade, um segundo.
+  - Cronometre ensaiando. Se passar de 2min45, corte a linha marcada no
+    slide 4.
+
+================================================================================
+ SLIDE 1 - CAPA                                                     [10 seg]
+================================================================================
+
+Bom dia. Vamos apresentar o MinhaVida: um aplicativo de gestao pessoal que
+reune lista de tarefas e controle financeiro.
+
+Eu mostro o resumo e o Diagrama de Classes. O Julio Cesar mostra Interacao e
+Implantacao.
+
+================================================================================
+ SLIDE 2 - O PROBLEMA E A SOLUCAO                                   [40 seg]
+================================================================================
+
+Hoje as tarefas ficam no bloco de notas, os gastos numa planilha, e a conta
+que vence dia 10 num lembrete que a gente desliga sem ler.
+
+Tres ferramentas, nenhuma conversando com a outra.
+
+O MinhaVida junta os tres pilares num aplicativo so.
+
+Atividades: o CRUD completo de tarefas, com categoria, prioridade e horario.
+Financeiro: receitas e despesas, com saldo na hora. E Importancias: os
+compromissos que nao podem passar - conta de internet, licenciamento do carro.
+
+(pausa)
+
+================================================================================
+ SLIDE 3 - O DIFERENCIAL                                            [40 seg]
+================================================================================
+
+E e no terceiro pilar que esta o nosso diferencial.
+
+Chegou o dia de pagar a internet: noventa e nove e noventa, da Vivo Fibra. O
+usuario marca como paga.
+
+Num toque so, o sistema faz cinco coisas:
+
+[Aponte os cartoes enquanto conta]
+
+Conclui a importancia. Cria a despesa automaticamente. Debita a conta e
+atualiza o saldo. Ja gera a conta do mes que vem. E cancela o alerta de
+vencimento.
+
+Um toque, cinco efeitos. (pausa)
+
+Nos outros aplicativos, voce marca como paga num lugar e lanca a despesa na
+mao em outro.
+
+================================================================================
+ SLIDE 4 - DIAGRAMA DE CLASSES                                      [50 seg]
+================================================================================
+
+Este e o Diagrama de Classes. Ele responde: de que objetos o sistema e feito.
+
+[Percorra da esquerda para a direita apontando]
+
+Na esquerda, o Usuario. O losango preenchido e composicao: excluir o usuario
+exclui os dados dele junto.
+
+No centro, a Categoria, que se relaciona com ela mesma - e assim que nasce a
+subcategoria, aquele "Estudo, Faculdade" que aparece na tela.
+
+Abaixo, a classe abstrata ItemAgendavel, com Atividade e Importancia herdando
+dela. O triangulo vazado e a generalizacao.
+
+E na direita, ContaFinanceira, Transacao e o objeto de valor Dinheiro.
+
+[So se sobrar tempo:] Esta e a versao reduzida; a completa tem quinze
+entidades.
+
+================================================================================
+ SLIDE 5 - AS DECISOES                                              [30 seg]
+================================================================================
+
+Duas decisoes opostas, tomadas pelo mesmo criterio.
+
+Usamos heranca em Atividade e Importancia, porque as duas compartilham nao so
+atributos, mas comportamento: concluir, cancelar, estar atrasado.
+
+Mas nao usamos heranca em Receita e Despesa. Elas teriam os mesmos atributos,
+diferindo so no sinal. Ali um enum resolve.
+
+[Fale devagar - e a sua frase mais importante:]
+
+Heranca onde o comportamento e diferente, evitada onde nao e. Essa foi a
+decisao, nao o acaso.
+
+(pausa)
+
+Julio, e com voce.
+
+================================================================================
+ SE PERGUNTAREM (respostas de 20 segundos)
+================================================================================
+
+"Por que nao heranca para Receita e Despesa?"
+  Porque teriam os mesmos atributos e a diferenca e so o sinal. Heranca so se
+  justifica com comportamento polimorfico real. Usei um enum, e o sinal fica
+  encapsulado no metodo valorComSinal.
+
+"Qual a diferenca entre agregacao e composicao?"
+  Na composicao o todo controla o ciclo de vida da parte: excluir o Usuario
+  exclui as preferencias dele. Na agregacao a parte sobrevive: excluir uma
+  Transacao nao apaga a Categoria. Losango preenchido e composicao, vazado e
+  agregacao.
+
+"Por que UUID e nao id sequencial?"
+  Seguranca, porque com sequencial eu tento o proximo numero e vejo dado de
+  outro usuario; e porque o app funciona offline, entao o celular precisa
+  gerar o identificador sozinho.
+
+"O que e a Categoria unificada?"
+  Sao tres universos de categoria nas telas - atividade, financeiro e
+  importancia - numa entidade so, com um campo escopo que diz a qual
+  pertence. E o padrao Composite.
+
+"O que e um objeto de valor?"
+  Um objeto sem identidade propria, definido so pelo valor. Dinheiro carrega
+  valor e moeda juntos, entao e impossivel somar real com dolar por acidente.
+
+"Onde ficam as regras de negocio?"
+  Dentro das entidades, nao no controller. Quem valida se a hora de fim e
+  maior que a de inicio e a propria classe Atividade. Isso e modelo rico, em
+  oposicao ao modelo anemico.
+
+================================================================================
+ LEMBRETES
+================================================================================
+
+  - Sao menos de 3 minutos. Ritmo normal, sem correr e sem se estender.
+  - No slide 4, aponte de verdade para o diagrama enquanto narra.
+  - Se travar, pule para a proxima frase. Ninguem percebe.
+  - A frase que precisa sair bem: "Heranca onde o comportamento e diferente,
+    evitada onde nao e."
+
+================================================================================

@@ -1,0 +1,161 @@
+================================================================================
+           MINHAVIDA - ROTEIRO CURTO (6 MINUTOS) - JULIO CESAR
+================================================================================
+
+  SUA PARTE: slides 6 a 9  |  TEMPO: 3min  |  Voce fecha a apresentacao.
+  Apresentacao inteira: 6 minutos. O Paulo usa os 3 primeiros.
+
+  COMO USAR
+  - [colchetes] = instrucao para voce, nao se fala.
+  - Texto normal = o que voce fala.
+  - (pausa) = pare de verdade, um segundo.
+  - Cronometre ensaiando. Se passar de 3 min, corte a linha marcada no
+    slide 7.
+
+================================================================================
+ SLIDE 6 - DIAGRAMA DE INTERACAO: A QUITACAO                        [60 seg]
+================================================================================
+
+Obrigado, Paulo.
+
+O Paulo mostrou a estrutura. Eu mostro como esses objetos conversam, e onde
+tudo isso roda.
+
+Este diagrama de sequencia detalha aquele toque unico do slide anterior.
+
+[Percorra o diagrama de cima para baixo com o dedo ou o cursor]
+
+O usuario confirma. O caso de uso busca a importancia, valida, e abre uma
+transacao de banco.
+
+Dentro dela: conclui a importancia, cria a despesa de noventa e nove e
+noventa, debita a conta e gera a ocorrencia de outubro. COMMIT.
+
+Depois do commit - e so depois - cancela a notificacao e limpa o cache.
+
+Por que depois? Porque isso sao efeitos colaterais. Se falharem, nao podem
+derrubar o pagamento.
+
+[Fale devagar - esta e a sua frase principal:]
+
+O que e essencial fica dentro da transacao. O que e acessorio fica fora.
+
+(pausa)
+
+================================================================================
+ SLIDE 7 - DIAGRAMA DE IMPLANTACAO                                  [55 seg]
+================================================================================
+
+E agora: onde isso roda de verdade.
+
+[Percorra da esquerda para a direita]
+
+Na esquerda, o celular: o aplicativo, um banco SQLite com o cache offline, e
+o armazenamento seguro dos tokens.
+
+De la sai HTTPS para o Cloudflare, que barra ataque antes de chegar na
+infraestrutura que a gente paga.
+
+Depois, a nuvem: AWS em Sao Paulo. Quinze a trinta milissegundos de latencia,
+e dado pessoal no Brasil simplifica a LGPD.
+
+Dentro dela, um cluster Kubernetes com dois pods separados: a API e o worker.
+Separados porque disparar dez mil notificacoes nao pode deixar lento quem
+esta usando o aplicativo agora.
+
+[So se sobrar tempo:] Custo: duzentos e oitenta e tres dolares por mes; vinte
+e cinco na fase de validacao.
+
+================================================================================
+ SLIDE 8 - VALIDACAO                                                [40 seg]
+================================================================================
+
+E fecho com o que diferencia esse trabalho: nos nao desenhamos a modelagem,
+nos executamos.
+
+O esquema rodou num PostgreSQL de verdade. E reproduz exatamente os numeros
+das telas: saldo de mil duzentos e vinte e trinta e cinco, doze atividades,
+dezoito horas e quarenta e cinco minutos.
+
+As regras tambem foram testadas: valor negativo, horario invertido, menor de
+treze anos - todas rejeitadas.
+
+E achamos tres inconsistencias no proprio prototipo: as fichas de categoria
+somam mil seiscentos e sessenta e um, mas o card do topo diz mil duzentos e
+trinta.
+
+E normal em prototipo de design. E e por isso que se modela antes: o erro
+aparece agora, e nao em producao.
+
+================================================================================
+ SLIDE 9 - FECHAMENTO                                               [15 seg]
+================================================================================
+
+O MinhaVida esta completamente especificado: sessenta e um requisitos,
+dezoito diagramas, duzentas e vinte e sete colunas de banco.
+
+[Devagar:]
+
+A partir daqui, programar e traduzir. As decisoes dificeis ja foram tomadas.
+
+(pausa)
+
+Obrigado. Estamos a disposicao.
+
+================================================================================
+ SE PERGUNTAREM (respostas de 20 segundos)
+================================================================================
+
+"Por que monolito e nao microsservicos?"
+  Porque o dominio exige atomicidade: quitar a importancia, criar a despesa e
+  atualizar o saldo precisam estar no mesmo COMMIT. Em servicos separados eu
+  precisaria de saga e consistencia eventual - muita complexidade para um
+  problema que nao tenho. Mas o monolito e modular, da para extrair depois.
+
+"Como garantem que o saldo nao fica errado?"
+  Tres mecanismos: bloqueio pessimista no banco contra condicao de corrida;
+  atomicidade, porque transacao e saldo entram no mesmo COMMIT; e o saldo e
+  sempre recalculavel a partir das transacoes, com um job noturno conferindo.
+  Alem disso, quem escreve o saldo e um gatilho do banco, e so ele.
+
+"E se o banco cair?"
+  O Postgres esta em Multi-AZ, com failover automatico. RTO de uma hora, RPO
+  de cinco minutos, e backup com recuperacao a qualquer ponto nos ultimos
+  sete dias. E o app funciona offline, entao o usuario continua registrando.
+
+"Qual a diferenca entre diagrama de sequencia e de comunicacao?"
+  Os dois descrevem a mesma interacao. O de sequencia organiza pelo tempo, no
+  eixo vertical. O de comunicacao organiza pela topologia, e a ordem vem da
+  numeracao - serve para avaliar acoplamento. Fizemos um de cada.
+
+"Voces testaram mesmo?"
+  Testamos. O schema rodou num PostgreSQL 16.13, com carga, e rodamos uma
+  bateria conferindo cada numero contra as telas, mais testes que tentam
+  violar cada regra para confirmar que o banco rejeita.
+
+"E se o Firebase sair do ar?"
+  A notificacao fica na tabela como agendada e o worker tenta de novo, com
+  recuo exponencial, ate cinco vezes. Nao se perde, e nao bloqueia nada,
+  porque o envio e assincrono.
+
+"Esse custo nao e alto para um projeto academico?"
+  E, e por isso nao comecaria assim. Aquela arquitetura e o destino, para
+  quando houver dez mil usuarios. Para validar, um servico gerenciado por
+  vinte e cinco dolares resolve, e a migracao nao muda codigo.
+
+================================================================================
+ LEMBRETES
+================================================================================
+
+  - Sao 3 minutos e voce tem o conteudo mais tecnico. Controle o ritmo.
+  - Se o tempo apertar, corte a linha de custo no slide 7.
+  - O que NAO pode faltar e o slide 6: e o coracao do projeto.
+  - Nos diagramas, acompanhe com o dedo enquanto narra. A banca segue melhor.
+  - Se quiser quebrar o gelo na abertura, cabe uma frase: a persona do
+    projeto se chama Julio Cesar, igual a voce. Custa 8 segundos - use so se
+    o ensaio estiver folgado.
+  - As duas frases que precisam sair bem:
+    "O que e essencial fica dentro da transacao. O que e acessorio fica fora."
+    "A partir daqui, programar e traduzir."
+
+================================================================================

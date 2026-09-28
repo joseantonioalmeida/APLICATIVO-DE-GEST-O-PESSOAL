@@ -7,8 +7,10 @@
 **Versão:** 1.0.0 · **Data:** 28/09/2026
 **Conteúdo:** Resumo do projeto · Diagrama de Classes · Diagramas de Interação · Diagrama de Implantação
 
-> 📊 **Slides prontos para projetar (21 slides):** https://claude.ai/artifact/HCE8uftTYYjjWZoe6phcds
-> Os roteiros de fala do Paulo e do Júlio César estão em [`roteiro-paulo.txt`](roteiro-paulo.txt) e [`roteiro-julio-cesar.txt`](roteiro-julio-cesar.txt).
+> 📊 **Slides prontos para projetar (9 slides · 6 minutos):** https://claude.ai/artifact/HCE8uftTYYjjWZoe6phcds
+> Roteiros de fala calibrados: [`roteiro-paulo-6min.txt`](roteiro-paulo-6min.txt) (slides 1–5) e [`roteiro-julio-cesar-6min.txt`](roteiro-julio-cesar-6min.txt) (slides 6–9).
+>
+> Este documento é a **versão escrita completa**, com todo o conteúdo dos 17 diagramas. A apresentação falada é um recorte dele.
 
 ---
 
