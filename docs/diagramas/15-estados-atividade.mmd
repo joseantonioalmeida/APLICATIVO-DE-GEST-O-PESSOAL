@@ -1,0 +1,22 @@
+stateDiagram-v2
+    direction LR
+    [*] --> PENDENTE : criar()
+    PENDENTE --> EM_ANDAMENTO : iniciar()
+    PENDENTE --> ATRASADA : [data/hora ultrapassada]<br/>job diario 00:10
+    PENDENTE --> CONCLUIDA : concluir()
+    PENDENTE --> CANCELADA : cancelar()
+    EM_ANDAMENTO --> CONCLUIDA : concluir()
+    EM_ANDAMENTO --> ATRASADA : [horaFim ultrapassada]
+    EM_ANDAMENTO --> CANCELADA : cancelar()
+    ATRASADA --> CONCLUIDA : concluir()
+    ATRASADA --> PENDENTE : reagendar(novaData)
+    ATRASADA --> CANCELADA : cancelar()
+    CONCLUIDA --> PENDENTE : reabrir()
+    CONCLUIDA --> [*]
+    CANCELADA --> [*]
+
+    note right of CONCLUIDA
+        entry / concluidaEm = now()
+        entry / cancelarLembrete()
+        entry / publicar(AtividadeConcluidaEvent)
+    end note

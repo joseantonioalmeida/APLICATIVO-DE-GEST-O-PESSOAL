@@ -1,0 +1,82 @@
+erDiagram
+    USUARIO ||--o| PREFERENCIA_USUARIO : "possui"
+    USUARIO ||--o{ CREDENCIAL_SOCIAL : "vincula"
+    USUARIO ||--o{ SESSAO : "abre"
+    USUARIO ||--o{ TOKEN_RECUPERACAO_SENHA : "solicita"
+    USUARIO ||--o{ DISPOSITIVO_USUARIO : "registra"
+    USUARIO ||--o{ CATEGORIA : "personaliza"
+    USUARIO ||--o{ ATIVIDADE : "planeja"
+    USUARIO ||--o{ CONTA_FINANCEIRA : "mantem"
+    USUARIO ||--o{ TRANSACAO : "lanca"
+    USUARIO ||--o{ IMPORTANCIA : "acompanha"
+    USUARIO ||--o{ ORCAMENTO : "define"
+    USUARIO ||--o{ NOTIFICACAO : "recebe"
+    CATEGORIA ||--o{ CATEGORIA : "e pai de"
+    CATEGORIA ||--o{ ATIVIDADE : "classifica"
+    CATEGORIA ||--o{ TRANSACAO : "classifica"
+    CATEGORIA ||--o{ IMPORTANCIA : "classifica"
+    CATEGORIA ||--o{ ORCAMENTO : "limita"
+    CONTA_FINANCEIRA ||--o{ TRANSACAO : "movimenta"
+    IMPORTANCIA |o--o| TRANSACAO : "quita"
+    REGRA_RECORRENCIA ||--o{ ATIVIDADE : "repete"
+    REGRA_RECORRENCIA ||--o{ IMPORTANCIA : "repete"
+    REGRA_RECORRENCIA ||--o{ TRANSACAO : "repete"
+    ATIVIDADE ||--o{ ATIVIDADE : "origina"
+    TRANSACAO ||--o{ TRANSACAO : "parcela"
+
+    USUARIO {
+        uuid id PK
+        varchar nome_completo
+        varchar nome_usuario UK
+        varchar email UK
+        varchar senha_hash
+        date data_nascimento
+        varchar status
+        timestamptz data_cadastro
+    }
+    ATIVIDADE {
+        uuid id PK
+        uuid usuario_id FK
+        uuid categoria_id FK
+        varchar titulo
+        date data_atividade
+        time hora_inicio
+        time hora_fim
+        varchar prioridade
+        varchar status
+    }
+    TRANSACAO {
+        uuid id PK
+        uuid usuario_id FK
+        uuid conta_id FK
+        uuid categoria_id FK
+        varchar descricao
+        varchar tipo
+        numeric valor
+        date data_movimento
+    }
+    IMPORTANCIA {
+        uuid id PK
+        uuid usuario_id FK
+        uuid categoria_id FK
+        varchar titulo
+        varchar origem
+        date data_vencimento
+        numeric valor
+        varchar status
+    }
+    CONTA_FINANCEIRA {
+        uuid id PK
+        uuid usuario_id FK
+        varchar nome
+        varchar tipo
+        numeric saldo_atual
+    }
+    CATEGORIA {
+        uuid id PK
+        uuid usuario_id FK
+        uuid categoria_pai_id FK
+        varchar nome
+        varchar escopo
+        varchar cor_hex
+    }

@@ -1,0 +1,61 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaHome (View)
+    participant VM as :HomeViewModel
+    participant LOCAL as :BaseLocal (SQLite)
+    participant API as :DashboardController
+    participant GUARD as :JwtAuthGuard
+    participant UC as :ObterResumoDiarioUseCase
+    participant CACHE as :CacheRedis
+    participant SA as :AtividadeService
+    participant SF as :FinanceiroService
+    participant SI as :ImportanciaService
+    participant DB as :PostgreSQL
+
+    U->>V: abre o aplicativo
+    V->>VM: carregarDashboard()
+    VM->>LOCAL: lerCacheOffline()
+    LOCAL-->>VM: snapshot anterior
+    VM-->>V: render imediato (dados em cache + skeleton)
+    VM->>API: GET /api/v1/dashboard?data=2025-09-29
+    activate API
+    API->>GUARD: validarToken(Bearer)
+    GUARD-->>API: usuarioId autenticado
+    API->>UC: executar(usuarioId, data)
+    activate UC
+    UC->>CACHE: get("dash:{usuarioId}:{data}")
+
+    alt cache valido (TTL 120s)
+        CACHE-->>UC: ResumoDiarioDTO
+    else cache ausente
+        CACHE-->>UC: null
+        par consultas paralelas
+            UC->>SA: listarAtividadesDoDia(usuarioId, data)
+            SA->>DB: SELECT ... FROM atividade WHERE data_atividade=$2
+            DB-->>SA: atividades
+            SA-->>UC: List~AtividadeResumoDTO~
+        and
+            UC->>SF: obterResumoMensal(usuarioId, mes)
+            SF->>DB: SELECT SUM(...) FROM transacao GROUP BY tipo
+            DB-->>SF: totais do mes e do mes anterior
+            SF->>SF: calcularVariacaoPercentual()
+            SF-->>UC: ResumoFinanceiroDTO (saldo, despesas, +12%, +8%)
+        and
+            UC->>SI: listarProximasImportancias(usuarioId, limite=5)
+            SI->>DB: SELECT ... WHERE status='PENDENTE' ORDER BY data_vencimento
+            DB-->>SI: importancias
+            SI->>SI: calcularDiasRestantes() para cada item
+            SI-->>UC: List~ImportanciaResumoDTO~ (3 pendentes)
+        end
+        UC->>UC: montarResumoDiario()
+        UC->>CACHE: set("dash:{usuarioId}:{data}", dto, ttl=120)
+    end
+
+    UC-->>API: ResumoDiarioDTO
+    deactivate UC
+    API-->>VM: 200 {saldoMes, despesasMes, importanciasPendentes,<br/>atividadesHoje, resumoDoDia, recentes}
+    deactivate API
+    VM->>LOCAL: atualizarCacheOffline(dto)
+    VM-->>V: atualizarEstado(dto)
+    V-->>U: cards, atividades de hoje e proximas importancias

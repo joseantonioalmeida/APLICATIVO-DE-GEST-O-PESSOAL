@@ -1,0 +1,481 @@
+================================================================================
+                    MINHAVIDA - ROTEIRO DE APRESENTACAO
+                           FALA DO JULIO CESAR
+================================================================================
+
+  PARTE 2 DE 2 - Diagramas de Interacao e de Implantacao
+  Tempo estimado: 9 a 11 minutos
+  Voce assume a palavra depois do Paulo, que apresentou o resumo do
+  projeto e o Diagrama de Classes.
+
+  COMO USAR ESTE ROTEIRO
+  - O texto entre [colchetes] e instrucao para voce, nao e para falar.
+  - O texto normal e o que voce fala. Entenda a ideia de cada bloco e
+    fale com suas palavras - nao precisa decorar.
+  - Onde estiver (pausa), pare de verdade por um segundo.
+  - Detalhe util: a persona do projeto se chama Julio Cesar, igual a
+    voce. Use isso na abertura, funciona muito bem.
+
+================================================================================
+ BLOCO 1 - RETOMADA                                      [cerca de 40 segundos]
+================================================================================
+
+[Slide: transicao - voce assume]
+
+Obrigado, Paulo.
+
+E antes de comecar, uma coincidencia que ajuda: a persona do projeto,
+o usuario que a gente desenhou, se chama Julio Cesar. Mesmo nome que o
+meu. Entao quando voces virem "Ola, Julio" na tela inicial, e
+literalmente o usuario que eu represento aqui.
+
+[Espere a reacao, costuma render um sorriso da banca]
+
+O Paulo mostrou a estrutura - de que objetos o sistema e feito.
+
+Eu vou mostrar duas coisas. Primeiro: como esses objetos conversam
+entre si na hora de executar uma acao. Isso sao os diagramas de
+Interacao. Depois: onde tudo isso roda de verdade, em que maquina, com
+qual protocolo e quanto custa por mes. Isso e o diagrama de
+Implantacao.
+
+(pausa)
+
+================================================================================
+ BLOCO 2 - O QUE SAO DIAGRAMAS DE INTERACAO             [cerca de 1,5 minuto]
+================================================================================
+
+[Slide: Diagramas de Interacao - visao geral]
+
+O diagrama de classes e uma fotografia. Ele mostra o sistema parado.
+
+O diagrama de interacao e um filme. Ele mostra o sistema funcionando,
+com os objetos trocando mensagens numa ordem especifica.
+
+A UML define quatro tipos de diagrama de interacao. Nos usamos os dois
+mais expressivos:
+
+- Diagrama de sequencia, que enfatiza QUANDO cada coisa acontece.
+  Fizemos oito deles.
+- Diagrama de comunicacao, que enfatiza QUEM fala com QUEM. Fizemos um.
+
+[Slide: notacao]
+
+Rapidamente, a notacao:
+
+- A linha vertical e a linha de vida do objeto.
+- O retangulo em cima da linha e a barra de ativacao: e o tempo em que
+  aquele objeto esta executando alguma coisa.
+- Seta cheia e mensagem sincrona: quem chamou fica esperando.
+- Seta tracejada e o retorno.
+- Seta aberta e assincrona: quem chamou nao espera.
+- E as caixas escritas alt, opt, loop e par sao fragmentos. Alt e
+  alternativa, tipo um if-else. Opt e opcional. Loop e repeticao. Par
+  e execucao em paralelo.
+
+(pausa)
+
+================================================================================
+ BLOCO 3 - OS DIAGRAMAS DE SEQUENCIA                       [cerca de 3 minutos]
+================================================================================
+
+[Slide: SD-01 Cadastro]
+
+O primeiro e o cadastro de usuario.
+
+Tres coisas para destacar aqui.
+
+Primeira: a validacao acontece duas vezes - no celular e no servidor.
+No celular e para dar resposta imediata ao usuario. No servidor e
+porque toda entrada vinda do cliente e nao confiavel. Sempre.
+
+Segunda: olhem o bloco do BEGIN ate o COMMIT. Quando um usuario e
+criado, junto com ele nascem as preferencias, dezoito categorias
+padrao e uma conta chamada Carteira. Tudo no mesmo COMMIT. Se qualquer
+etapa falhar, tudo e desfeito. Nunca existe usuario pela metade no
+banco.
+
+Terceira: o e-mail de verificacao nao e enviado na requisicao, ele e
+enfileirado. Se o servico de e-mail estiver fora do ar, o cadastro
+funciona do mesmo jeito. O usuario nao paga pela indisponibilidade de
+um servico externo.
+
+[Slide: SD-02 Login]
+
+No login, o destaque e de seguranca.
+
+Reparem que, quando as credenciais estao erradas, a resposta e
+generica: "e-mail ou senha incorretos". Nunca "esse e-mail nao
+existe". Se a gente dissesse qual dos dois esta errado, um atacante
+descobriria quais e-mails tem conta no sistema. E o tempo de resposta
+e constante justamente para nao entregar a informacao pelo relogio.
+
+E tem dois tokens, com funcoes diferentes. O access token dura quinze
+minutos e nao precisa consultar o banco - e rapido. O refresh token
+fica salvo na tabela de sessao, e por isso pode ser revogado de
+verdade. E o "lembrar de mim" e so um parametro: muda a validade de
+sete para noventa dias.
+
+[Slide: SD-03 Dashboard]
+
+No painel inicial, duas decisoes de desempenho.
+
+Primeira: a tela aparece imediatamente com o que esta salvo no celular
+e so depois atualiza com o que vem da internet. O usuario nunca olha
+para uma tela em branco.
+
+Segunda: olhem o fragmento par. As tres consultas - atividades,
+financeiro e importancias - rodam em paralelo no servidor. O tempo
+total e o da mais lenta, nao a soma das tres. E o resultado fica em
+cache por cento e vinte segundos.
+
+[Slide: SD-04 CRUD de atividade]
+
+Aqui esta o CRUD que o Paulo mencionou, funcionando.
+
+O ponto que eu quero destacar e este: quem valida e quem calcula a
+duracao e a propria entidade Atividade, nao o controller. Isso se
+chama modelo rico. O oposto, modelo anemico, e quando a entidade e so
+um saco de atributos e a regra fica espalhada pelo sistema.
+
+E reparem no caminho de cima, no fragmento alt: sem conexao, a
+operacao vai para uma fila local chamada outbox e a tela mostra o item
+com um selo de pendente. O usuario nunca fica bloqueado pela rede.
+
+[Slide: SD-05 Transacao financeira]
+
+Esse e o diagrama que trata de dinheiro, entao a exigencia e maior.
+
+Reparem no SELECT FOR UPDATE. Isso e bloqueio pessimista. Imaginem que
+o usuario lance duas despesas ao mesmo tempo, em dois aparelhos. Sem
+bloqueio, as duas leem o saldo antigo e uma sobrescreve a outra - o
+dinheiro some. Com o bloqueio, uma espera a outra terminar.
+
+E tudo - inserir a transacao e atualizar o saldo - acontece no mesmo
+COMMIT. Se falhar em qualquer ponto, e ROLLBACK. O saldo jamais fica
+inconsistente. Em aplicativo financeiro isso nao e desejavel, e
+obrigatorio.
+
+Um detalhe de projeto que vale citar: quem escreve o saldo e um
+gatilho no banco de dados, e somente ele. A aplicacao nao atualiza o
+saldo direto. Se os dois escrevessem, o valor seria contado duas
+vezes. Com a regra no banco, o saldo fica correto ate se alguem rodar
+um comando SQL na mao.
+
+================================================================================
+ BLOCO 4 - O DIAGRAMA MAIS IMPORTANTE                      [cerca de 2 minutos]
+================================================================================
+
+[Slide: SD-06 Quitacao de importancia - deixe bastante tempo nele]
+
+Agora o diagrama mais importante do projeto inteiro.
+
+O Paulo falou do nosso diferencial: marcar a conta da internet como
+paga e o sistema fazer cinco coisas sozinho. Este diagrama e esse
+diferencial, detalhado.
+
+[Percorra o diagrama de cima para baixo enquanto fala]
+
+O usuario confirma. O caso de uso busca a importancia. Valida se ela
+ainda esta pendente. Abre a transacao de banco.
+
+Dentro da transacao: muda o status para concluida, cria a despesa de
+noventa e nove e noventa, debita a conta, e - se for uma conta
+recorrente - ja gera a ocorrencia de outubro.
+
+COMMIT.
+
+Depois do commit, e so depois, ele cancela a notificacao de vencimento
+e limpa o cache.
+
+[Pausa. Essa e a frase de efeito:]
+
+Por que depois? Porque cancelar uma notificacao e limpar um cache sao
+efeitos colaterais. Se falharem, nao podem derrubar o pagamento. O que
+e essencial fica dentro da transacao. O que e acessorio fica fora.
+
+E olhem o fragmento alt la em cima. Se a importancia ja estiver
+concluida, o sistema devolve erro 409 e nao faz nada. Sem essa guarda,
+um toque duplo do usuario geraria duas despesas e debitaria a conta
+duas vezes.
+
+[Slide: SD-07 e SD-08 - pode passar mais rapido]
+
+Rapidamente os dois ultimos.
+
+No processamento de notificacoes, o destaque e o FOR UPDATE SKIP
+LOCKED. Ele permite que varios workers consumam a mesma fila ao mesmo
+tempo sem que dois peguem a mesma notificacao e o usuario receba o
+aviso duplicado.
+
+E na sincronizacao offline, o destaque e a idempotencia. Cada operacao
+feita no celular carrega um identificador unico gerado la. Se a
+resposta se perder e o aplicativo reenviar, o servidor reconhece que
+ja processou aquilo e devolve o resultado anterior, em vez de duplicar
+o registro. E exatamente por isso que as chaves do banco sao UUID e
+nao numero sequencial.
+
+================================================================================
+ BLOCO 5 - DIAGRAMA DE COMUNICACAO                       [cerca de 1 minuto]
+================================================================================
+
+[Slide: DC-01 Diagrama de comunicacao]
+
+Esse e o diagrama de comunicacao. Ele mostra a mesma operacao do
+diagrama de sequencia anterior - o registro de uma transacao - mas com
+outra enfase.
+
+O de sequencia enfatiza QUANDO: a ordem esta no eixo vertical, de cima
+para baixo.
+
+O de comunicacao enfatiza QUEM FALA COM QUEM: a ordem esta na
+numeracao das mensagens, e o que fica evidente e a topologia das
+ligacoes.
+
+Os dois sao semanticamente equivalentes - descrevem a mesma coisa.
+
+Mas o de comunicacao revela uma coisa que o de sequencia esconde.
+Olhem quantas setas saem do RegistrarTransacaoUseCase: sete objetos
+diferentes. Esse e o ponto de maior acoplamento do sistema. Se a gente
+precisar adicionar mais regras no lancamento financeiro, e o primeiro
+lugar que vai precisar de refatoracao.
+
+Ou seja: cada diagrama responde a uma pergunta. Por isso a gente fez
+os dois.
+
+(pausa)
+
+================================================================================
+ BLOCO 6 - DIAGRAMA DE IMPLANTACAO                         [cerca de 3 minutos]
+================================================================================
+
+[Slide: Diagrama de Implantacao]
+
+E agora o diagrama de implantacao, que responde: onde isso tudo roda
+de verdade.
+
+[Notacao, rapido]
+
+Na notacao: device e uma maquina, fisica ou virtual.
+executionEnvironment e um ambiente de execucao dentro dela - um
+runtime, um container. E artifact e o que a gente instala: o binario,
+a imagem Docker, o arquivo de banco.
+
+[Percorra os quatro blocos, de cima para baixo ou conforme seu slide]
+
+São quatro blocos.
+
+PRIMEIRO - o celular do usuario. Android 8 ou superior, iOS 14 ou
+superior. Dentro dele tem tres artefatos: o aplicativo em React
+Native, um banco SQLite local que guarda o cache offline e a fila de
+operacoes pendentes, e o armazenamento seguro - Keychain no iPhone,
+Keystore no Android - onde ficam os tokens. Token nunca fica em
+armazenamento comum.
+
+SEGUNDO - a borda, que e o Cloudflare. Ali acontece o TLS, a protecao
+contra ataque de negacao de servico e o limite de cem requisicoes por
+minuto por IP. E importante notar: isso acontece ANTES do trafego
+chegar na nossa infraestrutura. A defesa mais barata e a que voce nao
+paga para processar.
+
+TERCEIRO - a nuvem. A gente escolheu AWS na regiao de Sao Paulo.
+
+[Se a banca for tecnica, essa justificativa costuma ser bem recebida:]
+
+Sao Paulo por dois motivos. Latencia: quinze a trinta milissegundos
+para o usuario brasileiro, contra cento e vinte a cento e oitenta se
+estivesse na Virginia. E LGPD: manter dado pessoal em territorio
+nacional simplifica muito a conformidade.
+
+Dentro da nuvem tem um balanceador, e um cluster Kubernetes com dois
+tipos de pod.
+
+O pod da API escala de duas a seis replicas automaticamente, conforme
+o uso de CPU. Isso porque o uso do aplicativo e sazonal - tem pico de
+manha, no almoco e a noite. Nao faz sentido pagar pelo pico vinte e
+quatro horas por dia.
+
+O pod do worker e separado. E ele que processa as notificacoes e os
+jobs agendados. A razao de separar e simples: disparar dez mil
+notificacoes nao pode deixar lento quem esta usando o aplicativo
+naquele momento.
+
+O banco e PostgreSQL com Multi-AZ, que e replicacao em outra zona de
+disponibilidade com failover automatico, mais uma replica de leitura
+para os relatorios pesados nao atrapalharem as operacoes do dia a dia.
+
+E tem Redis para cache e filas, S3 para as fotos de perfil, e a parte
+de observabilidade.
+
+QUARTO - os servicos externos: Firebase para o push, Google Identity
+para o login social, e Amazon SES para os e-mails.
+
+[Slide: custo]
+
+Sobre custo: essa infraestrutura completa sai por volta de duzentos e
+oitenta dolares por mes, atendendo ate uns dez mil usuarios ativos.
+
+Mas eu quero ser honesto: para a fase de validacao, isso e caro
+demais. Dá para rodar a mesma coisa em um servico gerenciado tipo
+Railway ou Render, com banco e Redis inclusos, por uns vinte e cinco
+dolares. E como tudo esta em container, a migracao depois nao muda uma
+linha de codigo.
+
+[Slide: ambiente de desenvolvimento]
+
+E para desenvolvimento e para essa apresentacao, tudo roda numa
+maquina so, com Docker Compose: a API, o Postgres, o Redis e o MinIO,
+que e um S3 local. O codigo de upload e identico nos dois ambientes -
+muda so uma variavel de ambiente.
+
+================================================================================
+ BLOCO 7 - VALIDACAO E ENCERRAMENTO                        [cerca de 2 minutos]
+================================================================================
+
+[Slide: validacao - numeros conferidos]
+
+E eu quero fechar com uma coisa que acho que diferencia esse trabalho.
+
+A gente nao desenhou a modelagem e parou. A gente executou.
+
+O esquema do banco rodou num PostgreSQL 16 de verdade, com carga de
+dados. E o modelo reproduz exatamente os numeros das telas:
+
+- Saldo atual: mil duzentos e vinte reais e trinta e cinco centavos.
+  Igual a tela.
+- Receitas do mes: dois mil quatrocentos e cinquenta e setenta e
+  cinco. Igual.
+- Doze atividades, dez concluidas, duas pendentes. Igual.
+- Tempo total: dezoito horas e quarenta e cinco minutos. Igual.
+
+E as regras de negocio foram testadas contra o banco. Todas
+rejeitaram as violacoes corretamente: valor negativo, horario
+invertido, exclusao de categoria do sistema, cadastro de menor de
+treze anos. E a quitacao da importancia gerou a despesa e debitou o
+saldo em noventa e nove e noventa, exatamente como projetado.
+
+[Slide: inconsistencias encontradas]
+
+E nesse processo a gente encontrou tres inconsistencias no proprio
+prototipo.
+
+A mais clara: na tela Financeiro, as fichas de categoria somam mil
+seiscentos e sessenta e um reais e quarenta, mas o card do topo diz
+mil duzentos e trinta e quarenta.
+
+Isso e absolutamente normal em prototipo feito em ferramenta de
+design - os numeros sao escritos a mao, um de cada vez. Mas e
+exatamente esse o valor de modelar os dados antes de programar: a
+inconsistencia aparece agora, na modelagem, e nao em producao com o
+usuario reclamando que a conta nao fecha.
+
+[Slide: conclusao]
+
+Para fechar.
+
+O MinhaVida esta completamente especificado. Das oito telas ao esquema
+de banco executavel. Dos sessenta e um requisitos aos dezessete
+diagramas UML. Das decisoes de arquitetura justificadas ao custo
+mensal estimado.
+
+E nada foi feito por convencao. A heranca em ItemAgendavel, o enum em
+vez de heranca para receita e despesa, o Composite em Categoria, o
+gatilho como fonte unica do saldo, o UUID que viabiliza o modo
+offline - cada uma dessas decisoes tem justificativa registrada e
+consequencia assumida.
+
+[Frase de encerramento - fale devagar:]
+
+A partir daqui, programar e traduzir. As decisoes dificeis ja foram
+tomadas.
+
+Obrigado. Estamos a disposicao para as perguntas.
+
+================================================================================
+ SE A BANCA PERGUNTAR - PREPARO PARA ARGUICAO
+================================================================================
+
+P: "Qual a diferenca entre diagrama de sequencia e de comunicacao?"
+R: Os dois descrevem a mesma interacao, sao semanticamente
+   equivalentes. A diferenca e a enfase. O de sequencia organiza pelo
+   tempo, no eixo vertical - e melhor para fluxo longo, com condicional
+   e paralelismo. O de comunicacao organiza pela topologia, e a ordem
+   vem da numeracao - e melhor para avaliar acoplamento. Eu usei o de
+   comunicacao justamente para mostrar que um caso de uso nosso
+   conversa com sete objetos, o que e o nosso maior ponto de
+   acoplamento.
+
+P: "Por que monolito e nao microsservicos?"
+R: Porque o nosso dominio exige atomicidade. Quitar a importancia,
+   criar a despesa e atualizar o saldo precisam acontecer no mesmo
+   COMMIT. Se eu quebrasse isso em servicos separados, precisaria de
+   saga e consistencia eventual - muito mais complexidade para
+   resolver um problema que eu nao tenho. Alem disso, a equipe e
+   pequena. Mas o monolito e modular, com fronteiras internas por
+   contexto, entao da para extrair um modulo depois se a escala
+   justificar.
+
+P: "O que acontece se o banco cair?"
+R: O RDS esta em Multi-AZ, entao ha failover automatico para outra
+   zona de disponibilidade. O RTO projetado e de uma hora e o RPO de
+   cinco minutos. Alem disso tem backup diario com recuperacao a
+   qualquer ponto nos ultimos sete dias. E do lado do aplicativo, como
+   ele funciona offline, o usuario continua registrando e sincroniza
+   depois.
+
+P: "Como voces garantem que o saldo nao fica errado?"
+R: Por tres mecanismos. Primeiro, bloqueio pessimista no banco, que
+   evita condicao de corrida. Segundo, atomicidade: a transacao e o
+   saldo sao gravados no mesmo COMMIT, ou os dois entram ou nenhum
+   entra. Terceiro, o saldo e sempre recalculavel a partir do saldo
+   inicial mais as transacoes efetivadas - tem uma funcao no banco que
+   faz essa reconciliacao, e um job noturno que confere.
+
+P: "Por que TLS e limite de requisicao no Cloudflare e nao na API?"
+R: Porque o ataque nao deve chegar na infraestrutura que eu pago para
+   processar. Filtrar na borda e mais barato e mais eficaz. A API
+   tambem tem limite proprio por conta, mas o limite por IP fica la na
+   frente.
+
+P: "Esse custo de duzentos e oitenta dolares nao e alto para um TCC?"
+R: E alto, sim, e por isso eu nao recomendaria comecar assim. Aquela
+   arquitetura e o destino, para quando houver dez mil usuarios. Para
+   validar, um servico gerenciado por vinte e cinco dolares resolve. O
+   ponto importante e que, como tudo esta em container, a migracao de
+   um para o outro nao muda codigo - so muda onde o container roda.
+
+P: "Voces testaram mesmo ou so escreveram o SQL?"
+R: Testamos de verdade. O schema rodou num PostgreSQL 16.13, a carga
+   foi aplicada e a gente rodou uma bateria conferindo cada numero
+   contra as telas, alem de testes que tentam violar cada regra de
+   negocio para confirmar que o banco rejeita. Esta tudo documentado
+   no arquivo do dicionario de dados, na secao de validacao.
+
+P: "E se o Firebase sair do ar?"
+R: A notificacao fica na tabela com status agendada e o worker tenta
+   de novo, com recuo exponencial, ate cinco vezes. Nao se perde. E
+   como o canal de e-mail e independente, da para configurar fallback.
+   O importante e que nada disso bloqueia a operacao principal do
+   aplicativo, porque o envio e assincrono.
+
+================================================================================
+ LEMBRETES FINAIS
+================================================================================
+
+  - A sua parte tem mais conteudo tecnico que a do Paulo. Controle o
+    ritmo: e melhor cortar um detalhe do que atropelar tudo.
+  - Se o tempo apertar, os blocos que voce pode encurtar sao o SD-07 e
+    SD-08 (notificacao e sincronizacao). O que NAO pode faltar e o
+    SD-06, a quitacao - e o coracao do projeto.
+  - Nos diagramas de sequencia, percorra com o dedo ou com o cursor de
+    cima para baixo enquanto narra. A banca acompanha muito melhor.
+  - Use a coincidencia do seu nome com a persona na abertura. Quebra o
+    gelo e ninguem esquece.
+  - As duas frases que voce tem que entregar bem sao:
+    "O que e essencial fica dentro da transacao. O que e acessorio
+     fica fora."
+    e
+    "A partir daqui, programar e traduzir. As decisoes dificeis ja
+     foram tomadas."
+
+================================================================================

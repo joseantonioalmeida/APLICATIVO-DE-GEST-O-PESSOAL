@@ -1,0 +1,80 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaFinanceiro
+    participant VM as :FinanceiroViewModel
+    participant API as :TransacaoController
+    participant UC as :RegistrarTransacaoUseCase
+    participant TX as :GerenciadorTransacional
+    participant T as :Transacao (entidade)
+    participant CONTA as :ContaFinanceira (entidade)
+    participant TREP as :TransacaoRepository
+    participant CREP as :ContaRepository
+    participant DB as :PostgreSQL
+    participant CACHE as :CacheRedis
+    participant ORC as :OrcamentoService
+    participant EV as :BarramentoDeEventos
+
+    U->>V: toca no botao flutuante "+"<br/>e informa descricao, valor,<br/>tipo, categoria, conta e data
+    V->>VM: registrar(dto)
+    VM->>API: POST /api/v1/transacoes {dto}
+    activate API
+    API->>API: validarDTO (valor > 0, ate 2 casas decimais)
+    API->>UC: executar(usuarioId, dto)
+    activate UC
+    UC->>TX: iniciar()
+    TX->>DB: BEGIN
+
+    UC->>CREP: buscarPorId(contaId) FOR UPDATE
+    CREP->>DB: SELECT ... FROM conta_financeira WHERE id=$1 FOR UPDATE
+    Note over CREP,DB: bloqueio pessimista evita<br/>condicao de corrida no saldo
+    DB-->>CREP: conta
+    CREP-->>UC: ContaFinanceira
+
+    UC->>T: new Transacao(dto)
+    T->>T: validarInvariantes()
+    T-->>UC: transacao (situacao=EFETIVADA)
+
+    alt tipo = RECEITA
+        UC->>CONTA: creditar(valor)
+    else tipo = DESPESA
+        UC->>CONTA: debitar(valor)
+    end
+    CONTA->>CONTA: saldoAtual = saldoAtual +/- valor
+
+    UC->>TREP: salvar(transacao)
+    TREP->>DB: INSERT INTO transacao (...)
+    DB->>DB: gatilho tg_transacao_saldo<br/>UPDATE conta_financeira SET saldo_atual
+    Note over UC,DB: o gatilho e a fonte unica do saldo:<br/>a aplicacao nao atualiza a coluna diretamente
+
+    opt transacao parcelada
+        UC->>TREP: salvarParcelas(2..N)
+        TREP->>DB: INSERT INTO transacao (parcela_numero, transacao_origem_id)
+    end
+
+    UC->>TX: confirmar()
+    TX->>DB: COMMIT
+    DB-->>TX: ok
+
+    UC->>CACHE: invalidar("dash:{usuarioId}:*", "fin:{usuarioId}:{mes}")
+    UC->>EV: publicar(TransacaoRegistradaEvent)
+    UC-->>API: TransacaoDTO
+    deactivate UC
+    API-->>VM: 201 Created {transacao, novoSaldo}
+    deactivate API
+    VM-->>V: atualizar cards e lista de movimentacoes
+    V-->>U: saldo e graficos recalculados
+
+    EV-)ORC: tratar(TransacaoRegistradaEvent)
+    ORC->>DB: SELECT orcamento WHERE categoria e mes
+    ORC->>ORC: percentualUtilizado()
+    alt gasto >= percentual de alerta
+        ORC->>DB: INSERT INTO notificacao (tipo='ALERTA_ORCAMENTO')
+    end
+
+    alt erro em qualquer etapa
+        UC->>TX: desfazer()
+        TX->>DB: ROLLBACK
+        Note over TX,DB: atomicidade garantida:<br/>saldo nunca fica inconsistente
+        API-->>VM: 422 / 500 com codigo de erro
+    end

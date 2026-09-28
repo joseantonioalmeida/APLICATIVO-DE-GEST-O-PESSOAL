@@ -1,0 +1,117 @@
+classDiagram
+    direction TB
+    note "Versão reduzida para projeção.
+O diagrama completo, com 15 entidades, 3 objetos de valor
+e 19 enumerações, está em 01-classes-dominio."
+
+    class Usuario {
+        -UUID id
+        -String nomeCompleto
+        -Email email
+        -String senhaHash
+        -LocalDate dataNascimento
+        -StatusUsuario status
+        -DateTime dataCadastro
+        +autenticar(senha) Boolean
+        +atualizarPerfil(dados) void
+    }
+
+    class ItemAgendavel {
+        <<abstract>>
+        #UUID id
+        #UUID usuarioId
+        #UUID categoriaId
+        #String titulo
+        #String descricao
+        #Prioridade prioridade
+        #Boolean lembreteAtivo
+        +concluir()* void
+        +cancelar()* void
+        +estaAtrasado() Boolean
+    }
+
+    class Atividade {
+        -LocalDate dataAtividade
+        -LocalTime horaInicio
+        -LocalTime horaFim
+        -Integer duracaoMinutos
+        -StatusAtividade status
+        +concluir() void
+        +calcularDuracao() Integer
+    }
+
+    class Importancia {
+        -String origem
+        -LocalDate dataVencimento
+        -Dinheiro valor
+        -StatusImportancia status
+        -Boolean gerarTransacaoAoConcluir
+        +concluir(contaId) Transacao
+        +diasRestantes() Integer
+    }
+
+    class Transacao {
+        -UUID contaId
+        -String descricao
+        -TipoMovimento tipo
+        -Dinheiro valor
+        -LocalDate dataMovimento
+        -SituacaoTransacao situacao
+        +efetivar() void
+        +valorComSinal() Dinheiro
+    }
+
+    class ContaFinanceira {
+        -String nome
+        -TipoConta tipo
+        -Dinheiro saldoInicial
+        -Dinheiro saldoAtual
+        +creditar(valor) void
+        +debitar(valor) void
+    }
+
+    class Categoria {
+        -UUID categoriaPaiId
+        -String nome
+        -EscopoCategoria escopo
+        -String corHex
+        -String icone
+        +ehSubcategoria() Boolean
+    }
+
+    class RegraRecorrencia {
+        -Frequencia frequencia
+        -Integer intervalo
+        -LocalDate proximaOcorrencia
+        +calcularProximaOcorrencia(base) LocalDate
+    }
+
+    class Dinheiro {
+        <<value object>>
+        -Decimal valor
+        -String moeda
+        +somar(outro) Dinheiro
+        +formatar() String
+    }
+
+    Usuario "1" *-- "0..*" Atividade : planeja
+    Usuario "1" *-- "0..*" Importancia : acompanha
+    Usuario "1" *-- "0..*" ContaFinanceira : mantem
+    Usuario "1" *-- "0..*" Transacao : lanca
+    Usuario "1" *-- "0..*" Categoria : personaliza
+
+    ItemAgendavel <|-- Atividade
+    ItemAgendavel <|-- Importancia
+
+    Categoria "0..1" o-- "0..*" Categoria : subcategoria
+    Categoria "1" o-- "0..*" Atividade : classifica
+    Categoria "1" o-- "0..*" Transacao : classifica
+    Categoria "1" o-- "0..*" Importancia : classifica
+
+    ContaFinanceira "1" *-- "0..*" Transacao : movimenta
+    Importancia "0..1" --> "0..1" Transacao : quita/gera
+    ItemAgendavel "0..*" --> "0..1" RegraRecorrencia : repete-se por
+
+    Transacao ..> Dinheiro
+    Importancia ..> Dinheiro
+    ContaFinanceira ..> Dinheiro

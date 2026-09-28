@@ -1,0 +1,80 @@
+flowchart LR
+    U(("Usuario"))
+    S(("Sistema<br/>(agendador)"))
+    G(("Google<br/>Identity"))
+    F(("Firebase<br/>FCM"))
+
+    subgraph SIS["Sistema MinhaVida"]
+        direction TB
+        subgraph M1["Modulo: Identidade e Acesso"]
+            UC01(["UC01 Cadastrar conta"])
+            UC02(["UC02 Autenticar"])
+            UC03(["UC03 Recuperar senha"])
+            UC04(["UC04 Manter perfil"])
+            UC05(["UC05 Configurar preferencias"])
+            UC06(["UC06 Encerrar sessao"])
+        end
+        subgraph M2["Modulo: Gestao de Atividades"]
+            UC07(["UC07 Cadastrar atividade"])
+            UC08(["UC08 Consultar/filtrar atividades"])
+            UC09(["UC09 Editar atividade"])
+            UC10(["UC10 Concluir atividade"])
+            UC11(["UC11 Excluir atividade"])
+            UC12(["UC12 Definir recorrencia"])
+        end
+        subgraph M3["Modulo: Gestao Financeira"]
+            UC13(["UC13 Registrar receita/despesa"])
+            UC14(["UC14 Consultar movimentacoes"])
+            UC15(["UC15 Editar/estornar lancamento"])
+            UC16(["UC16 Gerenciar contas"])
+            UC17(["UC17 Gerenciar categorias"])
+            UC18(["UC18 Definir orcamento"])
+        end
+        subgraph M4["Modulo: Importancias"]
+            UC19(["UC19 Cadastrar importancia"])
+            UC20(["UC20 Consultar por vencimento"])
+            UC21(["UC21 Concluir/quitar importancia"])
+        end
+        subgraph M5["Modulo: Insights"]
+            UC22(["UC22 Visualizar dashboard"])
+            UC23(["UC23 Emitir relatorios"])
+            UC24(["UC24 Receber notificacoes"])
+        end
+    end
+
+    U --- UC01
+    U --- UC02
+    U --- UC03
+    U --- UC04
+    U --- UC05
+    U --- UC06
+    U --- UC07
+    U --- UC08
+    U --- UC09
+    U --- UC10
+    U --- UC11
+    U --- UC13
+    U --- UC14
+    U --- UC15
+    U --- UC16
+    U --- UC17
+    U --- UC18
+    U --- UC19
+    U --- UC20
+    U --- UC21
+    U --- UC22
+    U --- UC23
+    U --- UC24
+
+    UC02 -.->|"&lt;&lt;extend&gt;&gt;"| G
+    UC07 -.->|"&lt;&lt;extend&gt;&gt;"| UC12
+    UC19 -.->|"&lt;&lt;extend&gt;&gt;"| UC12
+    UC21 -.->|"&lt;&lt;include&gt;&gt;"| UC13
+    UC22 -.->|"&lt;&lt;include&gt;&gt;"| UC08
+    UC22 -.->|"&lt;&lt;include&gt;&gt;"| UC14
+    UC22 -.->|"&lt;&lt;include&gt;&gt;"| UC20
+    S --- UC24
+    UC24 --- F
+
+    classDef ator fill:#4f46e5,stroke:#312e81,color:#fff
+    class U,S,G,F ator

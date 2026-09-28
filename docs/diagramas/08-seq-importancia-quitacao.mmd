@@ -1,0 +1,73 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaImportancias
+    participant VM as :ImportanciaViewModel
+    participant API as :ImportanciaController
+    participant UC as :ConcluirImportanciaUseCase
+    participant TX as :GerenciadorTransacional
+    participant I as :Importancia (entidade)
+    participant T as :Transacao (entidade)
+    participant CONTA as :ContaFinanceira
+    participant IREP as :ImportanciaRepository
+    participant TREP as :TransacaoRepository
+    participant DB as :PostgreSQL
+    participant NOT as :NotificacaoService
+    participant CACHE as :CacheRedis
+
+    U->>V: abre "Pagamento da internet - Vivo Fibra"<br/>R$ 99,90 e confirma "Marcar como paga"
+    V->>VM: concluir(importanciaId, contaId)
+    VM->>API: PATCH /api/v1/importancias/{id}/concluir {contaId}
+    activate API
+    API->>UC: executar(usuarioId, id, contaId)
+    activate UC
+
+    UC->>IREP: buscarPorId(id)
+    IREP->>DB: SELECT * FROM importancia WHERE id=$1 AND usuario_id=$2
+    DB-->>IREP: registro
+    IREP-->>UC: Importancia
+
+    alt ja concluida ou cancelada
+        UC-->>API: EstadoInvalidoException
+        API-->>VM: 409 {codigo:'IMPORTANCIA_JA_CONCLUIDA'}
+    else pendente
+        UC->>TX: iniciar()
+        TX->>DB: BEGIN
+
+        UC->>I: concluir(contaId)
+        I->>I: validar(status == PENDENTE)
+        I->>I: status = CONCLUIDA · concluidaEm = now()
+
+        opt gerarTransacaoAoConcluir = true e valor informado
+            I->>T: criarTransacaoDeQuitacao()
+            T->>T: descricao = titulo · tipo = DESPESA ·<br/>dataMovimento = hoje · importanciaId = id
+            T-->>I: transacao
+            UC->>TREP: salvar(transacao)
+            TREP->>DB: INSERT INTO transacao (importancia_id, ...)
+            UC->>CONTA: debitar(valor)
+            UC->>DB: UPDATE conta_financeira SET saldo_atual
+            I->>I: transacaoId = transacao.id
+        end
+
+        UC->>IREP: atualizar(importancia)
+        IREP->>DB: UPDATE importancia SET status, concluida_em, transacao_id
+
+        opt possui regra de recorrencia
+            UC->>IREP: gerarProximaOcorrencia(regra)
+            IREP->>DB: INSERT INTO importancia (proxima competencia)
+            Note over UC,DB: "Pagamento da internet" de outubro<br/>e criado automaticamente
+        end
+
+        UC->>TX: confirmar()
+        TX->>DB: COMMIT
+
+        UC->>NOT: cancelarNotificacoesPendentes(importanciaId)
+        NOT->>DB: UPDATE notificacao SET status='CANCELADA'
+        UC->>CACHE: invalidar("dash:{usuarioId}:*")
+        UC-->>API: ImportanciaDTO + TransacaoDTO
+        deactivate UC
+        API-->>VM: 200 OK
+        deactivate API
+        VM-->>V: move o item para "Concluidos" (texto riscado)<br/>e atualiza o saldo
+        V-->>U: feedback visual de conclusao
+    end

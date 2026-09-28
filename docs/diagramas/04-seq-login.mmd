@@ -1,0 +1,55 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaLogin (View)
+    participant VM as :LoginViewModel
+    participant SS as :ArmazenamentoSeguro<br/>(Keychain/Keystore)
+    participant API as :AuthController
+    participant UC as :AutenticarUsuarioUseCase
+    participant REPO as :UsuarioRepository
+    participant HASH as :HashProvider
+    participant JWT as :TokenProvider (JWT)
+    participant SESS as :SessaoRepository
+    participant DB as :PostgreSQL
+
+    U->>V: informa e-mail/usuario + senha<br/>marca "Lembrar de mim"
+    V->>VM: entrar(identificador, senha, lembrarDeMim)
+    VM->>API: POST /api/v1/auth/login
+    activate API
+    API->>UC: executar(credenciais)
+    activate UC
+    UC->>REPO: buscarPorEmailOuUsuario(identificador)
+    REPO->>DB: SELECT * FROM usuario WHERE email=$1 OR nome_usuario=$1
+    DB-->>REPO: registro
+    REPO-->>UC: Usuario
+
+    alt usuario inexistente ou senha incorreta
+        UC->>HASH: verificar(senha, senhaHash)
+        HASH-->>UC: false
+        UC->>UC: registrarTentativaFalha(ip)
+        Note over UC: resposta generica e tempo constante<br/>para evitar enumeracao de contas
+        UC-->>API: CredenciaisInvalidasException
+        API-->>VM: 401 {codigo:'CREDENCIAIS_INVALIDAS'}
+        VM-->>V: "E-mail ou senha incorretos"
+    else conta bloqueada ou inativa
+        UC-->>API: ContaBloqueadaException
+        API-->>VM: 403 {codigo:'CONTA_BLOQUEADA'}
+    else autenticacao bem-sucedida
+        UC->>HASH: verificar(senha, senhaHash)
+        HASH-->>UC: true
+        UC->>JWT: gerarAccessToken(usuarioId, perfil)
+        JWT-->>UC: accessToken (exp 15 min)
+        UC->>JWT: gerarRefreshToken()
+        JWT-->>UC: refreshToken (exp 7d ou 90d se lembrarDeMim)
+        UC->>SESS: criar(Sessao)
+        SESS->>DB: INSERT INTO sessao (refresh_token_hash, dispositivo, expira_em)
+        UC->>REPO: registrarUltimoAcesso(usuarioId)
+        REPO->>DB: UPDATE usuario SET ultimo_acesso = now()
+        UC-->>API: SessaoDTO
+        deactivate UC
+        API-->>VM: 200 {accessToken, refreshToken, usuario}
+        deactivate API
+        VM->>SS: gravarTokens(accessToken, refreshToken)
+        VM-->>V: navegarPara(Home)
+        V-->>U: exibe Dashboard "Ola, Julio!"
+    end

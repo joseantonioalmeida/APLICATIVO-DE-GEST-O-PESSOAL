@@ -1,0 +1,54 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant APP as :AplicativoMobile
+    participant OUT as :FilaOutbox (SQLite)
+    participant NET as :MonitorDeRede
+    participant SYNC as :ServicoSincronizacao
+    participant API as :SyncController
+    participant UC as :SincronizarUseCase
+    participant DB as :PostgreSQL
+
+    Note over U,DB: --- Modo offline ---
+    U->>APP: cria e conclui atividades sem internet
+    APP->>OUT: gravar operacoes com<br/>idOperacao (UUID), timestamp e versao
+    APP-->>U: interface responde normalmente<br/>(itens marcados como "nao sincronizado")
+
+    Note over U,DB: --- Conexao restabelecida ---
+    NET-)SYNC: conexaoRestabelecida()
+    activate SYNC
+    SYNC->>OUT: listarPendentes(ordenadoPorTimestamp)
+    OUT-->>SYNC: List~Operacao~
+
+    SYNC->>API: POST /api/v1/sync/lote {operacoes, ultimaSincronizacao}
+    activate API
+    API->>UC: executar(usuarioId, lote)
+    activate UC
+
+    loop para cada operacao
+        UC->>DB: SELECT 1 FROM operacao_processada WHERE id_operacao=$1
+        alt operacao ja processada
+            Note over UC,DB: idempotencia: reenvio nao duplica dados
+            UC->>UC: ignorar e devolver resultado anterior
+        else operacao nova
+            UC->>DB: aplicar INSERT/UPDATE/DELETE
+            UC->>DB: INSERT INTO operacao_processada (id_operacao)
+        end
+    end
+
+    UC->>DB: SELECT * FROM (atividade, transacao, importancia)<br/>WHERE atualizado_em > ultimaSincronizacao
+    DB-->>UC: alteracoes do servidor
+
+    alt conflito: mesmo registro alterado nos dois lados
+        UC->>UC: resolver por "ultima escrita vence"<br/>comparando atualizado_em
+        Note over UC: campos divergentes sao registrados<br/>para auditoria e exibidos ao usuario
+    end
+
+    UC-->>API: ResultadoSincronizacaoDTO
+    deactivate UC
+    API-->>SYNC: 200 {aplicadas, conflitos, alteracoesServidor, serverTime}
+    deactivate API
+    SYNC->>OUT: removerOperacoesConfirmadas()
+    SYNC->>APP: aplicarAlteracoesDoServidor()
+    deactivate SYNC
+    APP-->>U: dados consistentes · selos de pendencia removidos

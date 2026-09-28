@@ -1,0 +1,60 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaCadastro<br/>(View)
+    participant VM as :CadastroViewModel
+    participant API as :AuthController<br/>(REST /auth/registrar)
+    participant UC as :RegistrarUsuarioUseCase
+    participant VAL as :ValidadorCadastro
+    participant HASH as :HashProvider<br/>(bcrypt cost 12)
+    participant REPO as :UsuarioRepository
+    participant SEED as :CategoriaPadraoService
+    participant DB as :PostgreSQL
+    participant FILA as :FilaEmail (Redis)
+    participant MAIL as :ServicoEmail (SES)
+
+    U->>V: preenche nome, e-mail, senha,<br/>confirmacao, data nasc. e aceita termos
+    V->>VM: submeterCadastro(dto)
+    VM->>VM: validarLocalmente(dto)
+    alt dados invalidos no cliente
+        VM-->>V: exibirErrosDeCampo()
+        V-->>U: destaca campos invalidos
+    else dados validos
+        VM->>API: POST /api/v1/auth/registrar {dto}
+        activate API
+        API->>UC: executar(dto)
+        activate UC
+        UC->>VAL: validar(dto)
+        VAL-->>UC: ok (senha forte, idade >= 13, termos aceitos)
+        UC->>REPO: existePorEmailOuUsuario(email, nomeUsuario)
+        REPO->>DB: SELECT 1 FROM usuario WHERE email=$1 OR nome_usuario=$2
+        DB-->>REPO: vazio
+        REPO-->>UC: false
+        UC->>HASH: gerarHash(senha)
+        HASH-->>UC: senhaHash
+        UC->>REPO: salvar(Usuario)
+        REPO->>DB: BEGIN
+        REPO->>DB: INSERT INTO usuario (...)
+        UC->>SEED: criarCategoriasPadrao(usuarioId)
+        SEED->>DB: INSERT INTO categoria (18 registros padrao)
+        UC->>DB: INSERT INTO preferencia_usuario (tema=ESCURO, idioma=pt-BR)
+        UC->>DB: INSERT INTO conta_financeira (nome='Carteira')
+        REPO->>DB: COMMIT
+        DB-->>REPO: usuario persistido
+        UC->>FILA: enfileirar(EmailVerificacao, usuarioId)
+        UC-->>API: UsuarioCriadoDTO
+        deactivate UC
+        API-->>VM: 201 Created {id, nome, email, token}
+        deactivate API
+        VM-->>V: navegarPara(Login) + mensagemSucesso
+        V-->>U: "Conta criada! Verifique seu e-mail."
+        FILA-)MAIL: consumir job (assincrono)
+        MAIL-)U: e-mail de verificacao
+    end
+
+    alt e-mail ja cadastrado
+        REPO-->>UC: true
+        UC-->>API: ConflitoException
+        API-->>VM: 409 Conflict {codigo:'EMAIL_EM_USO'}
+        VM-->>V: exibirErro("E-mail ja cadastrado")
+    end

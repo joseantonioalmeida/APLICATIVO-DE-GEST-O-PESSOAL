@@ -1,0 +1,22 @@
+flowchart TB
+    subgraph DEV["&lt;&lt;device&gt;&gt;  Maquina do Desenvolvedor / Laboratorio"]
+        direction TB
+        EXPO["&lt;&lt;artifact&gt;&gt;<br/><b>Expo Go / Emulador Android</b><br/>minhavida-app (modo dev)"]
+        subgraph DC["&lt;&lt;executionEnvironment&gt;&gt;  Docker Compose"]
+            APIC["&lt;&lt;artifact&gt;&gt;<br/><b>api</b> — NestJS<br/>localhost:3000"]
+            PGC[("&lt;&lt;artifact&gt;&gt;<br/><b>postgres:16-alpine</b><br/>localhost:5432")]
+            RDC[("&lt;&lt;artifact&gt;&gt;<br/><b>redis:7-alpine</b><br/>localhost:6379")]
+            MINIO[("&lt;&lt;artifact&gt;&gt;<br/><b>minio</b><br/>S3 local :9000")]
+            ADM["&lt;&lt;artifact&gt;&gt;<br/><b>pgAdmin</b><br/>localhost:5050"]
+        end
+        EXPO -->|"HTTP · 3000"| APIC
+        APIC --> PGC
+        APIC --> RDC
+        APIC --> MINIO
+        ADM --> PGC
+    end
+
+    classDef art fill:#1e293b,stroke:#38bdf8,color:#e0f2fe
+    classDef db fill:#052e16,stroke:#22c55e,color:#dcfce7
+    class EXPO,APIC,ADM art
+    class PGC,RDC,MINIO db

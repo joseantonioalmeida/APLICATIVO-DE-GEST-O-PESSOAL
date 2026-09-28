@@ -1,0 +1,79 @@
+flowchart TB
+
+    subgraph CLIENTE["&lt;&lt;device&gt;&gt;  Smartphone do Usuario — Android 8+ / iOS 14+"]
+        direction TB
+        subgraph RT["&lt;&lt;executionEnvironment&gt;&gt;  Android Runtime (ART) / iOS Runtime"]
+            APP["&lt;&lt;artifact&gt;&gt;<br/><b>minhavida-app.apk / .ipa</b><br/>React Native 0.74 + TypeScript<br/>Camadas: View / ViewModel / UseCase / Repository"]
+            SQLITE[("&lt;&lt;artifact&gt;&gt;<br/><b>minhavida.db</b><br/>SQLite (WatermelonDB)<br/>cache offline + fila outbox")]
+            KS["&lt;&lt;artifact&gt;&gt;<br/><b>SecureStore</b><br/>Keychain (iOS) / Keystore (Android)<br/>access e refresh tokens"]
+        end
+        APP --- SQLITE
+        APP --- KS
+    end
+
+    subgraph EDGE["&lt;&lt;device&gt;&gt;  Borda — Cloudflare"]
+        WAF["&lt;&lt;executionEnvironment&gt;&gt;<br/><b>WAF + CDN + Rate Limit</b><br/>TLS 1.3, protecao DDoS<br/>100 req/min por IP"]
+    end
+
+    subgraph NUVEM["&lt;&lt;device&gt;&gt;  Provedor de Nuvem — AWS, regiao sa-east-1 (Sao Paulo)"]
+        direction TB
+
+        ALB["&lt;&lt;executionEnvironment&gt;&gt;<br/><b>Application Load Balancer</b><br/>HTTPS 443, health check /health"]
+
+        subgraph K8S["&lt;&lt;device&gt;&gt;  Cluster Kubernetes (Amazon EKS)"]
+            direction LR
+            subgraph POD1["&lt;&lt;executionEnvironment&gt;&gt;  Pod: api (2..6 replicas, HPA 70% CPU)"]
+                API["&lt;&lt;artifact&gt;&gt;<br/><b>minhavida-api:1.0.0</b> (Docker)<br/>Node.js 22 + NestJS<br/>REST /api/v1 · porta 3000"]
+            end
+            subgraph POD2["&lt;&lt;executionEnvironment&gt;&gt;  Pod: worker (1..3 replicas)"]
+                WRK["&lt;&lt;artifact&gt;&gt;<br/><b>minhavida-worker:1.0.0</b> (Docker)<br/>BullMQ · cron de notificacoes,<br/>recorrencias e resumos"]
+            end
+        end
+
+        subgraph RDS["&lt;&lt;device&gt;&gt;  Amazon RDS — Multi-AZ"]
+            direction LR
+            PG[("&lt;&lt;artifact&gt;&gt;<br/><b>PostgreSQL 16</b><br/>base minhavida — primaria<br/>backup PITR 7 dias")]
+            PGR[("&lt;&lt;artifact&gt;&gt;<br/><b>Replica de leitura</b><br/>relatorios e consultas pesadas")]
+            PG -.->|"replicacao<br/>streaming"| PGR
+        end
+
+        REDIS[("&lt;&lt;device&gt;&gt;<br/><b>Amazon ElastiCache — Redis 7</b><br/>cache de dashboard (TTL 120s)<br/>filas BullMQ · rate limit")]
+        S3[("&lt;&lt;device&gt;&gt;<br/><b>Amazon S3</b><br/>fotos de perfil e comprovantes<br/>URLs pre-assinadas, 15 min")]
+        OBS["&lt;&lt;device&gt;&gt;<br/><b>Observabilidade</b><br/>OpenTelemetry · Grafana<br/>Loki · Prometheus · Sentry"]
+        SEC["&lt;&lt;device&gt;&gt;<br/><b>AWS Secrets Manager</b><br/>segredos JWT e credenciais"]
+    end
+
+    subgraph EXT["&lt;&lt;device&gt;&gt;  Servicos Externos (SaaS)"]
+        direction LR
+        FCM["&lt;&lt;artifact&gt;&gt;<br/><b>Firebase Cloud Messaging</b><br/>notificacoes push"]
+        GOOGLE["&lt;&lt;artifact&gt;&gt;<br/><b>Google Identity</b><br/>OAuth 2.0 / OpenID Connect"]
+        SES["&lt;&lt;artifact&gt;&gt;<br/><b>Amazon SES</b><br/>verificacao e recuperacao<br/>de senha"]
+    end
+
+    CLIENTE ==>|"&lt;&lt;HTTPS/TLS 1.3&gt;&gt;<br/>REST + JSON · 443"| EDGE
+    EDGE ==>|"&lt;&lt;HTTPS&gt;&gt; 443"| ALB
+    ALB ==>|"&lt;&lt;HTTP/2&gt;&gt; interno · 3000"| POD1
+    POD1 ==>|"&lt;&lt;TCP/TLS&gt;&gt; 5432<br/>pool de 20 conexoes"| PG
+    POD1 -.->|"&lt;&lt;TCP/TLS&gt;&gt; 5432<br/>somente leitura"| PGR
+    POD1 ==>|"&lt;&lt;TCP/TLS&gt;&gt; 6379"| REDIS
+    POD2 ==>|"&lt;&lt;TCP/TLS&gt;&gt; 6379<br/>consumo de filas"| REDIS
+    POD2 ==>|"&lt;&lt;TCP/TLS&gt;&gt; 5432"| PG
+    POD1 ==>|"&lt;&lt;HTTPS&gt;&gt; SDK S3"| S3
+    POD1 -.->|"&lt;&lt;HTTPS&gt;&gt;"| SEC
+    POD1 -.->|"&lt;&lt;OTLP/gRPC&gt;&gt; 4317"| OBS
+    POD2 -.->|"&lt;&lt;OTLP/gRPC&gt;&gt; 4317"| OBS
+    POD2 ==>|"&lt;&lt;HTTPS&gt;&gt;<br/>FCM v1 API"| FCM
+    POD1 ==>|"&lt;&lt;HTTPS&gt;&gt;<br/>validacao de id_token"| GOOGLE
+    POD2 ==>|"&lt;&lt;SMTP/TLS&gt;&gt; 587"| SES
+    FCM -.->|"&lt;&lt;push&gt;&gt;<br/>APNs / FCM"| CLIENTE
+    CLIENTE -.->|"&lt;&lt;HTTPS&gt;&gt;<br/>consentimento OAuth"| GOOGLE
+
+    classDef device fill:#0f172a,stroke:#6366f1,stroke-width:2px,color:#e2e8f0
+    classDef exec fill:#1e1b4b,stroke:#818cf8,color:#e0e7ff
+    classDef art fill:#1e293b,stroke:#38bdf8,color:#e0f2fe
+    classDef db fill:#052e16,stroke:#22c55e,color:#dcfce7
+    classDef ext fill:#3b0764,stroke:#c084fc,color:#f3e8ff
+    class APP,KS,API,WRK art
+    class SQLITE,PG,PGR,REDIS,S3 db
+    class WAF,ALB,OBS,SEC exec
+    class FCM,GOOGLE,SES ext

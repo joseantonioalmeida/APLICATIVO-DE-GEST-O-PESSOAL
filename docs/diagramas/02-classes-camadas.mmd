@@ -1,0 +1,147 @@
+classDiagram
+    direction LR
+
+    namespace Apresentacao_Mobile {
+        class TelaAtividades {
+            +render() Widget
+            +aoTocarNovaAtividade() void
+        }
+        class AtividadeViewModel {
+            -EstadoAtividade estado
+            +carregar(filtro) void
+            +salvar(dto) void
+            +concluir(id) void
+        }
+    }
+
+    namespace Aplicacao_Mobile {
+        class ListarAtividadesUseCase {
+            +executar(filtro) List~AtividadeDTO~
+        }
+        class IAtividadeRepositoryMobile {
+            <<interface>>
+            +listar(filtro) List~Atividade~
+            +salvar(a) Atividade
+        }
+    }
+
+    namespace Infraestrutura_Mobile {
+        class AtividadeRepositoryImpl {
+            +listar(filtro) List~Atividade~
+            +salvar(a) Atividade
+        }
+        class ApiClient {
+            -String baseUrl
+            +get(rota) Resposta
+            +post(rota, corpo) Resposta
+            +interceptarRefreshToken() void
+        }
+        class BaseLocalSQLite {
+            +consultar(sql) Linhas
+            +enfileirarOutbox(op) void
+        }
+    }
+
+    namespace API_Backend {
+        class AtividadeController {
+            +criar(dto) AtividadeDTO
+            +listar(filtro) Pagina~AtividadeDTO~
+            +atualizar(id, dto) AtividadeDTO
+            +concluir(id) AtividadeDTO
+            +remover(id) void
+        }
+        class JwtAuthGuard {
+            +podeAtivar(contexto) Boolean
+        }
+        class FiltroDeExcecoes {
+            +tratar(erro) RespostaErro
+        }
+    }
+
+    namespace Aplicacao_Backend {
+        class CriarAtividadeUseCase {
+            +executar(usuarioId, dto) AtividadeDTO
+        }
+        class ConcluirAtividadeUseCase {
+            +executar(usuarioId, id) AtividadeDTO
+        }
+        class RegistrarTransacaoUseCase {
+            +executar(usuarioId, dto) TransacaoDTO
+        }
+        class ConcluirImportanciaUseCase {
+            +executar(usuarioId, id, contaId) ImportanciaDTO
+        }
+        class ObterResumoDiarioUseCase {
+            +executar(usuarioId, data) ResumoDiarioDTO
+        }
+    }
+
+    namespace Dominio {
+        class Atividade {
+            +concluir() void
+            +calcularDuracao() Integer
+        }
+        class Transacao {
+            +efetivar() void
+            +valorComSinal() Dinheiro
+        }
+        class IAtividadeRepository {
+            <<interface>>
+            +salvar(a) Atividade
+            +buscarPorId(id) Atividade
+            +listarPorFiltro(f) List~Atividade~
+        }
+        class INotificacaoService {
+            <<interface>>
+            +agendarLembrete(item) void
+            +cancelarLembrete(id) void
+        }
+        class RecorrenciaService {
+            +gerarProximasOcorrencias(item, horizonte) List
+        }
+    }
+
+    namespace Infraestrutura_Backend {
+        class AtividadeRepositoryPrisma {
+            +salvar(a) Atividade
+            +buscarPorId(id) Atividade
+        }
+        class NotificacaoServiceFCM {
+            +agendarLembrete(item) void
+        }
+        class HashProviderBcrypt {
+            +gerarHash(s) String
+            +verificar(s, h) Boolean
+        }
+        class TokenProviderJwt {
+            +gerarAccessToken(id) String
+        }
+        class CacheRedis {
+            +get(chave) Objeto
+            +set(chave, valor, ttl) void
+        }
+    }
+
+    TelaAtividades --> AtividadeViewModel
+    AtividadeViewModel --> ListarAtividadesUseCase
+    ListarAtividadesUseCase --> IAtividadeRepositoryMobile
+    IAtividadeRepositoryMobile <|.. AtividadeRepositoryImpl
+    AtividadeRepositoryImpl --> ApiClient
+    AtividadeRepositoryImpl --> BaseLocalSQLite
+    ApiClient ..> AtividadeController : HTTPS/JSON
+
+    AtividadeController --> JwtAuthGuard
+    AtividadeController --> CriarAtividadeUseCase
+    AtividadeController --> ConcluirAtividadeUseCase
+    AtividadeController ..> FiltroDeExcecoes
+    CriarAtividadeUseCase --> Atividade
+    CriarAtividadeUseCase --> IAtividadeRepository
+    CriarAtividadeUseCase --> RecorrenciaService
+    ConcluirAtividadeUseCase --> INotificacaoService
+    RegistrarTransacaoUseCase --> Transacao
+    ObterResumoDiarioUseCase --> CacheRedis
+
+    IAtividadeRepository <|.. AtividadeRepositoryPrisma
+    INotificacaoService <|.. NotificacaoServiceFCM
+
+    note for IAtividadeRepository "Inversao de dependencia: o dominio<br/>declara a interface (porta) e a<br/>infraestrutura fornece o adaptador."

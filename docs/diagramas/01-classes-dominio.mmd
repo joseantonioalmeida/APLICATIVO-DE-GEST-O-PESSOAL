@@ -1,0 +1,445 @@
+classDiagram
+    direction TB
+
+    %% ===================== IDENTIDADE E ACESSO =====================
+    class Usuario {
+        -UUID id
+        -String nomeCompleto
+        -String nomeUsuario
+        -Email email
+        -String senhaHash
+        -String telefone
+        -LocalDate dataNascimento
+        -String urlFotoPerfil
+        -StatusUsuario status
+        -Boolean emailVerificado
+        -Boolean aceiteTermos
+        -String versaoTermosAceita
+        -DateTime dataAceiteTermos
+        -DateTime dataCadastro
+        -DateTime ultimoAcesso
+        -DateTime criadoEm
+        -DateTime atualizadoEm
+        -DateTime excluidoEm
+        +autenticar(senha) Boolean
+        +alterarSenha(atual, nova) void
+        +atualizarPerfil(dados) void
+        +registrarAcesso() void
+        +desativarConta() void
+        +idade() Integer
+    }
+
+    class PreferenciaUsuario {
+        -UUID id
+        -UUID usuarioId
+        -TemaApp tema
+        -String idioma
+        -String moeda
+        -String fusoHorario
+        -Boolean notificacaoPush
+        -Boolean notificacaoEmail
+        -Boolean notificarAtividades
+        -Boolean notificarImportancias
+        -Integer antecedenciaLembreteMin
+        -Integer diasAntecedenciaImportancia
+        -Boolean resumoDiarioAtivo
+        -LocalTime horaResumoDiario
+        -DateTime atualizadoEm
+        +alternarTema() void
+        +permiteCanal(canal) Boolean
+    }
+
+    class CredencialSocial {
+        -UUID id
+        -UUID usuarioId
+        -ProvedorOAuth provedor
+        -String idProvedor
+        -String emailProvedor
+        -DateTime vinculadoEm
+        +desvincular() void
+    }
+
+    class Sessao {
+        -UUID id
+        -UUID usuarioId
+        -String refreshTokenHash
+        -String dispositivo
+        -String sistemaOperacional
+        -String appVersao
+        -String enderecoIp
+        -Boolean lembrarDeMim
+        -DateTime criadaEm
+        -DateTime expiraEm
+        -DateTime revogadaEm
+        -DateTime ultimaAtividadeEm
+        +estaValida() Boolean
+        +revogar() void
+        +renovar() void
+    }
+
+    class TokenRecuperacaoSenha {
+        -UUID id
+        -UUID usuarioId
+        -String tokenHash
+        -DateTime criadoEm
+        -DateTime expiraEm
+        -DateTime usadoEm
+        +estaValido() Boolean
+        +consumir() void
+    }
+
+    class DispositivoUsuario {
+        -UUID id
+        -UUID usuarioId
+        -String tokenPush
+        -Plataforma plataforma
+        -String modelo
+        -String versaoApp
+        -Boolean ativo
+        -DateTime registradoEm
+        -DateTime ultimoUsoEm
+    }
+
+    %% ===================== CLASSIFICACAO =====================
+    class Categoria {
+        -UUID id
+        -UUID usuarioId
+        -UUID categoriaPaiId
+        -String nome
+        -EscopoCategoria escopo
+        -TipoMovimento tipoMovimento
+        -String corHex
+        -String icone
+        -Boolean padraoSistema
+        -Boolean ativa
+        -Integer ordemExibicao
+        -DateTime criadoEm
+        +ehSubcategoria() Boolean
+        +caminhoCompleto() String
+        +inativar() void
+    }
+
+    %% ===================== ITEM AGENDAVEL (GENERALIZACAO) =====================
+    class ItemAgendavel {
+        <<abstract>>
+        #UUID id
+        #UUID usuarioId
+        #UUID categoriaId
+        #String titulo
+        #String descricao
+        #Prioridade prioridade
+        #Boolean lembreteAtivo
+        #Integer minutosAntesLembrete
+        #UUID regraRecorrenciaId
+        #DateTime criadoEm
+        #DateTime atualizadoEm
+        #DateTime excluidoEm
+        +concluir()* void
+        +cancelar()* void
+        +dataReferencia()* LocalDate
+        +estaAtrasado() Boolean
+    }
+
+    class Atividade {
+        -LocalDate dataAtividade
+        -LocalTime horaInicio
+        -LocalTime horaFim
+        -Integer duracaoMinutos
+        -StatusAtividade status
+        -DateTime concluidaEm
+        -UUID subcategoriaId
+        -UUID atividadeOrigemId
+        -Integer ordem
+        +concluir() void
+        +reabrir() void
+        +cancelar() void
+        +reagendar(data, hora) void
+        +calcularDuracao() Integer
+        +conflitaCom(outra) Boolean
+    }
+
+    class Importancia {
+        -String origem
+        -LocalDate dataVencimento
+        -Dinheiro valor
+        -TipoImportancia tipo
+        -StatusImportancia status
+        -DateTime concluidaEm
+        -UUID transacaoId
+        -Boolean gerarTransacaoAoConcluir
+        -Integer diasAntecedenciaAlerta
+        +concluir(contaId) Transacao
+        +cancelar() void
+        +diasRestantes() Integer
+        +estaVencida() Boolean
+        +classificarUrgencia() NivelUrgencia
+    }
+
+    class RegraRecorrencia {
+        -UUID id
+        -Frequencia frequencia
+        -Integer intervalo
+        -List~DiaSemana~ diasSemana
+        -Integer diaDoMes
+        -LocalDate dataInicio
+        -LocalDate dataFim
+        -Integer ocorrenciasMax
+        -Integer ocorrenciasGeradas
+        -LocalDate proximaOcorrencia
+        -Boolean ativa
+        +calcularProximaOcorrencia(base) LocalDate
+        +expirou() Boolean
+        +encerrar() void
+    }
+
+    %% ===================== FINANCEIRO =====================
+    class ContaFinanceira {
+        -UUID id
+        -UUID usuarioId
+        -String nome
+        -TipoConta tipo
+        -String instituicao
+        -Dinheiro saldoInicial
+        -Dinheiro saldoAtual
+        -String moeda
+        -String corHex
+        -String icone
+        -Boolean incluirNoSaldoTotal
+        -Boolean ativa
+        -DateTime criadoEm
+        +creditar(valor) void
+        +debitar(valor) void
+        +recalcularSaldo() Dinheiro
+        +temSaldoSuficiente(valor) Boolean
+    }
+
+    class Transacao {
+        -UUID id
+        -UUID usuarioId
+        -UUID contaId
+        -UUID categoriaId
+        -UUID importanciaId
+        -String descricao
+        -TipoMovimento tipo
+        -Dinheiro valor
+        -LocalDate dataMovimento
+        -LocalDate dataCompetencia
+        -FormaPagamento formaPagamento
+        -SituacaoTransacao situacao
+        -String observacao
+        -String urlComprovante
+        -UUID regraRecorrenciaId
+        -UUID transacaoOrigemId
+        -Integer parcelaNumero
+        -Integer parcelaTotal
+        -DateTime criadoEm
+        -DateTime atualizadoEm
+        -DateTime excluidoEm
+        +efetivar() void
+        +cancelar() void
+        +estornar() Transacao
+        +valorComSinal() Dinheiro
+        +ehParcelada() Boolean
+    }
+
+    class Orcamento {
+        -UUID id
+        -UUID usuarioId
+        -UUID categoriaId
+        -String mesReferencia
+        -Dinheiro valorLimite
+        -Dinheiro valorGasto
+        -Integer percentualAlerta
+        -Boolean ativo
+        +percentualUtilizado() Decimal
+        +excedeuLimite() Boolean
+        +saldoDisponivel() Dinheiro
+    }
+
+    class ResumoFinanceiroMensal {
+        <<read model>>
+        -UUID usuarioId
+        -String anoMes
+        -Dinheiro totalReceitas
+        -Dinheiro totalDespesas
+        -Dinheiro saldo
+        -Decimal variacaoReceitasPercentual
+        -Decimal variacaoDespesasPercentual
+        -Integer qtdTransacoes
+        -DateTime atualizadoEm
+    }
+
+    %% ===================== NOTIFICACAO E AUDITORIA =====================
+    class Notificacao {
+        -UUID id
+        -UUID usuarioId
+        -String titulo
+        -String mensagem
+        -TipoNotificacao tipo
+        -CanalNotificacao canal
+        -String entidadeRelacionadaTipo
+        -UUID entidadeRelacionadaId
+        -DateTime agendadaPara
+        -DateTime enviadaEm
+        -DateTime lidaEm
+        -StatusNotificacao status
+        -Integer tentativas
+        +agendar(quando) void
+        +marcarComoEnviada() void
+        +marcarComoLida() void
+        +cancelar() void
+    }
+
+    class LogAuditoria {
+        -UUID id
+        -UUID usuarioId
+        -String acao
+        -String entidade
+        -UUID entidadeId
+        -JSON dadosAnteriores
+        -JSON dadosNovos
+        -String enderecoIp
+        -DateTime ocorridoEm
+    }
+
+    %% ===================== VALUE OBJECTS =====================
+    class Email {
+        <<value object>>
+        -String valor
+        +validar() Boolean
+        +dominio() String
+    }
+
+    class Dinheiro {
+        <<value object>>
+        -Decimal valor
+        -String moeda
+        +somar(outro) Dinheiro
+        +subtrair(outro) Dinheiro
+        +negativo() Dinheiro
+        +formatar() String
+    }
+
+    class PeriodoTempo {
+        <<value object>>
+        -LocalTime inicio
+        -LocalTime fim
+        +duracaoMinutos() Integer
+        +sobrepoe(outro) Boolean
+    }
+
+    %% ===================== ENUMERACOES =====================
+    class StatusUsuario {
+        <<enumeration>>
+        ATIVO
+        INATIVO
+        BLOQUEADO
+        PENDENTE_VERIFICACAO
+    }
+    class StatusAtividade {
+        <<enumeration>>
+        PENDENTE
+        EM_ANDAMENTO
+        CONCLUIDA
+        ATRASADA
+        CANCELADA
+    }
+    class StatusImportancia {
+        <<enumeration>>
+        PENDENTE
+        VENCENDO_HOJE
+        ATRASADA
+        CONCLUIDA
+        CANCELADA
+    }
+    class Prioridade {
+        <<enumeration>>
+        BAIXA
+        MEDIA
+        ALTA
+        URGENTE
+    }
+    class EscopoCategoria {
+        <<enumeration>>
+        ATIVIDADE
+        FINANCEIRO
+        IMPORTANCIA
+    }
+    class TipoMovimento {
+        <<enumeration>>
+        RECEITA
+        DESPESA
+        TRANSFERENCIA
+    }
+    class TipoImportancia {
+        <<enumeration>>
+        CONTA_A_PAGAR
+        CONTA_A_RECEBER
+        COMPROMISSO
+        DATA_COMEMORATIVA
+    }
+    class TipoConta {
+        <<enumeration>>
+        CARTEIRA
+        CORRENTE
+        POUPANCA
+        CARTAO_CREDITO
+        INVESTIMENTO
+    }
+    class Frequencia {
+        <<enumeration>>
+        DIARIA
+        SEMANAL
+        QUINZENAL
+        MENSAL
+        ANUAL
+        PERSONALIZADA
+    }
+    class TemaApp {
+        <<enumeration>>
+        CLARO
+        ESCURO
+        SISTEMA
+    }
+
+    %% ===================== RELACIONAMENTOS =====================
+    Usuario "1" *-- "0..1" PreferenciaUsuario : possui
+    Usuario "1" *-- "0..*" CredencialSocial : vincula
+    Usuario "1" *-- "0..*" Sessao : abre
+    Usuario "1" *-- "0..*" TokenRecuperacaoSenha : solicita
+    Usuario "1" *-- "0..*" DispositivoUsuario : registra
+    Usuario "1" *-- "0..*" Categoria : personaliza
+    Usuario "1" *-- "0..*" Atividade : planeja
+    Usuario "1" *-- "0..*" Importancia : acompanha
+    Usuario "1" *-- "0..*" ContaFinanceira : mantem
+    Usuario "1" *-- "0..*" Transacao : lanca
+    Usuario "1" *-- "0..*" Orcamento : define
+    Usuario "1" *-- "0..*" Notificacao : recebe
+
+    ItemAgendavel <|-- Atividade : generalizacao
+    ItemAgendavel <|-- Importancia : generalizacao
+
+    Categoria "0..1" o-- "0..*" Categoria : pai/subcategoria
+    Categoria "1" o-- "0..*" Atividade : classifica
+    Categoria "1" o-- "0..*" Transacao : classifica
+    Categoria "1" o-- "0..*" Importancia : classifica
+    Categoria "1" o-- "0..*" Orcamento : limita
+
+    ContaFinanceira "1" *-- "0..*" Transacao : movimenta
+    Importancia "0..1" --> "0..1" Transacao : quita/gera
+    ItemAgendavel "0..*" --> "0..1" RegraRecorrencia : repete-se por
+    Transacao "0..*" --> "0..1" RegraRecorrencia : repete-se por
+    Atividade "0..1" --> "0..*" Atividade : origina instancias
+    Transacao "0..1" --> "0..*" Transacao : origina parcelas
+
+    Usuario *-- Email : usa
+    ContaFinanceira ..> Dinheiro : usa
+    Transacao ..> Dinheiro : usa
+    Importancia ..> Dinheiro : usa
+    Orcamento ..> Dinheiro : usa
+    Atividade ..> PeriodoTempo : usa
+
+    Atividade ..> Notificacao : dispara
+    Importancia ..> Notificacao : dispara
+    Transacao ..> ResumoFinanceiroMensal : consolida
+    Usuario ..> LogAuditoria : audita

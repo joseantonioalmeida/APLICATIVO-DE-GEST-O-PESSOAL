@@ -1,0 +1,52 @@
+sequenceDiagram
+    autonumber
+    participant CRON as :AgendadorCron<br/>(a cada 5 min)
+    participant W as :WorkerNotificacao
+    participant NREP as :NotificacaoRepository
+    participant DB as :PostgreSQL
+    participant PREF as :PreferenciaService
+    participant DREP as :DispositivoRepository
+    participant FCM as :Firebase Cloud Messaging
+    participant SES as :Amazon SES
+    actor U as :Usuario
+
+    CRON->>W: disparar(processarNotificacoesPendentes)
+    activate W
+    W->>NREP: buscarAgendadasAte(now())
+    NREP->>DB: SELECT * FROM notificacao<br/>WHERE status='AGENDADA' AND agendada_para <= now()<br/>FOR UPDATE SKIP LOCKED LIMIT 500
+    Note over NREP,DB: SKIP LOCKED permite varios<br/>workers em paralelo sem duplicar envio
+    DB-->>NREP: lote de notificacoes
+    NREP-->>W: List~Notificacao~
+
+    loop para cada notificacao do lote
+        W->>PREF: obterPreferencias(usuarioId)
+        PREF-->>W: preferencias
+
+        alt canal desabilitado pelo usuario
+            W->>NREP: marcarComoCancelada()
+        else canal PUSH habilitado
+            W->>DREP: listarDispositivosAtivos(usuarioId)
+            DREP-->>W: List~tokenPush~
+            W->>FCM: enviarMulticast(tokens, titulo, mensagem, payload)
+            alt envio bem-sucedido
+                FCM-->>W: 200 {successCount}
+                FCM-)U: notificacao no smartphone
+                W->>NREP: marcarComoEnviada()
+                NREP->>DB: UPDATE notificacao SET status='ENVIADA', enviada_em=now()
+            else token invalido
+                FCM-->>W: 404 UNREGISTERED
+                W->>DREP: desativarDispositivo(token)
+            else falha temporaria
+                FCM-->>W: 503
+                W->>NREP: incrementarTentativas()
+                Note over W,NREP: reagendamento com backoff<br/>exponencial ate 5 tentativas
+            end
+        else canal EMAIL habilitado
+            W->>SES: enviarEmail(destinatario, template, dados)
+            SES-)U: e-mail recebido
+            W->>NREP: marcarComoEnviada()
+        end
+    end
+    deactivate W
+
+    Note over CRON,DB: Jobs diarios complementares:<br/>00:05 reclassificar importancias vencidas<br/>00:10 marcar atividades atrasadas<br/>07:00 resumo diario<br/>02:00 materializar resumo mensal

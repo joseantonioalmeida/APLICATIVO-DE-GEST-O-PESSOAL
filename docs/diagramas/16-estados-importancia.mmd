@@ -1,0 +1,22 @@
+stateDiagram-v2
+    direction LR
+    [*] --> PENDENTE : cadastrar()
+    PENDENTE --> VENCENDO_HOJE : [dataVencimento == hoje]<br/>job diario 00:05
+    PENDENTE --> CONCLUIDA : concluir(contaId)
+    PENDENTE --> CANCELADA : cancelar()
+    VENCENDO_HOJE --> ATRASADA : [passou da meia-noite]
+    VENCENDO_HOJE --> CONCLUIDA : concluir(contaId)
+    VENCENDO_HOJE --> CANCELADA : cancelar()
+    ATRASADA --> CONCLUIDA : concluir(contaId)
+    ATRASADA --> CANCELADA : cancelar()
+    CONCLUIDA --> [*]
+    CANCELADA --> [*]
+
+    note right of CONCLUIDA
+        entry / concluidaEm = now()
+        entry / [gerarTransacaoAoConcluir]
+                criar Transacao e debitar conta
+        entry / [possui recorrencia]
+                gerar proxima ocorrencia
+        entry / cancelarNotificacoesPendentes()
+    end note

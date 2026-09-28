@@ -1,0 +1,76 @@
+sequenceDiagram
+    autonumber
+    actor U as :Usuario
+    participant V as :TelaCadastrarAtividade
+    participant VM as :AtividadeViewModel
+    participant OUT as :FilaOutbox (SQLite)
+    participant API as :AtividadeController
+    participant UC as :CriarAtividadeUseCase
+    participant DOM as :Atividade (entidade)
+    participant RR as :RecorrenciaService
+    participant REPO as :AtividadeRepository
+    participant DB as :PostgreSQL
+    participant EV as :BarramentoDeEventos
+    participant NOT as :NotificacaoService
+
+    U->>V: preenche titulo, descricao, categoria,<br/>prioridade, data, horario e repeticao
+    U->>V: toca "Salvar atividade"
+    V->>VM: salvar(dto)
+    VM->>VM: validar(titulo 3..120, descricao <= 200,<br/>horaFim > horaInicio)
+
+    alt sem conexao
+        VM->>OUT: enfileirar(POST /atividades, dto)
+        VM-->>V: item exibido com selo "pendente de sincronizacao"
+    else com conexao
+        VM->>API: POST /api/v1/atividades {dto}
+        activate API
+        API->>UC: executar(usuarioId, dto)
+        activate UC
+        UC->>DOM: new Atividade(dto)
+        DOM->>DOM: validarInvariantes()
+        DOM->>DOM: calcularDuracao()
+        DOM-->>UC: atividade (status=PENDENTE)
+
+        opt repeticao diferente de "Nao repetir"
+            UC->>RR: criarRegra(frequencia, intervalo, fim)
+            RR-->>UC: regraRecorrenciaId
+            UC->>RR: gerarProximasOcorrencias(atividade, horizonte=90d)
+            RR-->>UC: List~Atividade~ filhas
+        end
+
+        UC->>REPO: salvar(atividade)
+        REPO->>DB: INSERT INTO atividade (...) RETURNING id
+        DB-->>REPO: id
+        REPO-->>UC: atividade persistida
+        UC->>EV: publicar(AtividadeCriadaEvent)
+        UC-->>API: AtividadeDTO
+        deactivate UC
+        API-->>VM: 201 Created {atividade}
+        deactivate API
+        VM-->>V: fecharTela() + atualizarLista()
+        V-->>U: "Atividade salva com sucesso"
+
+        EV-)NOT: tratar(AtividadeCriadaEvent)
+        NOT->>DB: INSERT INTO notificacao<br/>(agendada_para = inicio - 30 min)
+    end
+
+    Note over U,DB: --- Conclusao da atividade (tela Atividades) ---
+    U->>V: marca o checkbox da atividade
+    V->>VM: concluir(atividadeId)
+    VM-->>V: atualizacao otimista (risca o item)
+    VM->>API: PATCH /api/v1/atividades/{id}/concluir
+    API->>UC: ConcluirAtividadeUseCase.executar(id)
+    UC->>REPO: buscarPorId(id)
+    REPO-->>UC: atividade
+    UC->>DOM: concluir()
+    DOM->>DOM: status = CONCLUIDA · concluidaEm = now()
+    UC->>REPO: atualizar(atividade)
+    REPO->>DB: UPDATE atividade SET status, concluida_em
+    UC->>NOT: cancelarLembrete(atividadeId)
+    UC-->>API: AtividadeDTO
+    API-->>VM: 200 OK
+
+    alt falha na requisicao
+        API-->>VM: 5xx / timeout
+        VM-->>V: reverter atualizacao otimista + toast de erro
+    end

@@ -1,0 +1,310 @@
+================================================================================
+                    MINHAVIDA - ROTEIRO DE APRESENTACAO
+                              FALA DO PAULO
+================================================================================
+
+  PARTE 1 DE 2 - Resumo do projeto e Diagrama de Classes
+  Tempo estimado: 8 a 10 minutos
+  Depois voce passa a palavra para o Julio Cesar, que apresenta os
+  diagramas de Interacao e de Implantacao.
+
+  COMO USAR ESTE ROTEIRO
+  - O texto entre [colchetes] e instrucao para voce, nao e para falar.
+  - O texto normal e o que voce fala. Nao precisa decorar palavra por
+    palavra: entenda a ideia de cada bloco e fale com suas palavras.
+  - Onde estiver (pausa), pare de verdade por um segundo. Da tempo da
+    banca acompanhar e voce respirar.
+
+================================================================================
+ BLOCO 1 - ABERTURA                                        [cerca de 1 minuto]
+================================================================================
+
+[Slide: capa - logo MinhaVida]
+
+Bom dia a todos. Meu nome e Paulo e, junto com o Jose Antonio e o
+Julio Cesar, eu vou apresentar o MinhaVida - um aplicativo de gestao
+pessoal que reune, num lugar so, a lista de tarefas e o controle
+financeiro.
+
+Hoje a gente nao vem mostrar tela bonita. A gente vem mostrar a
+arquitetura por tras dela. Eu abro com o resumo do projeto e o
+Diagrama de Classes. Em seguida o Julio Cesar assume com os
+diagramas de Interacao e de Implantacao.
+
+(pausa)
+
+================================================================================
+ BLOCO 2 - O PROBLEMA                                    [cerca de 1,5 minuto]
+================================================================================
+
+[Slide: O problema]
+
+Vou comecar com uma pergunta simples. Onde voces anotam as coisas que
+precisam fazer hoje?
+
+[Espere 2 ou 3 segundos. Alguem vai responder "no bloco de notas",
+ "no celular". Aproveite a resposta.]
+
+Pois e. E onde voces anotam quanto gastaram essa semana?
+
+Quase sempre e em outro lugar. E a conta de luz que vence dia 10 esta
+num terceiro lugar - normalmente um lembrete que a gente desliga sem
+ler.
+
+Essa e a fragmentacao. Tres ferramentas diferentes, nenhuma
+conversando com a outra. E o resultado disso a gente conhece bem:
+
+- A pessoa nao tem uma visao unica do proprio dia.
+- Ela paga conta com multa porque esqueceu, nao porque faltou dinheiro.
+- O dinheiro some no fim do mes e ela nao sabe explicar em que.
+
+(pausa)
+
+================================================================================
+ BLOCO 3 - A SOLUCAO E O DIFERENCIAL                       [cerca de 2 minutos]
+================================================================================
+
+[Slide: A solucao - tres pilares]
+
+O MinhaVida junta os tres pilares num aplicativo so.
+
+Primeiro: Atividades. E o CRUD completo de tarefas - criar, consultar,
+editar e excluir - com categoria, prioridade, horario e repeticao.
+
+Segundo: Financeiro. Receitas e despesas, saldo atualizado na hora,
+gasto por categoria e a evolucao do mes.
+
+Terceiro: Importancias. Que sao os compromissos e as datas que nao
+podem passar - conta de internet, licenciamento do carro, assinatura
+de streaming.
+
+[Slide: O diferencial - fluxo da quitacao]
+
+Agora eu quero que voces prestem atencao nesse terceiro pilar, porque
+e aqui que esta o nosso diferencial.
+
+Imagina que chegou o dia de pagar a internet. Noventa e nove reais e
+noventa centavos, da Vivo Fibra. O usuario abre o aplicativo e marca
+como paga.
+
+Num toque so, o sistema faz cinco coisas:
+
+  1. Marca a importancia como concluida.
+  2. Cria a despesa de noventa e nove e noventa automaticamente.
+  3. Debita a conta e atualiza o saldo.
+  4. Ja cria a conta da internet do mes que vem.
+  5. E cancela o alerta de vencimento, que nao faz mais sentido.
+
+Um toque. Cinco efeitos. (pausa)
+
+Nenhum concorrente direto no mercado brasileiro fecha esse ciclo numa
+acao so. Nos outros aplicativos, voce marca a conta como paga num
+lugar e depois tem que lancar a despesa na mao em outro.
+
+================================================================================
+ BLOCO 4 - ESCOPO E NUMEROS                              [cerca de 1,5 minuto]
+================================================================================
+
+[Slide: Persona e escopo]
+
+Nossa persona e o Julio Cesar - e nao e coincidencia que o nome seja o
+mesmo do meu colega. Vinte e quatro anos, estudante que tambem
+trabalha, rotina apertada entre faculdade, trabalho e academia. Usa o
+celular como computador principal.
+
+Isso define um requisito duro: registrar uma atividade tem que levar
+menos de quinze segundos. Se levar mais, ele desinstala.
+
+[Slide: Numeros da modelagem]
+
+Para chegar ate aqui, a gente partiu das oito telas do prototipo e
+extraiu:
+
+- 61 requisitos funcionais
+- 32 requisitos nao funcionais
+- 24 regras de negocio
+- 24 casos de uso
+- 15 entidades de dominio
+- 16 tabelas no banco, com 227 colunas mapeadas
+
+Tudo isso rastreavel: cada requisito aponta para a tela que o originou
+e para a entidade que o implementa.
+
+(pausa)
+
+================================================================================
+ BLOCO 5 - DIAGRAMA DE CLASSES                             [cerca de 4 minutos]
+================================================================================
+
+[Slide: Diagrama de Classes - deixe ele na tela ate o fim do bloco]
+
+Agora o Diagrama de Classes.
+
+Esse diagrama responde a pergunta: "de que objetos o sistema e feito e
+como eles se relacionam". E a estrutura estatica do sistema.
+
+[Aponte para a regiao de cima do diagrama]
+
+Aqui em cima esta o bloco de identidade: Usuario, com as preferencias,
+as sessoes, as credenciais sociais. Repare que a ligacao usa losango
+preenchido - isso e composicao. Significa que se o usuario for
+excluido, as preferencias dele vao junto. Elas nao existem sozinhas.
+
+[Aponte para o meio]
+
+No meio estao Atividade e Importancia. E eu quero destacar quatro
+decisoes de modelagem, porque nenhuma delas foi por acaso.
+
+---- DECISAO 1: a heranca ItemAgendavel ----
+
+Olhem que Atividade e Importancia herdam de uma classe abstrata
+chamada ItemAgendavel.
+
+Por que? Porque as duas tem titulo, descricao, categoria, prioridade,
+repeticao e lembrete. Mas nao e so o atributo que se repete - o
+comportamento tambem. As duas podem ser concluidas, canceladas, e as
+duas podem estar atrasadas.
+
+Quando o comportamento e o mesmo, heranca e a ferramenta certa. O
+agendador de notificacoes trata as duas do mesmo jeito, sem saber qual
+e qual.
+
+---- DECISAO 2: por que Receita e Despesa NAO sao subclasses ----
+
+E agora o contrario. Olhem a classe Transacao.
+
+A gente podia ter criado Receita e Despesa como subclasses dela.
+Muita gente faz isso. Nos decidimos nao fazer.
+
+O motivo: receita e despesa tem exatamente os mesmos atributos. A
+unica diferenca e o sinal - uma soma no saldo, a outra subtrai.
+Heranca sem comportamento diferente e complexidade de graca.
+
+Entao usamos um enum chamado TipoMovimento, e o unico lugar onde o
+sinal importa fica encapsulado num metodo: valorComSinal.
+
+[Essa e a frase mais importante da sua parte - fale devagar:]
+
+A gente usou heranca onde o comportamento e diferente, e evitou onde
+nao e. Essa foi a decisao - nao o acaso.
+
+---- DECISAO 3: o padrao Composite em Categoria ----
+
+Nas telas aparecem tres conjuntos de categoria: as de atividade
+(Trabalho, Estudo, Pessoal, Lazer), as financeiras (Alimentacao,
+Transporte, Moradia) e as de importancia (Contas, Veiculo, Saude).
+
+E ainda aparece subcategoria: na tela de Atividades voces veem
+"Estudo, ponto, Faculdade".
+
+Em vez de criar tres tabelas parecidas, a gente criou uma entidade so,
+com um campo chamado escopo que diz a qual universo ela pertence. E
+ela se relaciona com ela mesma, atraves do campo categoriaPaiId - e
+assim nasce a subcategoria. Esse e o padrao Composite.
+
+---- DECISAO 4: os objetos de valor ----
+
+La embaixo estao tres classes marcadas como value object: Email,
+Dinheiro e PeriodoTempo.
+
+Dinheiro merece destaque. Ele carrega o valor e a moeda juntos, no
+mesmo objeto. Com isso, e impossivel somar real com dolar por
+acidente - o proprio tipo impede. E todo o arredondamento monetario
+acontece num lugar so do sistema.
+
+[Slide: Dicionario de atributos - opcional, se tiver tempo]
+
+Cada uma das quinze entidades tem os atributos detalhados: tipo,
+obrigatoriedade, valor padrao e de qual campo de qual tela ele veio.
+Sao 227 colunas mapeadas uma a uma.
+
+================================================================================
+ BLOCO 6 - PASSAGEM PARA O JULIO CESAR                   [cerca de 30 segundos]
+================================================================================
+
+[Slide: transicao]
+
+Entao ate aqui a gente viu a estrutura: de que o sistema e feito.
+
+O que falta responder e: como essas classes conversam entre si na hora
+de executar uma acao, e onde tudo isso roda de verdade.
+
+E essas duas perguntas quem responde e o Julio Cesar.
+
+[Olhe para o Julio Cesar e passe a palavra]
+
+Julio, e com voce.
+
+================================================================================
+ SE A BANCA PERGUNTAR - PREPARO PARA ARGUICAO
+================================================================================
+
+P: "Por que voce nao usou heranca para Receita e Despesa?"
+R: Porque as duas teriam exatamente os mesmos atributos. A unica
+   diferenca e o sinal aplicado ao saldo. Heranca so se justifica
+   quando ha comportamento polimorfico de verdade. Aqui nao ha - seria
+   uma tabela a mais e um JOIN a mais sem nenhum ganho. Por isso usei
+   um enum discriminador. E onde havia comportamento diferente mesmo,
+   em Atividade e Importancia, eu usei heranca.
+
+P: "Qual a diferenca entre agregacao e composicao?"
+R: Na composicao, o todo controla o ciclo de vida da parte: se eu
+   excluir o Usuario, as Preferencias dele somem junto, porque nao
+   fazem sentido sozinhas. Na agregacao, a parte sobrevive: se eu
+   excluir uma Transacao, a Categoria continua existindo, porque ela
+   e usada por outras transacoes. No diagrama, composicao e o losango
+   preenchido e agregacao e o losango vazado.
+
+P: "Por que UUID em vez de um id sequencial?"
+R: Por tres motivos. Primeiro, seguranca: com id sequencial, se eu
+   estou no registro 100, eu tento o 101 e vejo o dado de outro
+   usuario. Segundo, o aplicativo funciona offline - o celular precisa
+   gerar o identificador sozinho, sem pedir para o servidor. Terceiro,
+   nao ha colisao quando os dados sincronizam.
+
+P: "O que e um value object?"
+R: E um objeto sem identidade propria, definido apenas pelo seu valor
+   e imutavel. Dinheiro e o melhor exemplo: cem reais sao cem reais,
+   nao importa qual "instancia" e. Ja o Usuario tem identidade - dois
+   usuarios com o mesmo nome sao pessoas diferentes. Por isso um e
+   entidade e o outro e objeto de valor.
+
+P: "Por que uma tabela de categoria so, e nao tres?"
+R: Porque as tres seriam identicas em estrutura - nome, cor, icone,
+   ordem. A unica diferenca e a qual modulo pertencem, e isso cabe num
+   campo. Com uma tabela so, eu tenho uma tela de gerenciamento, um
+   repositorio e um conjunto de regras. Se eu criasse tres, teria que
+   triplicar tudo isso para ganhar nada.
+
+P: "Onde estao as regras de negocio?"
+R: Dentro das entidades de dominio, nao no controller. Quem valida se
+   a hora de fim e maior que a de inicio e a propria classe Atividade,
+   no metodo que calcula a duracao. Isso e o que se chama de modelo
+   rico, em oposicao ao modelo anemico, onde a entidade e so um saco
+   de atributos e a regra fica espalhada.
+
+P: "Voces testaram esse modelo?"
+R: Testamos. O esquema do banco foi executado num PostgreSQL 16 real,
+   com carga de dados, e o modelo reproduz exatamente os numeros das
+   telas: saldo de mil duzentos e vinte e trinta e cinco, doze
+   atividades, dezoito horas e quarenta e cinco minutos. E as regras
+   foram testadas contra o banco - todas rejeitaram as violacoes. O
+   Julio Cesar detalha isso no fim da apresentacao.
+
+================================================================================
+ LEMBRETES FINAIS
+================================================================================
+
+  - Fale devagar. A tendencia no nervosismo e acelerar.
+  - Quando apontar para o diagrama, aponte de verdade. A banca precisa
+    saber para onde olhar.
+  - Se travar, respire e volte para a ultima frase que voce falou.
+    Ninguem percebe.
+  - Voce nao precisa saber tudo. Se nao souber, diga: "essa parte quem
+    detalhou foi o Julio Cesar" ou "posso verificar e te retorno".
+    Isso e postura profissional, nao fraqueza.
+  - A frase que voce tem que entregar bem e essa:
+    "A gente usou heranca onde o comportamento e diferente, e evitou
+     onde nao e. Essa foi a decisao, nao o acaso."
+
+================================================================================

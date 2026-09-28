@@ -1,0 +1,36 @@
+flowchart LR
+    U(("ator<br/>Usuario"))
+    V["1 :TelaFinanceiro"]
+    VM["2 :FinanceiroViewModel"]
+    C["3 :TransacaoController"]
+    UC["4 :RegistrarTransacaoUseCase"]
+    T["5 :Transacao"]
+    CF["6 :ContaFinanceira"]
+    TR["7 :TransacaoRepository"]
+    CR["8 :ContaRepository"]
+    CA["9 :CacheRedis"]
+    EV["10 :BarramentoDeEventos"]
+    OR["11 :OrcamentoService"]
+
+    U -->|"1: informarLancamento()"| V
+    V -->|"2: registrar(dto)"| VM
+    VM -->|"3: POST /transacoes"| C
+    C -->|"4: executar(usuarioId, dto)"| UC
+    UC -->|"5: new Transacao(dto)"| T
+    UC -->|"6: buscarPorId(contaId)"| CR
+    UC -->|"7: debitar(valor) / creditar(valor)"| CF
+    UC -->|"8: salvar(transacao)"| TR
+    UC -->|"9: atualizarSaldo(conta)"| CR
+    UC -->|"10: invalidar(chaves)"| CA
+    UC -->|"11: publicar(TransacaoRegistradaEvent)"| EV
+    EV -->|"12: verificarLimite()"| OR
+    CF -->|"6.1: saldoAtual"| UC
+    UC -->|"13: TransacaoDTO"| C
+    C -->|"14: 201 Created"| VM
+    VM -->|"15: atualizarEstado()"| V
+    V -->|"16: exibirSaldoAtualizado()"| U
+
+    classDef ator fill:#4f46e5,stroke:#312e81,color:#fff
+    classDef obj fill:#1e293b,stroke:#6366f1,color:#e2e8f0
+    class U ator
+    class V,VM,C,UC,T,CF,TR,CR,CA,EV,OR obj
