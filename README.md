@@ -18,6 +18,7 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 | O roteiro de fala do **Paulo** (2min46) | [`apresentacao/roteiro-paulo-6min.txt`](apresentacao/roteiro-paulo-6min.txt) |
 | O roteiro de fala do **Júlio César** (2min53) | [`apresentacao/roteiro-julio-cesar-6min.txt`](apresentacao/roteiro-julio-cesar-6min.txt) |
 | Criar o banco de dados agora | [`banco/schema.sql`](banco/schema.sql) |
+| **A análise de concorrentes** (atividade avaliativa, 40 páginas) | [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) |
 
 > ⏱️ **A apresentação foi calibrada para 6 minutos** — 9 slides, Paulo nos slides 1 a 5 e Júlio César nos 6 a 9.
 > Os roteiros longos (`roteiro-paulo.txt` e `roteiro-julio-cesar.txt`, ~20 min) continuam no repositório como material de estudo e preparo para a arguição.
@@ -37,6 +38,13 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 | 07 | [Dicionário de Dados](docs/07-DICIONARIO-DE-DADOS.md) | 16 tabelas · 227 colunas · índices · gatilhos · validação executada |
 | 08 | [Contrato da API REST](docs/08-CONTRATO-API-REST.md) | 60+ endpoints com payloads e códigos de retorno |
 | 09 | [Diagramas Complementares](docs/09-DIAGRAMAS-COMPLEMENTARES.md) | Casos de uso · máquinas de estado · modelo ER |
+
+## 📑 Pesquisa de mercado
+
+| Arquivo | Descrição |
+|---|---|
+| [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) | Análise de 5 concorrentes (Organizze, Mobills, Todoist, TickTick, Notion) — identificação, problema, funcionalidades, monetização, tecnologias, avaliações, diferenciais e relação com o projeto |
+| [`pesquisa/analise-concorrentes.html`](pesquisa/analise-concorrentes.html) | Fonte do documento; o PDF é gerado a partir dele |
 
 ## 🗄️ Banco de dados
 
