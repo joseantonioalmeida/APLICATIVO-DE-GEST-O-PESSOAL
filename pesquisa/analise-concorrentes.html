@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Análise de Softwares Concorrentes — MinhaVida</title>
 <style>
-  @page { size: A4; margin: 22mm 18mm 20mm 20mm; }
+  @page { size: A4; margin: 17mm 18mm 15mm 20mm; }
 
   :root {
     --tinta:      #15192B;
@@ -41,18 +41,18 @@
 
   h1 { font-size: 19pt; margin: 0 0 4mm; padding-bottom: 2.5mm; border-bottom: 2.2pt solid var(--azul); }
   h2 { font-size: 14pt; margin: 8mm 0 3mm; color: var(--azul); page-break-after: avoid; }
-  h3 { font-size: 11.8pt; margin: 6mm 0 2mm; page-break-after: avoid; }
+  h3 { font-size: 11.8pt; margin: 3mm 0 1.3mm; page-break-after: avoid; }
   h4 { font-size: 10.8pt; margin: 5mm 0 1.5mm; color: var(--suave); text-transform: uppercase; letter-spacing: .4pt; page-break-after: avoid; }
 
-  p { margin: 0 0 3mm; orphans: 2; widows: 2; }
-  ul, ol { margin: 0 0 3mm; padding-left: 6mm; }
-  li { margin-bottom: 1.2mm; }
+  p { margin: 0 0 2.4mm; orphans: 2; widows: 2; }
+  ul, ol { margin: 0 0 2.4mm; padding-left: 6mm; }
+  li { margin-bottom: .9mm; }
   b, strong { color: var(--tinta); }
   a { color: var(--azul); text-decoration: none; word-break: break-all; }
 
   /* ---------- CAPA ---------- */
   .capa {
-    height: 253mm;
+    height: 262mm;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -88,10 +88,10 @@
   .sumario .n2 { padding-left: 7mm; color: var(--corpo); }
 
   /* ---------- TABELAS ---------- */
-  table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9.7pt; }
+  table { width: 100%; border-collapse: collapse; margin: 1.8mm 0 2.8mm; font-size: 9.7pt; }
   thead { display: table-header-group; }
   tr { page-break-inside: avoid; }
-  th, td { border: .5pt solid var(--linha); padding: 1.9mm 2.4mm; text-align: left; vertical-align: top; hyphens: none; }
+  th, td { border: .5pt solid var(--linha); padding: 1.5mm 2.2mm; text-align: left; vertical-align: top; hyphens: none; }
   th { background: var(--azul-claro); font-family: "Liberation Sans", Arial, sans-serif; font-weight: 700; color: var(--tinta); font-size: 9.4pt; }
   td { line-height: 1.42; }
   tbody tr:nth-child(even) { background: #F7F9FD; }
@@ -111,10 +111,10 @@
   .caixa.destaque .caixa-titulo { color: var(--verde); }
 
   /* ---------- ABERTURA DE CONCORRENTE ---------- */
-  .abre-conc { border-top: 2.2pt solid var(--azul); padding-top: 3mm; margin-bottom: 4mm; }
+  .abre-conc { border-top: 2.2pt solid var(--azul); padding-top: 2.5mm; margin-bottom: 3mm; }
   .abre-conc .ordem { font-family: "Liberation Sans", Arial, sans-serif; font-size: 9.5pt; letter-spacing: 2.4pt; text-transform: uppercase; color: var(--azul); }
   .abre-conc h2 { margin: 1mm 0 1.5mm; font-size: 18pt; color: var(--tinta); }
-  .abre-conc .papel { font-size: 11pt; color: var(--suave); font-style: italic; }
+  .abre-conc .papel { font-size: 10.6pt; color: var(--suave); font-style: italic; }
 
   .pos, .neg { font-family: "Liberation Sans", Arial, sans-serif; font-weight: 700; font-size: 9.2pt; }
   .pos { color: var(--verde); }
@@ -158,999 +158,340 @@
     Paulo Henrique &mdash; 03359118
   </div>
 </section>
-
-<!-- ============================= SUMÁRIO ============================= -->
-<section>
-  <h1>Sumário</h1>
-  <div class="sumario">
-    <div class="n1"><span>1&nbsp;&nbsp;Introdução e objetivo</span><span>3</span></div>
-    <div class="n1"><span>2&nbsp;&nbsp;Metodologia da pesquisa</span><span>3</span></div>
-    <div class="n1"><span>3&nbsp;&nbsp;O projeto da equipe: MinhaVida</span><span>5</span></div>
-    <div class="n2"><span>3.1&nbsp;&nbsp;Escopo funcional e stack tecnológica</span><span>5</span></div>
-    <div class="n2"><span>3.2&nbsp;&nbsp;Critério de seleção dos concorrentes</span><span>6</span></div>
-    <div class="n1"><span>4&nbsp;&nbsp;Concorrente 1 — Organizze</span><span>7</span></div>
-    <div class="n1"><span>5&nbsp;&nbsp;Concorrente 2 — Mobills</span><span>12</span></div>
-    <div class="n1"><span>6&nbsp;&nbsp;Concorrente 3 — Todoist</span><span>17</span></div>
-    <div class="n1"><span>7&nbsp;&nbsp;Concorrente 4 — TickTick</span><span>22</span></div>
-    <div class="n1"><span>8&nbsp;&nbsp;Concorrente 5 — Notion</span><span>26</span></div>
-    <div class="n1"><span>9&nbsp;&nbsp;Quadro comparativo consolidado</span><span>31</span></div>
-    <div class="n1"><span>10&nbsp;&nbsp;Síntese dos aprendizados</span><span>34</span></div>
-    <div class="n2"><span>10.1&nbsp;&nbsp;A lacuna de mercado identificada</span><span>34</span></div>
-    <div class="n2"><span>10.2&nbsp;&nbsp;Problemas a evitar</span><span>34</span></div>
-    <div class="n2"><span>10.3&nbsp;&nbsp;Oportunidades de diferenciação</span><span>35</span></div>
-    <div class="n2"><span>10.4&nbsp;&nbsp;Implicações para a stack tecnológica</span><span>36</span></div>
-    <div class="n2"><span>10.5&nbsp;&nbsp;Implicações para o modelo de monetização</span><span>37</span></div>
-    <div class="n1"><span>11&nbsp;&nbsp;Decisões incorporadas ao projeto</span><span>38</span></div>
-    <div class="n1"><span>12&nbsp;&nbsp;Considerações finais</span><span>38</span></div>
-    <div class="n1"><span>13&nbsp;&nbsp;Referências</span><span>39</span></div>
-  </div>
-</section>
-
-<!-- ============================= 1 e 2 ============================= -->
-<section class="pagina">
-  <h1>1&nbsp;&nbsp;Introdução e objetivo</h1>
-
-  <p>Este documento apresenta uma pesquisa de mercado sobre cinco softwares concorrentes ou semelhantes ao <b>MinhaVida</b>, aplicativo de gestão pessoal em desenvolvimento pela equipe. A análise identifica, para cada solução, suas características de identificação, o problema que resolve, suas funcionalidades, o modelo de monetização, as tecnologias e plataformas divulgadas publicamente, as avaliações dos usuários e seus diferenciais competitivos.</p>
-
-  <p>O objetivo não é apenas catalogar concorrentes. É responder a uma pergunta de projeto: <b>em um mercado com soluções maduras, bem financiadas e com milhões de usuários, que espaço resta para o MinhaVida — e o que a equipe deve fazer diferente para ocupá-lo?</b> Cada seção termina com a relação explícita entre o concorrente analisado e o projeto, e o documento se encerra com as decisões que essa pesquisa produziu sobre o escopo, a arquitetura e a monetização do produto.</p>
-
-  <h1 style="margin-top:9mm">2&nbsp;&nbsp;Metodologia da pesquisa</h1>
-
-  <p>A pesquisa foi conduzida em <b>30 de setembro de 2026</b>, consultando fontes públicas: páginas oficiais dos produtos, lojas de aplicativos (Google Play e App Store), sites especializados em análise de software (Capterra, GetApp), imprensa de tecnologia brasileira (Canaltech, Tecnoblog, TecMundo, Showmetech, MobileTime) e plataformas de reclamação de consumidores (Reclame Aqui).</p>
-
-  <h3>Limitações declaradas</h3>
-  <p>Três limitações devem ser consideradas na leitura deste documento, e são declaradas aqui em nome do rigor da análise:</p>
-  <ul>
-    <li><b>Preços mudam com frequência.</b> Todos os valores apresentados correspondem à data da consulta e podem variar por promoções, cupons, região e moeda. Onde as fontes divergiram, a divergência foi registrada em vez de arbitrada.</li>
-    <li><b>Tecnologias internas nem sempre são públicas.</b> Conforme orienta a proposta da atividade, não foram inferidas tecnologias não divulgadas. A seção de tecnologia de cada concorrente registra apenas o que é verificável: plataformas suportadas, integrações anunciadas, APIs públicas e declarações oficiais das empresas.</li>
-    <li><b>Avaliações de usuários são sínteses, não amostras estatísticas.</b> Foram priorizados padrões recorrentes relatados por múltiplas fontes, e não comentários isolados. Quando um número de avaliações ou nota é citado, ele vem acompanhado da fonte e da ressalva de que varia ao longo do tempo.</li>
-  </ul>
-
-  <h3>Estrutura de análise</h3>
-  <p>Cada concorrente é analisado segundo a mesma estrutura de oito tópicos, correspondente às seções 3 a 10 da proposta da atividade: identificação, problema resolvido, funcionalidades, modelo de monetização, tecnologias e plataformas, avaliações dos usuários, diferenciais e relação com o projeto da equipe. A uniformidade permite a comparação direta apresentada no capítulo 9.</p>
-</section>
-
-<!-- ============================= 3 ============================= -->
-<section class="pagina">
-  <h1>3&nbsp;&nbsp;O projeto da equipe: MinhaVida</h1>
-
-  <p>Para que a análise competitiva faça sentido, é necessário registrar com precisão o que o projeto é. O <b>MinhaVida</b> é um aplicativo mobile de gestão pessoal cuja proposta é reunir, em um único produto, três domínios que hoje o usuário administra em ferramentas separadas.</p>
-
-  <h2>3.1&nbsp;&nbsp;Escopo funcional e stack tecnológica</h2>
-
-  <table class="ficha">
-    <tr><th>Nome</th><td>MinhaVida — <i>&ldquo;Organize hoje, viva melhor amanhã.&rdquo;</i></td></tr>
-    <tr><th>Categoria</th><td>Gestão pessoal (produtividade + finanças pessoais)</td></tr>
-    <tr><th>Público-alvo</th><td>Adultos jovens brasileiros, de 20 a 35 anos, que conciliam estudo e trabalho, com renda variável e rotina fragmentada. Persona de referência: estudante universitário que também trabalha, usa o celular como computador principal.</td></tr>
-    <tr><th>Pilar 1 — Atividades</th><td>CRUD completo de tarefas com categoria, subcategoria, prioridade, data, horário, duração calculada e recorrência.</td></tr>
-    <tr><th>Pilar 2 — Financeiro</th><td>Registro de receitas e despesas, múltiplas contas, saldo em tempo real, gasto por categoria, evolução mensal e orçamento por categoria.</td></tr>
-    <tr><th>Pilar 3 — Importâncias</th><td>Compromissos e contas com data de vencimento, alerta de proximidade e <b>quitação que gera automaticamente o lançamento financeiro correspondente</b>.</td></tr>
-    <tr><th>Back-end</th><td>Python com FastAPI; SQLAlchemy como ORM; Alembic para migrações versionadas; Pydantic para validação e serialização; PostgreSQL como banco de dados relacional.</td></tr>
-    <tr><th>Mobile</th><td>Flutter (Android e iOS a partir de uma base de código única).</td></tr>
-    <tr><th>Estágio</th><td>Modelagem concluída e validada: 61 requisitos funcionais, 24 regras de negócio, 15 entidades de domínio, 16 tabelas e esquema executado em PostgreSQL 16.</td></tr>
-  </table>
-
-  <div class="caixa destaque">
-    <div class="caixa-titulo">A hipótese central do produto</div>
-    O valor do MinhaVida não está em fazer tarefas melhor que um gerenciador de tarefas, nem finanças melhor que um app financeiro. Está na <b>integração entre os dois domínios</b>: ao marcar a importância <i>&ldquo;Pagamento da internet — Vivo Fibra — R$ 99,90&rdquo;</i> como paga, o sistema conclui o compromisso, gera a despesa, debita a conta, atualiza o saldo, cria a ocorrência do mês seguinte e cancela o alerta — em uma única ação do usuário. A pesquisa a seguir testa se essa hipótese se sustenta diante do que o mercado já oferece.
-  </div>
-
-  <h2>3.2&nbsp;&nbsp;Critério de seleção dos concorrentes</h2>
-
-  <p>O MinhaVida ocupa a interseção de dois mercados distintos e maduros. Selecionar cinco concorrentes de um só desses mercados produziria uma análise enviesada. A seleção foi, portanto, deliberadamente distribuída:</p>
-
-  <table>
-    <thead><tr><th style="width:20%">Concorrente</th><th style="width:22%">Categoria</th><th style="width:16%">Origem</th><th>Por que foi selecionado</th></tr></thead>
-    <tbody>
-      <tr><td><b>Organizze</b></td><td>Finanças pessoais</td><td>Brasil</td><td>Concorrente direto dos pilares Financeiro e Importâncias, com forte funcionalidade de contas a pagar e alertas de vencimento.</td></tr>
-      <tr><td><b>Mobills</b></td><td>Finanças pessoais</td><td>Brasil</td><td>Líder de downloads do segmento no Brasil; define o padrão de expectativa do usuário brasileiro para um app financeiro.</td></tr>
-      <tr><td><b>Todoist</b></td><td>Gerenciador de tarefas</td><td>Global</td><td>Referência mundial em gestão de tarefas; concorrente direto do pilar Atividades e benchmark de usabilidade.</td></tr>
-      <tr><td><b>TickTick</b></td><td>Tarefas + calendário + hábitos</td><td>Global</td><td>O concorrente que mais se aproxima da ideia de &ldquo;painel único do dia&rdquo;, agregando tarefas, calendário, Pomodoro e hábitos.</td></tr>
-      <tr><td><b>Notion</b></td><td>Espaço de trabalho tudo-em-um</td><td>Global</td><td>Representa a alternativa genérica: o usuário que monta sua própria solução integrada de tarefas e finanças por meio de templates.</td></tr>
-    </tbody>
-  </table>
-
-  <p>Essa distribuição — dois concorrentes financeiros nacionais, dois gerenciadores de tarefas globais e uma plataforma genérica — permite avaliar o MinhaVida por três ângulos: contra quem já resolve bem metade do problema, contra quem resolve a outra metade, e contra quem promete resolver tudo ao custo de o usuário construir a solução sozinho.</p>
-</section>
-<!-- ============================= CONCORRENTE 1 — ORGANIZZE ============================= -->
+<!-- ============================= 1 — ORGANIZZE ============================= -->
 <section class="pagina">
   <div class="abre-conc">
     <div class="ordem">Concorrente 1 de 5</div>
-    <h2>4&nbsp;&nbsp;Organizze</h2>
+    <h2>1&nbsp;&nbsp;Organizze</h2>
     <div class="papel">Finanças pessoais &middot; Brasil &middot; concorrente direto dos pilares Financeiro e Importâncias</div>
   </div>
 
-  <h3>4.1&nbsp;&nbsp;Identificação do software</h3>
+  <h3>Identificação</h3>
   <table class="ficha">
-    <tr><th>Nome</th><td>Organizze — Finanças Pessoais</td></tr>
-    <tr><th>Empresa responsável</th><td>Organizze, empresa brasileira de tecnologia financeira sediada em Santa Catarina</td></tr>
-    <tr><th>Ano de criação</th><td>Aplicativo publicado na App Store em julho de 2013. A empresa comunica mais de 15 anos de atuação no segmento.</td></tr>
-    <tr><th>Público-alvo</th><td>Pessoas físicas e microempreendedores brasileiros que buscam controle de orçamento doméstico, contas a pagar e cartões de crédito</td></tr>
-    <tr><th>Região de atuação</th><td>Brasil (produto em português, integrado ao sistema financeiro nacional via Open Finance)</td></tr>
-    <tr><th>Site oficial</th><td>www.organizze.com.br</td></tr>
-    <tr><th>Lojas de aplicativos</th><td>Google Play e App Store (identificador iOS 677699286). Também possui versão web.</td></tr>
-    <tr><th>Escala</th><td>Aproximadamente 2,3 milhões de instalações e 45,8 mil avaliações somente na App Store, com nota média em torno de 4,6; a imprensa especializada reporta mais de 6 milhões de downloads considerando todas as plataformas.</td></tr>
+    <tr><th>Empresa e ano</th><td>Organizze, empresa brasileira de tecnologia financeira sediada em Santa Catarina. Aplicativo publicado em julho de 2013.</td></tr>
+    <tr><th>Público e região</th><td>Pessoas físicas e microempreendedores brasileiros; produto em português, integrado ao Open Finance nacional</td></tr>
+    <tr><th>Site e lojas</th><td>www.organizze.com.br &middot; Google Play e App Store (id 677699286) &middot; versão web</td></tr>
+    <tr><th>Escala</th><td>≈ 2,3 milhões de instalações e 45,8 mil avaliações só na App Store, nota ≈ 4,6; mais de 6 milhões de downloads no total</td></tr>
   </table>
-  <p class="fonte">Fontes: página do app na App Store; CB Insights; Canaltech; AppGoblin. Números variam conforme a data de consulta.</p>
 
-  <h3>4.2&nbsp;&nbsp;Problema que o software resolve</h3>
-  <p><b>Qual problema é solucionado?</b> A falta de visibilidade sobre para onde o dinheiro vai. O brasileiro típico tem receitas e despesas espalhadas por conta-corrente, cartões de crédito de bancos diferentes, dinheiro em espécie e carteiras digitais, sem nenhuma visão consolidada. O Organizze centraliza esse fluxo.</p>
-  <p><b>Qual necessidade dos usuários é atendida?</b> Saber, a qualquer momento, quanto se tem, quanto se deve, o que vence nos próximos dias e em quais categorias o dinheiro está sendo consumido — sem precisar manter uma planilha manualmente.</p>
-  <p><b>Quem são os principais usuários?</b> Adultos economicamente ativos que já tentaram controlar gastos por planilha e desistiram pelo custo de manutenção. Também microempreendedores individuais que misturam finanças pessoais e do negócio.</p>
-  <p><b>Em qual contexto é utilizado?</b> Uso diário e fragmentado: registro de uma despesa no momento da compra, conferência do saldo antes de uma decisão de consumo, e uma revisão mais longa no fechamento do mês.</p>
-  <p><b>Qual é a proposta de valor?</b> Controle financeiro completo e confiável, com sincronização bancária automática e — ponto que a empresa enfatiza em sua comunicação — independência financeira da companhia, que declara não vender dados de usuários a terceiros.</p>
+  <h3>Problema que resolve</h3>
+  <p>A falta de visibilidade sobre para onde o dinheiro vai: receitas e despesas espalhadas por conta-corrente, cartões de bancos diferentes e carteiras digitais, sem visão consolidada. O Organizze centraliza esse fluxo e responde, a qualquer momento, quanto se tem, quanto se deve e o que vence. A proposta de valor combina sincronização bancária automática com privacidade declarada.</p>
 
-  <div class="caixa">
-    <div class="caixa-titulo">Relação com o problema que o MinhaVida pretende resolver</div>
-    O Organizze resolve <b>integralmente e melhor</b> o pilar Financeiro do MinhaVida, e resolve o pilar Importâncias sob o rótulo de &ldquo;contas a pagar e a receber&rdquo;. O que ele <b>não</b> endereça é o outro lado do dia do usuário: as tarefas, os compromissos sem valor monetário, o tempo. Para o Organizze, o dia do usuário é uma sequência de transações; para o MinhaVida, é uma sequência de compromissos, dos quais alguns custam dinheiro.
-  </div>
-
-  <h3>4.3&nbsp;&nbsp;Funcionalidades</h3>
+  <h3>Funcionalidades</h3>
   <table>
-    <thead><tr><th style="width:32%">Funcionalidade</th><th style="width:44%">Descrição</th><th style="width:24%">Também prevista no MinhaVida?</th></tr></thead>
+    <thead><tr><th style="width:36%">Funcionalidade</th><th>Descrição</th><th style="width:21%">No MinhaVida?</th></tr></thead>
     <tbody>
-      <tr><td>Cadastro e autenticação</td><td>Conta por e-mail e senha, com sincronização entre celular e web</td><td><span class="pos">Sim</span> — inclusive com login social via Google</td></tr>
-      <tr><td>Lançamento de receitas e despesas</td><td>Registro manual com categoria, conta, data e observação</td><td><span class="pos">Sim</span> — núcleo do pilar Financeiro</td></tr>
-      <tr><td>Sincronização bancária (Open Finance)</td><td>Conexão com instituições financeiras para importar lançamentos automaticamente</td><td><span class="neg">Não no MVP</span> — avaliado para versão futura</td></tr>
-      <tr><td>Contas a pagar e a receber com alerta</td><td>Cadastro de compromissos financeiros com data de vencimento e notificação</td><td><span class="pos">Sim</span> — é exatamente o pilar Importâncias</td></tr>
-      <tr><td>Controle de fatura de cartão de crédito</td><td>Acompanhamento de faturas, limites e melhor data de compra</td><td><span class="neg">Parcial</span> — o modelo prevê conta do tipo cartão, sem gestão de fatura</td></tr>
-      <tr><td>Categorias personalizadas</td><td>Criação e edição de categorias próprias, com limite de gastos</td><td><span class="pos">Sim</span> — categorias com escopo e subcategorias</td></tr>
-      <tr><td>Metas e limites de gastos</td><td>Definição de teto por categoria com acompanhamento</td><td><span class="pos">Sim</span> — entidade Orçamento, com alerta por percentual</td></tr>
-      <tr><td>Relatórios e gráficos</td><td>Relatórios mensais, evolução patrimonial e gastos por categoria</td><td><span class="pos">Sim</span> — resumo mensal e gasto por categoria</td></tr>
-      <tr><td>Conciliação bancária</td><td>Comparação entre lançamentos importados e registrados</td><td><span class="neg">Não</span> — depende de Open Finance</td></tr>
-      <tr><td>Múltiplas contas e cartões</td><td>Gestão simultânea de várias contas</td><td><span class="pos">Sim</span> — entidade ContaFinanceira</td></tr>
-      <tr><td>Versão web</td><td>Acesso por navegador, com a mesma base de dados</td><td><span class="neg">Não no MVP</span> — roadmap</td></tr>
-      <tr><td>Gestão de tarefas</td><td>—</td><td><span class="pos">Exclusivo do MinhaVida</span></td></tr>
+      <tr><td>Receitas e despesas</td><td>Lançamento manual com categoria, conta, data e observação</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Contas a pagar com alerta</td><td>Compromissos financeiros com vencimento e notificação</td><td><span class="pos">Sim</span> &mdash; pilar Importâncias</td></tr>
+      <tr><td>Categorias, limites e relatórios</td><td>Categorias próprias com teto de gastos, relatórios mensais e gasto por categoria</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Open Finance e conciliação</td><td>Importação automática de lançamentos bancários</td><td><span class="neg">Não no MVP</span></td></tr>
+      <tr><td>Fatura de cartão e versão web</td><td>Gestão de faturas e acesso por navegador</td><td><span class="neg">Parcial / roadmap</span></td></tr>
     </tbody>
   </table>
 
-  <h3>4.4&nbsp;&nbsp;Modelo de monetização</h3>
-  <p>O modelo é <b>freemium com período de teste</b>: o aplicativo é gratuito para download, oferece sete dias de avaliação e passa a exigir assinatura para uso continuado das funções principais. A estrutura de planos observada distingue o uso manual do uso com sincronização bancária:</p>
-  <table>
-    <thead><tr><th style="width:26%">Plano</th><th style="width:20%">Valor mensal</th><th>Proposta</th></tr></thead>
-    <tbody>
-      <tr><td>Teste gratuito</td><td class="num">R$ 0 (7 dias)</td><td>Acesso para avaliação do produto</td></tr>
-      <tr><td>Manual</td><td class="num">a partir de R$ 35</td><td>Registro manual de lançamentos, categorias, relatórios e alertas</td></tr>
-      <tr><td>Conectado</td><td class="num">a partir de R$ 45</td><td>Tudo do plano Manual mais a sincronização automática via Open Finance</td></tr>
-    </tbody>
-  </table>
-  <p class="nota">Valores levantados em fontes secundárias na data da pesquisa; a página oficial de planos não pôde ser consultada diretamente. Há ainda um canal de distribuição por parceria: assinantes do Serasa Premium recebem o plano Manual sem custo adicional e desconto no plano Conectado — um modelo de aquisição por parceria corporativa, e não apenas por venda direta ao consumidor.</p>
+  <h3>Modelo de monetização</h3>
+  <p>Freemium com teste de <b>7 dias</b> e assinatura obrigatória depois &mdash; não há plano gratuito permanente. Plano <b>Manual</b> a partir de <b>R$ 35/mês</b> e <b>Conectado</b> a partir de <b>R$ 45/mês</b>, este com Open Finance. Assinantes do Serasa Premium recebem o Manual sem custo.</p>
 
-  <h3>4.5&nbsp;&nbsp;Tecnologias e plataformas</h3>
+  <h3>Tecnologias e plataformas</h3>
+  <p>Android, iOS, aplicação web e serviços em nuvem com sincronização entre plataformas. Integrações públicas: Open Finance com bancos brasileiros e parceria com o Serasa Premium. Linguagens e banco de dados não são divulgados publicamente e não foram inferidos.</p>
+
+  <h3>Avaliações dos usuários</h3>
   <table>
-    <thead><tr><th style="width:34%">Dimensão</th><th>O que é público</th></tr></thead>
+    <thead><tr><th style="width:50%">Elogios frequentes</th><th>Críticas recorrentes</th></tr></thead>
     <tbody>
-      <tr><td>Aplicativo Android</td><td>Sim, distribuído pela Google Play</td></tr>
-      <tr><td>Aplicativo iOS</td><td>Sim, distribuído pela App Store</td></tr>
-      <tr><td>Aplicação web</td><td>Sim, com a mesma base sincronizada</td></tr>
-      <tr><td>Serviços em nuvem</td><td>Sim, por inferência necessária da sincronização multiplataforma; infraestrutura específica não divulgada</td></tr>
-      <tr><td>Integrações</td><td>Open Finance com instituições financeiras brasileiras; parceria de distribuição com Serasa Premium</td></tr>
-      <tr><td>Banco de dados / linguagens</td><td class="nota">Não divulgado publicamente — não inferido, conforme orientação da atividade</td></tr>
+      <tr><td>Interface limpa; relatórios e categorização confiáveis</td><td><b>Preço alto</b> para um app de controle pessoal &mdash; o ponto mais criticado</td></tr>
+      <tr><td>Alertas de contas a pagar efetivos, evitando atrasos</td><td><b>Teste de 7 dias curto demais</b> para avaliar um produto de uso mensal</td></tr>
+      <tr><td>Postura de privacidade valorizada</td><td>Falhas ocasionais de sincronização, com lançamentos duplicados ou ausentes</td></tr>
     </tbody>
   </table>
 
-  <h3>4.6&nbsp;&nbsp;Avaliações e comentários dos usuários</h3>
-  <p>A nota média em torno de <b>4,6 de 5</b>, sustentada por dezenas de milhares de avaliações apenas na App Store, indica satisfação consistente. Os padrões recorrentes identificados:</p>
-  <table>
-    <thead><tr><th style="width:50%">Aspectos positivos frequentes</th><th style="width:50%">Críticas e dificuldades relatadas</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>Interface limpa e organizada, considerada mais agradável que a de concorrentes</td>
-        <td>O preço é o ponto mais criticado: a mensalidade é percebida como alta para um app de controle pessoal</td>
-      </tr>
-      <tr>
-        <td>Confiabilidade dos relatórios e da categorização</td>
-        <td>O período gratuito de sete dias é visto como curto para avaliar um produto de uso mensal</td>
-      </tr>
-      <tr>
-        <td>Alertas de contas a pagar efetivos, evitando atrasos</td>
-        <td>Falhas ocasionais na sincronização bancária, com lançamentos duplicados ou ausentes</td>
-      </tr>
-      <tr>
-        <td>Postura de privacidade valorizada — a empresa declara não comercializar dados</td>
-        <td>Funcionalidades básicas ficam atrás do paywall, o que frustra quem buscava uma alternativa gratuita à planilha</td>
-      </tr>
-    </tbody>
-  </table>
-  <p><b>Sugestões recorrentes dos usuários:</b> plano gratuito permanente com limites, em vez de teste por tempo; ampliação do rol de bancos suportados; e melhorias na importação de faturas de cartão.</p>
-
-  <h3>4.7&nbsp;&nbsp;Diferenciais</h3>
+  <h3>Diferenciais</h3>
   <ul>
-    <li><b>Maturidade e confiança.</b> Mais de uma década de operação em um segmento em que o usuário deposita dados sensíveis é, por si só, uma barreira de entrada.</li>
-    <li><b>Posicionamento explícito de privacidade.</b> Declarar que não vende dados é um diferencial de marketing relevante em finanças pessoais e um contraste direto com modelos financiados por publicidade ou por venda de leads.</li>
-    <li><b>Open Finance maduro.</b> A sincronização automática elimina o maior ponto de abandono desse tipo de app: o esforço de digitação diária.</li>
-    <li><b>Canal de distribuição por parceria.</b> O acordo com o Serasa Premium entrega base de usuários sem custo de aquisição unitário.</li>
-    <li><b>Multiplataforma real.</b> Android, iOS e web com a mesma base de dados.</li>
+    <li><b>Maturidade:</b> mais de uma década em um segmento que depende de confiança para receber dados sensíveis.</li>
+    <li><b>Privacidade como posicionamento declarado</b>, em contraste com modelos financiados por publicidade.</li>
+    <li><b>Open Finance maduro</b>, que elimina a digitação diária &mdash; maior causa de abandono nesse tipo de app.</li>
   </ul>
+
+  <h3>Relação com o projeto da equipe</h3>
+  <table>
+    <tbody>
+      <tr><th style="width:27%">Funcionalidades em comum</th><td>Autenticação, receitas e despesas, múltiplas contas, categorias com limites, contas a pagar com alerta e relatórios mensais.</td></tr>
+      <tr><th>O que ele tem e o projeto não</th><td>Open Finance, conciliação bancária, fatura de cartão e versão web.</td></tr>
+      <tr><th>O que o projeto tem e ele não</th><td>O pilar de produtividade inteiro e a <b>quitação de uma importância que gera automaticamente o lançamento financeiro</b>.</td></tr>
+      <tr><th>O que serve de referência</th><td>A privacidade como diferencial declarado, alinhada à LGPD já prevista no projeto, e a parceria como canal de aquisição.</td></tr>
+      <tr><th>Problemas a evitar</th><td>O teste de 7 dias sem plano gratuito: o valor de um app diário só aparece depois de semanas. O projeto deve adotar plano gratuito com limites.</td></tr>
+      <tr><th>Oportunidade a explorar</th><td>O contexto não financeiro: o Organizze sabe que o usuário gastou R$ 89,90 na academia, mas não sabe que ele treinou. E o preço, abaixo da faixa de R$ 35 a R$ 45.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section class="pagina">
-  <h3>4.8&nbsp;&nbsp;Relação com o projeto da equipe</h3>
-  <ol class="perguntas">
-    <li><b>Quais funcionalidades do concorrente também estão previstas no projeto?</b>
-    Cadastro e autenticação, lançamento de receitas e despesas, múltiplas contas, categorias personalizadas com cor e ícone, limites de gastos por categoria, contas a pagar com alerta de vencimento, relatórios mensais e gasto por categoria. Há sobreposição substancial no pilar Financeiro — o que confirma que a equipe está resolvendo um problema real e já validado pelo mercado.</li>
-
-    <li><b>Quais funcionalidades do concorrente não estão previstas no projeto?</b>
-    Sincronização bancária via Open Finance, conciliação bancária, gestão detalhada de fatura de cartão de crédito com cálculo de melhor data de compra, e versão web. Nenhuma delas está no escopo do MVP.</li>
-
-    <li><b>Quais funcionalidades do projeto não foram identificadas no concorrente?</b>
-    Todo o pilar de produtividade: CRUD de atividades com horário e duração, indicadores de tarefas concluídas e tempo acumulado, agenda do dia e — sobretudo — a <b>quitação de uma importância que gera automaticamente o lançamento financeiro</b>. No Organizze, marcar uma conta como paga e registrar a despesa são operações do mesmo domínio; no MinhaVida, é a ponte entre dois domínios distintos.</li>
-
-    <li><b>Quais características do concorrente podem servir de referência?</b>
-    Três, em ordem de importância: (i) a <b>postura de privacidade como diferencial declarado</b>, que se alinha à conformidade com a LGPD já prevista na arquitetura do projeto; (ii) o rigor na categorização e nos relatórios, que é o que sustenta a percepção de confiabilidade; (iii) a <b>estratégia de parceria como canal de distribuição</b>, um caminho de aquisição que a equipe não havia considerado.</li>
-
-    <li><b>Quais problemas identificados no concorrente podem ser evitados?</b>
-    O principal é o <b>teste de sete dias sem plano gratuito permanente</b>. Para um produto de uso diário cujo valor só aparece após semanas de uso acumulado, sete dias é insuficiente — e as avaliações refletem essa frustração. O MinhaVida deve adotar um plano gratuito permanente com limites, não um teste temporário. O segundo é a ausência de um caminho sem sincronização bancária a preço acessível: quem quer apenas registrar manualmente paga caro.</li>
-
-    <li><b>Quais oportunidades de diferenciação podem ser exploradas?</b>
-    A principal é o <b>contexto não financeiro</b>. O Organizze sabe que o usuário gastou R$ 89,90 na academia; não sabe que ele treinou. O MinhaVida pode responder perguntas que o Organizze não alcança — quanto custou, em dinheiro e em horas, a rotina de estudos deste mês. A segunda é o <b>preço</b>: com custo operacional muito menor, é viável posicionar-se abaixo da faixa de R$ 35 a R$ 45 mensais.</li>
-  </ol>
-</section>
-
-<!-- ============================= CONCORRENTE 2 — MOBILLS ============================= -->
-<section class="pagina">
-  <div class="abre-conc">
+<!-- ============================= 2 — MOBILLS ============================= -->
+<section>
+  <div class="abre-conc" style="margin-top:4mm">
     <div class="ordem">Concorrente 2 de 5</div>
-    <h2>5&nbsp;&nbsp;Mobills</h2>
+    <h2>2&nbsp;&nbsp;Mobills</h2>
     <div class="papel">Finanças pessoais &middot; Brasil &middot; líder de downloads do segmento no país</div>
   </div>
 
-  <h3>5.1&nbsp;&nbsp;Identificação do software</h3>
+  <h3>Identificação</h3>
   <table class="ficha">
-    <tr><th>Nome</th><td>Mobills — Controle Financeiro</td></tr>
-    <tr><th>Empresa responsável</th><td>Mobills, startup brasileira sediada em Fortaleza (CE)</td></tr>
-    <tr><th>Ano de criação</th><td>Fundada em 2014 por Carlos Terceiro, atual CEO. A ideia surgiu em dezembro de 2012, quando o fundador procurou um app de finanças pessoais e não encontrou um que atendesse.</td></tr>
-    <tr><th>Público-alvo</th><td>Pessoas físicas brasileiras de todas as faixas de renda; forte penetração entre usuários de primeira experiência com controle financeiro</td></tr>
-    <tr><th>Região de atuação</th><td>Brasil, com movimento de expansão internacional anunciado a partir de 2021</td></tr>
-    <tr><th>Site oficial</th><td>www.mobills.com.br</td></tr>
-    <tr><th>Lojas de aplicativos</th><td>Google Play e App Store (identificador iOS 921838244); também versão web</td></tr>
-    <tr><th>Escala e reconhecimento</th><td>Mais de 5 milhões de downloads na Google Play e cerca de 8 milhões de usuários cadastrados reportados ao final de 2020. Nota em torno de 4,6, com mais de 167 mil avaliações em levantamentos anteriores e mais de 300 mil em fontes mais recentes. Foi eleito 1º lugar na categoria &ldquo;Controle de gastos&rdquo; da seleção editorial da Google Play e reconhecido como Android Excellence — único app brasileiro em uma lista de 38.</td></tr>
+    <tr><th>Empresa e ano</th><td>Mobills, startup brasileira sediada em Fortaleza (CE), fundada em 2014 por Carlos Terceiro, atual CEO</td></tr>
+    <tr><th>Público e região</th><td>Pessoas físicas de todas as faixas de renda no Brasil, com forte penetração entre iniciantes em controle financeiro</td></tr>
+    <tr><th>Site e lojas</th><td>www.mobills.com.br &middot; Google Play e App Store (id 921838244) &middot; versão web</td></tr>
+    <tr><th>Escala</th><td>Mais de 5 milhões de downloads e ≈ 8 milhões de cadastros; nota ≈ 4,6. Foi 1º lugar em &ldquo;Controle de gastos&rdquo; na seleção editorial da Google Play e único brasileiro no Android Excellence, entre 38 apps.</td></tr>
   </table>
-  <p class="fonte">Fontes: Showmetech; MobileTime; Diário do Nordeste; blog oficial Mobills. Números variam conforme a data de consulta.</p>
 
-  <h3>5.2&nbsp;&nbsp;Problema que o software resolve</h3>
-  <p><b>Qual problema é solucionado?</b> O mesmo problema central do Organizze — a ausência de visão consolidada das finanças pessoais — mas com um posicionamento diferente: o Mobills se apresenta como porta de entrada para a <b>educação financeira</b>, e não apenas como ferramenta de registro.</p>
-  <p><b>Qual necessidade dos usuários é atendida?</b> Começar a controlar as finanças sem conhecimento prévio de contabilidade, com uma interface que guia o usuário e um plano gratuito suficiente para experimentar o hábito antes de pagar por ele.</p>
-  <p><b>Quem são os principais usuários?</b> O público é mais amplo e mais jovem que o do Organizze, refletindo a estratégia de aquisição por conteúdo — a empresa mantém um blog de educação financeira de grande alcance, que funciona como funil de entrada.</p>
-  <p><b>Em qual contexto é utilizado?</b> Registro diário de despesas, acompanhamento de faturas de cartão e planejamento mensal. O reconhecimento editorial da Google Play indica também uso como app de referência recomendado a iniciantes.</p>
-  <p><b>Qual é a proposta de valor?</b> Controle financeiro acessível, com uma camada de educação, entregue por um produto nacional que entende o sistema financeiro brasileiro.</p>
+  <h3>Problema que resolve</h3>
+  <p>O mesmo problema central do Organizze, com posicionamento diferente: o Mobills se apresenta como porta de entrada para a <b>educação financeira</b>, não apenas como ferramenta de registro. Atende quem quer começar sem conhecimento prévio, com plano gratuito suficiente para criar o hábito antes de pagar por ele.</p>
 
-  <div class="caixa">
-    <div class="caixa-titulo">Relação com o problema que o MinhaVida pretende resolver</div>
-    O Mobills define o <b>padrão de expectativa</b> do usuário brasileiro para um aplicativo financeiro: se o MinhaVida não entregar lançamento rápido, categorias visuais, gráfico mensal e controle de cartão em nível comparável, o pilar Financeiro será percebido como inferior — mesmo que o diferencial de integração com tarefas funcione perfeitamente. É o concorrente que estabelece o piso de qualidade.
-  </div>
-
-  <h3>5.3&nbsp;&nbsp;Funcionalidades</h3>
+  <h3>Funcionalidades</h3>
   <table>
-    <thead><tr><th style="width:32%">Funcionalidade</th><th style="width:44%">Descrição</th><th style="width:24%">Também prevista no MinhaVida?</th></tr></thead>
+    <thead><tr><th style="width:36%">Funcionalidade</th><th>Descrição</th><th style="width:21%">No MinhaVida?</th></tr></thead>
     <tbody>
-      <tr><td>Cadastro e autenticação</td><td>Conta própria e login social</td><td><span class="pos">Sim</span></td></tr>
-      <tr><td>Registro de receitas e despesas</td><td>Lançamento manual com categoria, conta e data</td><td><span class="pos">Sim</span></td></tr>
-      <tr><td>Integração bancária</td><td>Sincronização automática de lançamentos; a primeira integração lançada foi com o Nubank</td><td><span class="neg">Não no MVP</span></td></tr>
-      <tr><td>Cartões de crédito</td><td>Gestão de faturas, limites e parcelamentos</td><td><span class="neg">Parcial</span> — há transações parceladas, sem fatura</td></tr>
-      <tr><td>Planejamento e orçamento mensal</td><td>Definição de teto por categoria com acompanhamento visual</td><td><span class="pos">Sim</span> — entidade Orçamento</td></tr>
-      <tr><td>Metas financeiras</td><td>Objetivos de economia com progresso</td><td><span class="neg">Não no MVP</span> — roadmap</td></tr>
-      <tr><td>Relatórios e dashboards</td><td>Relatórios mensais, gráficos de evolução e distribuição por categoria</td><td><span class="pos">Sim</span></td></tr>
-      <tr><td>Notificações e lembretes</td><td>Alertas de vencimento e de estouro de orçamento</td><td><span class="pos">Sim</span> — notificação por push com agendamento</td></tr>
-      <tr><td>Conteúdo de educação financeira</td><td>Blog e materiais integrados à estratégia do produto</td><td><span class="neg">Não</span></td></tr>
-      <tr><td>Versão web e desktop</td><td>Acesso por navegador</td><td><span class="neg">Não no MVP</span></td></tr>
-      <tr><td>Gestão de tarefas e agenda</td><td>—</td><td><span class="pos">Exclusivo do MinhaVida</span></td></tr>
+      <tr><td>Receitas, despesas e orçamento</td><td>Lançamento manual e teto por categoria com acompanhamento visual</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Relatórios e dashboards</td><td>Gráficos de evolução e distribuição por categoria</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Notificações e lembretes</td><td>Alertas de vencimento e de estouro de orçamento</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Integração bancária</td><td>Sincronização automática; a primeira foi com o Nubank</td><td><span class="neg">Não no MVP</span></td></tr>
+      <tr><td>Cartões, metas e conteúdo</td><td>Faturas e parcelamentos, metas de economia e blog de educação financeira</td><td><span class="neg">Parcial / não</span></td></tr>
     </tbody>
   </table>
 
-  <h3>5.4&nbsp;&nbsp;Modelo de monetização</h3>
-  <p>Modelo <b>freemium com plano gratuito permanente</b> — diferença relevante em relação ao Organizze. A versão gratuita é funcional e limitada em quantidade de itens e em automação; o plano Premium remove limites e habilita a sincronização bancária.</p>
+  <h3>Modelo de monetização</h3>
+  <p>Freemium com <b>plano gratuito permanente</b> &mdash; diferença relevante frente ao Organizze. O Premium custa cerca de <b>R$ 19,90/mês</b>; no anual as fontes divergem entre <b>R$ 99,90 e R$ 159,90</b>, com cupons que reduzem para cerca de R$ 111,90. A divergência não foi arbitrada: o relevante é a faixa, equivalente a R$ 8 a R$ 13 mensais &mdash; bem mais acessível que o Organizze.</p>
+
+  <h3>Tecnologias e plataformas</h3>
+  <p>Android, iOS e aplicação web. A empresa figura como <b>estudo de caso público do Firebase</b>, do Google, o que confirma o uso de serviços gerenciados de nuvem. Integração bancária direta, iniciada com o Nubank, e depois Open Finance. Linguagens e banco de dados não divulgados.</p>
+
+  <h3>Avaliações dos usuários</h3>
   <table>
-    <thead><tr><th style="width:26%">Plano</th><th style="width:24%">Valor</th><th>Observações</th></tr></thead>
+    <thead><tr><th style="width:50%">Elogios frequentes</th><th>Críticas recorrentes</th></tr></thead>
     <tbody>
-      <tr><td>Gratuito</td><td class="num">R$ 0</td><td>Permanente, com limites de quantidade e sem automação bancária</td></tr>
-      <tr><td>Premium mensal</td><td class="num">≈ R$ 19,90/mês</td><td>Valor recorrente na maioria das fontes consultadas</td></tr>
-      <tr><td>Premium anual</td><td class="num">R$ 99,90 a R$ 159,90/ano</td><td>As fontes divergem; há cupons promocionais que reduzem o plano anual de R$ 159,90 para cerca de R$ 111,90</td></tr>
+      <tr><td>Facilidade de uso e curva de aprendizado curta</td><td><b>Divergências de saldo</b> &mdash; o saldo exibido, sobretudo o diário, não confere, gerando insegurança</td></tr>
+      <tr><td>Plano gratuito generoso para começar</td><td><b>Erros recorrentes de cadastro</b>, com mensagem de erro de conexão ao concluir</td></tr>
+      <tr><td>Gráficos claros e reconhecimento editorial da Google Play</td><td><b>Ausência de suporte efetivo</b>, sem canal de atendimento funcional</td></tr>
     </tbody>
   </table>
-  <p class="nota">A divergência entre R$ 99,90 e R$ 159,90 ao ano não foi arbitrada: reflete diferentes campanhas e datas de coleta das fontes. O importante para a análise é a <b>faixa</b>: o plano anual do Mobills equivale a algo entre R$ 8 e R$ 13 por mês, posicionamento sensivelmente mais acessível que o do Organizze. Há ainda distribuição por benefício corporativo, com ativação gratuita via parceiros de bem-estar.</p>
+  <p class="nota">Nota alta nas lojas convivendo com reclamações formais graves: o produto agrada no cotidiano e falha em situações críticas.</p>
 
-  <h3>5.5&nbsp;&nbsp;Tecnologias e plataformas</h3>
-  <table>
-    <thead><tr><th style="width:34%">Dimensão</th><th>O que é público</th></tr></thead>
-    <tbody>
-      <tr><td>Aplicativo Android</td><td>Sim — reconhecido pelo programa Android Excellence do Google</td></tr>
-      <tr><td>Aplicativo iOS</td><td>Sim</td></tr>
-      <tr><td>Aplicação web</td><td>Sim</td></tr>
-      <tr><td>Serviços em nuvem</td><td>A empresa figura como estudo de caso público do <b>Firebase</b>, plataforma do Google, o que confirma o uso de serviços gerenciados de nuvem</td></tr>
-      <tr><td>Integrações</td><td>Integração bancária direta, iniciada com o Nubank, e posteriormente Open Finance</td></tr>
-      <tr><td>Banco de dados / linguagens</td><td class="nota">Não divulgado publicamente — não inferido</td></tr>
-    </tbody>
-  </table>
-
-  <h3>5.6&nbsp;&nbsp;Avaliações e comentários dos usuários</h3>
-  <p>A avaliação média em torno de <b>4,6 de 5</b> convive com um conjunto consistente de reclamações formais registradas em plataformas de defesa do consumidor. Essa combinação — nota alta nas lojas e reclamações graves em canais formais — é informativa: o produto agrada na experiência cotidiana, mas falha em situações críticas.</p>
-  <table>
-    <thead><tr><th style="width:50%">Aspectos positivos frequentes</th><th style="width:50%">Críticas e dificuldades relatadas</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>Facilidade de uso e curva de aprendizado curta, adequada a iniciantes</td>
-        <td><b>Divergências de saldo</b> — usuários relatam que o saldo exibido, especialmente o saldo diário, não confere, gerando insegurança sobre a confiabilidade da informação financeira</td>
-      </tr>
-      <tr>
-        <td>Plano gratuito considerado generoso para começar</td>
-        <td><b>Erros recorrentes de cadastro</b> — tela inicial solicitando completar o cadastro repetidamente, com erro de conexão ao tentar concluir</td>
-      </tr>
-      <tr>
-        <td>Gráficos e relatórios visualmente claros</td>
-        <td><b>Ausência de suporte efetivo</b> — relatos de falta de canal de atendimento funcional por telefone ou e-mail</td>
-      </tr>
-      <tr>
-        <td>Reconhecimento editorial da Google Play reforça a percepção de qualidade</td>
-        <td>Limites do plano gratuito percebidos como restritivos após alguns meses de uso</td>
-      </tr>
-    </tbody>
-  </table>
-  <p><b>Sugestões recorrentes dos usuários:</b> maior transparência no cálculo do saldo, canal de suporte humano acessível e estabilidade na sincronização bancária.</p>
-
-  <div class="caixa alerta">
-    <div class="caixa-titulo">A lição mais valiosa desta pesquisa para a arquitetura do projeto</div>
-    A reclamação de <b>divergência de saldo</b> é exatamente a classe de defeito que a arquitetura do MinhaVida foi desenhada para tornar impossível. No projeto da equipe, o saldo é escrito por um <b>único mecanismo</b> — um gatilho no banco de dados que roda na mesma transação do lançamento — e existe uma função de reconciliação que recalcula o saldo a partir do saldo inicial somado às transações efetivadas. Um concorrente com milhões de usuários falhando justamente nesse ponto valida a decisão arquitetural e indica que ela deve ser tratada como requisito crítico, não como detalhe de implementação.
-  </div>
-
-  <h3>5.7&nbsp;&nbsp;Diferenciais</h3>
+  <h3>Diferenciais</h3>
   <ul>
-    <li><b>Liderança de downloads e reconhecimento editorial.</b> Ser o primeiro colocado na seleção da Google Play e o único brasileiro no Android Excellence gera credibilidade e aquisição orgânica.</li>
-    <li><b>Plano gratuito permanente.</b> Permite adquirir usuários sem atrito e converter depois, ao contrário do teste por tempo limitado.</li>
-    <li><b>Preço acessível no plano anual.</b> A faixa de R$ 8 a R$ 13 mensais equivalentes amplia muito o mercado endereçável.</li>
-    <li><b>Educação financeira como aquisição.</b> O conteúdo funciona como funil de baixo custo por usuário adquirido.</li>
-    <li><b>Pioneirismo em integração bancária no Brasil.</b> A primeira integração com o Nubank posicionou a marca como inovadora no segmento.</li>
+    <li><b>Liderança de downloads e reconhecimento editorial</b>, que geram credibilidade e aquisição orgânica.</li>
+    <li><b>Plano gratuito permanente</b> e preço anual acessível, ampliando o mercado endereçável.</li>
+    <li><b>Educação financeira como canal de aquisição</b> e pioneirismo em integração bancária no Brasil.</li>
   </ul>
 
-  <h3>5.8&nbsp;&nbsp;Relação com o projeto da equipe</h3>
-  <ol class="perguntas">
-    <li><b>Quais funcionalidades do concorrente também estão previstas no projeto?</b>
-    Cadastro e autenticação com login social, registro de receitas e despesas, categorias, orçamento mensal por categoria com alerta, relatórios e gráficos mensais, notificações de vencimento e múltiplas contas. A sobreposição no pilar Financeiro é praticamente total no nível do MVP.</li>
-
-    <li><b>Quais funcionalidades do concorrente não estão previstas no projeto?</b>
-    Integração bancária automática, gestão completa de fatura de cartão de crédito, metas de economia, camada de conteúdo educacional e versão web.</li>
-
-    <li><b>Quais funcionalidades do projeto não foram identificadas no concorrente?</b>
-    O pilar Atividades por inteiro, a visão de agenda do dia e a quitação de importância que gera a transação. Assim como no Organizze, o Mobills trata o dia do usuário exclusivamente como fluxo de caixa.</li>
-
-    <li><b>Quais características do concorrente podem servir de referência?</b>
-    Duas com clareza: (i) o <b>plano gratuito permanente</b>, que se mostra estratégia de aquisição superior ao teste de sete dias do Organizze; e (ii) a <b>estratégia de conteúdo como canal</b> — um blog de educação financeira e de produtividade tem custo marginal baixo e atrai exatamente o público-alvo do MinhaVida.</li>
-
-    <li><b>Quais problemas identificados no concorrente podem ser evitados?</b>
-    Três, todos acionáveis: (i) a <b>divergência de saldo</b>, já endereçada pela arquitetura de fonte única com gatilho transacional e função de reconciliação; (ii) a <b>ausência de suporte</b>, mitigável com um canal simples e honesto de contato e uma política pública de tempo de resposta; (iii) os <b>erros recorrentes de cadastro com falha de conexão</b>, que reforçam a decisão de arquitetura <i>offline-first</i> — no MinhaVida, perda de conectividade não pode bloquear o uso.</li>
-
-    <li><b>Quais oportunidades de diferenciação podem ser exploradas?</b>
-    A <b>confiabilidade do número</b> é a oportunidade mais direta: em um mercado onde o líder é acusado de mostrar saldo errado, &ldquo;o saldo sempre confere, e você pode auditar&rdquo; é uma promessa de produto defensável e verificável. Soma-se a ela o posicionamento de preço: com um MVP sem Open Finance, o custo operacional por usuário é baixo o bastante para sustentar um plano gratuito mais generoso que o do Mobills.</li>
-  </ol>
+  <h3>Relação com o projeto da equipe</h3>
+  <table>
+    <tbody>
+      <tr><th style="width:27%">Funcionalidades em comum</th><td>Login social, receitas e despesas, categorias, orçamento com alerta, relatórios, notificações e múltiplas contas &mdash; sobreposição quase total no pilar Financeiro.</td></tr>
+      <tr><th>O que ele tem e o projeto não</th><td>Integração bancária, fatura de cartão, metas de economia, camada educacional e versão web.</td></tr>
+      <tr><th>O que o projeto tem e ele não</th><td>O pilar Atividades, a agenda do dia e a quitação que gera transação. Como o Organizze, trata o dia do usuário apenas como fluxo de caixa.</td></tr>
+      <tr><th>O que serve de referência</th><td>O plano gratuito permanente, superior ao teste de 7 dias como estratégia de aquisição, e o conteúdo próprio como canal.</td></tr>
+      <tr><th>Problemas a evitar</th><td>A <b>divergência de saldo</b> é a classe de defeito que a arquitetura do projeto torna impossível: o saldo é escrito por um único gatilho, na mesma transação do lançamento, com função de reconciliação.</td></tr>
+      <tr><th>Oportunidade a explorar</th><td>A <b>confiabilidade do número</b>: num mercado em que o líder é acusado de mostrar saldo errado, &ldquo;o saldo sempre confere e pode ser auditado&rdquo; é promessa defensável.</td></tr>
+    </tbody>
+  </table>
 </section>
-<!-- ============================= CONCORRENTE 3 — TODOIST ============================= -->
-<section class="pagina">
-  <div class="abre-conc">
+
+<!-- ============================= 3 — TODOIST ============================= -->
+<section>
+  <div class="abre-conc" style="margin-top:4mm">
     <div class="ordem">Concorrente 3 de 5</div>
-    <h2>6&nbsp;&nbsp;Todoist</h2>
+    <h2>3&nbsp;&nbsp;Todoist</h2>
     <div class="papel">Gerenciador de tarefas &middot; global &middot; concorrente direto do pilar Atividades</div>
   </div>
 
-  <h3>6.1&nbsp;&nbsp;Identificação do software</h3>
+  <h3>Identificação</h3>
   <table class="ficha">
-    <tr><th>Nome</th><td>Todoist</td></tr>
-    <tr><th>Empresa responsável</th><td>Doist, empresa de operação totalmente remota, com registro nos Estados Unidos</td></tr>
-    <tr><th>Ano de criação</th><td>2007, criado por Amir Salihefendic</td></tr>
-    <tr><th>Público-alvo</th><td>Profissionais do conhecimento, estudantes e equipes pequenas que precisam de gestão de tarefas pessoal e colaborativa</td></tr>
-    <tr><th>Região de atuação</th><td>Global, com interface em português entre mais de vinte idiomas</td></tr>
-    <tr><th>Site oficial</th><td>www.todoist.com</td></tr>
-    <tr><th>Lojas de aplicativos</th><td>Google Play, App Store, além de aplicativos para Windows, macOS, Linux, extensões de navegador e versão web</td></tr>
-    <tr><th>Escala</th><td>Mais de 30 milhões de usuários registrados reportados em 2024. Nota de 4,6 de 5 no Capterra, com mais de 2.600 avaliações verificadas.</td></tr>
+    <tr><th>Empresa e ano</th><td>Doist, empresa de operação totalmente remota com registro nos Estados Unidos. Produto criado em 2007 por Amir Salihefendic.</td></tr>
+    <tr><th>Público e região</th><td>Profissionais do conhecimento, estudantes e equipes pequenas; global, com interface em português</td></tr>
+    <tr><th>Site e lojas</th><td>www.todoist.com &middot; Google Play, App Store, Windows, macOS, Linux, extensões e web</td></tr>
+    <tr><th>Escala</th><td>Mais de 30 milhões de usuários registrados; nota 4,6 de 5 no Capterra, com mais de 2.600 avaliações verificadas</td></tr>
   </table>
-  <p class="fonte">Fontes: Wikipédia; handbook público da Doist; Capterra; Android Authority.</p>
 
-  <h3>6.2&nbsp;&nbsp;Problema que o software resolve</h3>
-  <p><b>Qual problema é solucionado?</b> A sobrecarga mental de manter compromissos na memória. O Todoist materializa a premissa de que a mente humana serve para ter ideias, não para armazená-las: tudo que precisa ser feito deve sair da cabeça e entrar em um sistema confiável.</p>
-  <p><b>Qual necessidade dos usuários é atendida?</b> Capturar uma tarefa em segundos, no contexto em que ela surge, e confiar que ela reaparecerá no momento certo. A entrada em linguagem natural — digitar &ldquo;pagar internet toda dia 10&rdquo; e o sistema interpretar a recorrência — é a expressão mais clara dessa necessidade.</p>
-  <p><b>Quem são os principais usuários?</b> Profissionais e estudantes com alto volume de compromissos e baixa tolerância a atrito de interface.</p>
-  <p><b>Em qual contexto é utilizado?</b> Ao longo de todo o dia, em múltiplos dispositivos, com forte uso de captura rápida e revisão diária da visão &ldquo;Hoje&rdquo;.</p>
-  <p><b>Qual é a proposta de valor?</b> Um sistema de organização pessoal rápido, confiável e presente em toda plataforma que o usuário utilize.</p>
+  <h3>Problema que resolve</h3>
+  <p>A sobrecarga mental de manter compromissos na memória: tudo que precisa ser feito sai da cabeça e entra em um sistema confiável. A necessidade é capturar uma tarefa em segundos e confiar que ela reaparecerá no momento certo &mdash; e a entrada em linguagem natural, em que digitar &ldquo;pagar internet todo dia 10&rdquo; já configura a recorrência, é a expressão mais clara disso.</p>
 
-  <div class="caixa">
-    <div class="caixa-titulo">Relação com o problema que o MinhaVida pretende resolver</div>
-    O Todoist é para o pilar Atividades o que o Organizze é para o pilar Financeiro: resolve <b>melhor e mais profundamente</b> aquela metade do problema. A visão &ldquo;Hoje&rdquo; do Todoist é conceitualmente a mesma tela Início do MinhaVida — com a diferença de que, no Todoist, ela nunca conterá o saldo do mês nem a conta que vence amanhã.
-  </div>
-
-  <h3>6.3&nbsp;&nbsp;Funcionalidades</h3>
+  <h3>Funcionalidades</h3>
   <table>
-    <thead><tr><th style="width:32%">Funcionalidade</th><th style="width:44%">Descrição</th><th style="width:24%">Também prevista no MinhaVida?</th></tr></thead>
+    <thead><tr><th style="width:36%">Funcionalidade</th><th>Descrição</th><th style="width:21%">No MinhaVida?</th></tr></thead>
     <tbody>
-      <tr><td>Cadastro e autenticação</td><td>Conta própria e login social; sincronização entre todas as plataformas</td><td><span class="pos">Sim</span></td></tr>
-      <tr><td>CRUD de tarefas</td><td>Criação, edição, conclusão e exclusão com descrição, data e prioridade</td><td><span class="pos">Sim</span> — núcleo do pilar Atividades</td></tr>
-      <tr><td>Entrada em linguagem natural</td><td>Interpretação de texto livre para extrair data, hora e recorrência</td><td><span class="neg">Não no MVP</span> — forte candidata ao roadmap</td></tr>
-      <tr><td>Projetos e subtarefas</td><td>Hierarquia de organização com aninhamento</td><td><span class="neg">Parcial</span> — há categoria e subcategoria, sem subtarefas</td></tr>
-      <tr><td>Recorrência avançada</td><td>Regras flexíveis de repetição, inclusive relativas à data de conclusão</td><td><span class="pos">Sim</span> — entidade RegraRecorrencia com seis frequências</td></tr>
-      <tr><td>Prioridades e etiquetas</td><td>Quatro níveis de prioridade e marcação livre</td><td><span class="pos">Sim</span> — quatro níveis de prioridade</td></tr>
-      <tr><td>Filtros e visões personalizadas</td><td>Consultas salvas sobre o conjunto de tarefas</td><td><span class="neg">Parcial</span> — filtros por categoria, data e status</td></tr>
-      <tr><td>Colaboração</td><td>Compartilhamento de projetos, atribuição e comentários</td><td><span class="neg">Não</span> — o MinhaVida é deliberadamente individual</td></tr>
-      <tr><td>Gamificação (Karma)</td><td>Pontuação por produtividade, com metas diárias e sequências</td><td><span class="neg">Não no MVP</span> — roadmap</td></tr>
-      <tr><td>Integrações</td><td>Mais de uma centena, incluindo calendários, e-mail e automatizadores</td><td><span class="neg">Não no MVP</span></td></tr>
-      <tr><td>Notificações e lembretes</td><td>Push, e-mail e lembretes por horário e por local</td><td><span class="pos">Sim</span> — push com agendamento por antecedência</td></tr>
-      <tr><td>Gestão financeira</td><td>—</td><td><span class="pos">Exclusivo do MinhaVida</span></td></tr>
+      <tr><td>CRUD de tarefas e prioridades</td><td>Criação, edição, conclusão e exclusão, com quatro níveis de prioridade</td><td><span class="pos">Sim</span> &mdash; pilar Atividades</td></tr>
+      <tr><td>Recorrência avançada</td><td>Regras flexíveis, inclusive relativas à data de conclusão</td><td><span class="pos">Sim</span> &mdash; seis frequências</td></tr>
+      <tr><td>Notificações e lembretes</td><td>Push, e-mail e lembretes por horário e por local</td><td><span class="pos">Sim</span></td></tr>
+      <tr><td>Linguagem natural</td><td>Interpreta texto livre para extrair data, hora e repetição</td><td><span class="neg">Não no MVP</span> &mdash; roadmap</td></tr>
+      <tr><td>Subtarefas, filtros, colaboração e API</td><td>Hierarquia aninhada, consultas salvas, compartilhamento e integrações</td><td><span class="neg">Parcial / não</span></td></tr>
     </tbody>
   </table>
 
-  <h3>6.4&nbsp;&nbsp;Modelo de monetização</h3>
-  <p>Modelo <b>freemium com plano gratuito permanente</b> e dois níveis pagos, sendo um deles por usuário para equipes.</p>
-  <table>
-    <thead><tr><th style="width:22%">Plano</th><th style="width:24%">Valor</th><th>Principais limites e recursos</th></tr></thead>
-    <tbody>
-      <tr><td>Beginner (gratuito)</td><td class="num">US$ 0</td><td>Até 5 projetos pessoais ativos, 3 filtros personalizados, histórico de atividade de 7 dias e anexos de até 5 MB</td></tr>
-      <tr><td>Pro</td><td class="num">US$ 7/mês<br>ou US$ 60/ano</td><td>Até 300 projetos pessoais, filtros ilimitados, lembretes, histórico completo</td></tr>
-      <tr><td>Business</td><td class="num">US$ 10/usuário/mês<br>ou US$ 8/usuário/mês no anual</td><td>Até 500 projetos de equipe, até 1.000 membros por espaço, anexos de 100 MB</td></tr>
-    </tbody>
-  </table>
-  <div class="caixa alerta">
-    <div class="caixa-titulo">Um caso instrutivo de reajuste de preço</div>
-    Em <b>10 de dezembro de 2025</b>, o Todoist reajustou o plano Pro: o mensal subiu cerca de <b>40%</b>, de US$ 5 para US$ 7, e o anual cerca de <b>25%</b>, de US$ 48 para US$ 60. A empresa justificou o aumento pela sustentabilidade de longo prazo do produto. A repercussão foi negativa em comunidades de usuários, agravada por dois fatores: não houve funcionalidade nova relevante anunciada junto com o reajuste, e usuários em planos antigos ficaram sem acesso a recursos lançados depois daquela data. O episódio gerou uma onda de conteúdo comparando alternativas mais baratas — entre elas, o TickTick.
-  </div>
+  <h3>Modelo de monetização</h3>
+  <p>Freemium com gratuito permanente e dois níveis pagos. O <b>Beginner</b> limita a 5 projetos ativos, 3 filtros e histórico de 7 dias. O <b>Pro</b> custa <b>US$ 7/mês ou US$ 60/ano</b> e o <b>Business</b>, US$ 10 por usuário/mês. Em <b>10/12/2025</b> o Pro subiu <b>40%</b> no mensal (US$ 5 → 7) e <b>25%</b> no anual (US$ 48 → 60), sem funcionalidade nova anunciada junto e deixando planos antigos sem acesso a recursos posteriores &mdash; a repercussão foi negativa.</p>
 
-  <h3>6.5&nbsp;&nbsp;Tecnologias e plataformas</h3>
+  <h3>Tecnologias e plataformas</h3>
+  <p>Android e iOS nativos, clientes Windows, macOS e Linux, web e extensões. Possui <b>API REST pública documentada</b> e webhooks, que sustentam mais de uma centena de integrações, e sincronização em tempo real com funcionamento offline. Linguagens e banco de dados não divulgados.</p>
+
+  <h3>Avaliações dos usuários</h3>
   <table>
-    <thead><tr><th style="width:34%">Dimensão</th><th>O que é público</th></tr></thead>
+    <thead><tr><th style="width:50%">Elogios frequentes</th><th>Críticas recorrentes</th></tr></thead>
     <tbody>
-      <tr><td>Aplicativos móveis</td><td>Android e iOS nativos</td></tr>
-      <tr><td>Desktop</td><td>Windows, macOS e Linux</td></tr>
-      <tr><td>Web e navegador</td><td>Aplicação web e extensões para os principais navegadores</td></tr>
-      <tr><td>API pública</td><td><b>Sim</b> — API REST documentada publicamente, além de webhooks, o que sustenta o ecossistema de integrações</td></tr>
-      <tr><td>Integrações</td><td>Mais de uma centena de integrações oficiais e de terceiros</td></tr>
-      <tr><td>Sincronização e offline</td><td>Sincronização em tempo real entre plataformas com funcionamento offline nos clientes</td></tr>
-      <tr><td>Banco de dados / linguagens</td><td class="nota">Não divulgado de forma oficial — não inferido</td></tr>
+      <tr><td>Velocidade e estabilidade &mdash; descrito com consistência como rápido e confiável</td><td><b>Preço e o reajuste de dez/2025</b>, o ponto mais debatido do produto</td></tr>
+      <tr><td>Entrada em linguagem natural, o recurso que mais reduz atrito</td><td>Plano gratuito restritivo: 5 projetos é pouco para uso pessoal amplo</td></tr>
+      <tr><td>Presença em todas as plataformas com sincronização confiável</td><td>Sem calendário nativo robusto; usuários antigos excluídos de novos recursos</td></tr>
     </tbody>
   </table>
 
-  <h3>6.6&nbsp;&nbsp;Avaliações e comentários dos usuários</h3>
-  <table>
-    <thead><tr><th style="width:50%">Aspectos positivos frequentes</th><th style="width:50%">Críticas e dificuldades relatadas</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>Velocidade e estabilidade — o app é consistentemente descrito como rápido e confiável</td>
-        <td><b>Preço e o reajuste de dezembro de 2025</b>, apontado como o ponto mais debatido do produto</td>
-      </tr>
-      <tr>
-        <td>Entrada em linguagem natural, citada como o recurso que mais reduz atrito</td>
-        <td>Plano gratuito considerado restritivo: 5 projetos ativos é pouco para uso pessoal amplo</td>
-      </tr>
-      <tr>
-        <td>Presença em todas as plataformas com sincronização confiável</td>
-        <td>Ausência de visão de calendário nativa robusta, disponível apenas em planos pagos e de forma limitada</td>
-      </tr>
-      <tr>
-        <td>Interface limpa, sem excesso de recursos visuais</td>
-        <td>Usuários de planos antigos excluídos de novos recursos após o reajuste</td>
-      </tr>
-    </tbody>
-  </table>
-  <p><b>Sugestões recorrentes dos usuários:</b> plano gratuito mais generoso, visão de calendário nativa e maior clareza sobre o que justifica o preço.</p>
-
-  <h3>6.7&nbsp;&nbsp;Diferenciais</h3>
+  <h3>Diferenciais</h3>
   <ul>
-    <li><b>Entrada em linguagem natural.</b> É o diferencial mais citado e o que mais reduz o tempo entre pensar e registrar.</li>
-    <li><b>Onipresença de plataforma.</b> Poucos concorrentes cobrem móvel, desktop, web e navegador com a mesma qualidade.</li>
-    <li><b>Ecossistema de integrações sustentado por API pública.</b> Transforma o produto em plataforma.</li>
-    <li><b>Longevidade e independência.</b> Quase duas décadas de operação sem aquisição, o que a empresa usa como argumento de confiança.</li>
-    <li><b>Gamificação com Karma.</b> Mecanismo de engajamento que cria hábito sem depender de notificação intrusiva.</li>
+    <li><b>Entrada em linguagem natural</b>, que reduz ao mínimo o tempo entre pensar e registrar.</li>
+    <li><b>Onipresença de plataforma</b> e <b>API pública</b>, que transformam o produto em plataforma.</li>
+    <li><b>Longevidade e independência</b>: quase duas décadas sem aquisição, usado como argumento de confiança.</li>
   </ul>
+
+  <h3>Relação com o projeto da equipe</h3>
+  <table>
+    <tbody>
+      <tr><th style="width:27%">Funcionalidades em comum</th><td>CRUD de tarefas, prioridades, recorrência, categorização, filtros por data e status, e lembretes com antecedência configurável.</td></tr>
+      <tr><th>O que ele tem e o projeto não</th><td>Linguagem natural, subtarefas aninhadas, filtros salvos, colaboração, gamificação, API pública e clientes desktop.</td></tr>
+      <tr><th>O que o projeto tem e ele não</th><td>Todo o domínio financeiro. No Todoist é possível criar a tarefa &ldquo;pagar internet&rdquo;, mas concluí-la não registra R$ 99,90 em lugar algum.</td></tr>
+      <tr><th>O que serve de referência</th><td>A obsessão com a velocidade de captura: o requisito de registrar uma atividade em até 15 segundos merece o mesmo rigor.</td></tr>
+      <tr><th>Problemas a evitar</th><td>Duas lições do reajuste: <b>não aumentar preço sem entregar valor visível na mesma janela</b> e <b>não criar castas de usuários</b>. Excluir assinantes antigos de novos recursos transformou um reajuste comum em crise de reputação.</td></tr>
+      <tr><th>Oportunidade a explorar</th><td>Quem avalia migrar do Todoist por preço é o perfil do projeto. O argumento não é &ldquo;um Todoist mais barato&rdquo;, e sim &ldquo;pelo preço de um gerenciador de tarefas, você organiza também o seu dinheiro&rdquo;.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<section class="pagina">
-  <h3>6.8&nbsp;&nbsp;Relação com o projeto da equipe</h3>
-  <ol class="perguntas">
-    <li><b>Quais funcionalidades do concorrente também estão previstas no projeto?</b>
-    CRUD completo de tarefas, prioridades em quatro níveis, recorrência, categorização, filtros por data e status, conclusão e reabertura de tarefas, e notificações de lembrete com antecedência configurável.</li>
-
-    <li><b>Quais funcionalidades do concorrente não estão previstas no projeto?</b>
-    Entrada em linguagem natural, subtarefas aninhadas, filtros personalizados salvos, colaboração e compartilhamento de projetos, gamificação por pontuação, API pública com ecossistema de integrações, e clientes desktop e de navegador.</li>
-
-    <li><b>Quais funcionalidades do projeto não foram identificadas no concorrente?</b>
-    Todo o domínio financeiro: contas, receitas, despesas, saldo, orçamento e gasto por categoria. E, de novo, a ponte entre os domínios — no Todoist é possível criar a tarefa &ldquo;pagar internet&rdquo;, mas concluí-la não registra R$ 99,90 em lugar algum.</li>
-
-    <li><b>Quais características do concorrente podem servir de referência?</b>
-    Três: (i) a <b>obsessão com a velocidade de captura</b> — o requisito do MinhaVida de registrar uma atividade em até 15 segundos deve ser tratado com o mesmo rigor, e a entrada em linguagem natural é a evolução natural desse requisito; (ii) a <b>estabilidade como característica de produto</b>, e não como detalhe técnico; (iii) o <b>desenho do plano gratuito com limites claros e compreensíveis</b>, em vez de limites arbitrários.</li>
-
-    <li><b>Quais problemas identificados no concorrente podem ser evitados?</b>
-    O episódio do reajuste oferece duas lições concretas: (i) <b>nunca aumentar preço sem entregar valor novo e visível na mesma janela</b>; (ii) <b>nunca criar castas de usuários</b> — excluir assinantes antigos de novos recursos foi o que transformou um reajuste comum em crise de reputação. Uma terceira lição é de escopo: um plano gratuito restritivo demais empurra o usuário para o concorrente antes que ele perceba o valor do produto.</li>
-
-    <li><b>Quais oportunidades de diferenciação podem ser exploradas?</b>
-    O usuário que hoje avalia migrar do Todoist por preço é exatamente o perfil do MinhaVida: alguém que já entendeu o valor de organizar o dia e busca alternativa melhor custo-benefício. A oportunidade é oferecer <b>gestão de tarefas competente somada a algo que o Todoist não tem</b> — o lado financeiro — por um preço abaixo de US$ 7 mensais. O argumento de venda não é &ldquo;somos um Todoist mais barato&rdquo;, e sim &ldquo;pelo preço de um gerenciador de tarefas, você organiza também o seu dinheiro&rdquo;.</li>
-  </ol>
-</section>
-
-<!-- ============================= CONCORRENTE 4 — TICKTICK ============================= -->
-<section class="pagina">
-  <div class="abre-conc">
+<!-- ============================= 4 — TICKTICK ============================= -->
+<section>
+  <div class="abre-conc" style="margin-top:4mm">
     <div class="ordem">Concorrente 4 de 5</div>
-    <h2>7&nbsp;&nbsp;TickTick</h2>
-    <div class="papel">Tarefas, calendário e hábitos &middot; global &middot; o concorrente mais próximo do conceito de painel único do dia</div>
+    <h2>4&nbsp;&nbsp;TickTick</h2>
+    <div class="papel">Tarefas, calendário e hábitos &middot; global &middot; o mais próximo do conceito de painel único do dia</div>
   </div>
 
-  <h3>7.1&nbsp;&nbsp;Identificação do software</h3>
+  <h3>Identificação</h3>
   <table class="ficha">
-    <tr><th>Nome</th><td>TickTick — Lista de Tarefas e Calendário</td></tr>
-    <tr><th>Empresa responsável</th><td>Appest Inc. (também identificada como Appest Limited nas lojas de aplicativos)</td></tr>
-    <tr><th>Ano de criação</th><td>TickTick foi lançado em 2013. A equipe vinha do GTasks, aplicativo Android de 2010 integrado ao Google Tasks.</td></tr>
-    <tr><th>Público-alvo</th><td>Usuários que buscam reunir tarefas, calendário, foco e hábitos em um único aplicativo, a preço baixo</td></tr>
-    <tr><th>Região de atuação</th><td>Global, com interface em português</td></tr>
-    <tr><th>Site oficial</th><td>www.ticktick.com</td></tr>
-    <tr><th>Lojas de aplicativos</th><td>Google Play e App Store (identificador iOS 626144601), além de clientes desktop, web e extensões de navegador</td></tr>
+    <tr><th>Empresa e ano</th><td>Appest Inc., também identificada como Appest Limited nas lojas. Lançado em 2013; a equipe vinha do GTasks, app Android de 2010.</td></tr>
+    <tr><th>Público e região</th><td>Quem quer reunir tarefas, calendário, foco e hábitos em um só app, a preço baixo; global, com interface em português</td></tr>
+    <tr><th>Site e lojas</th><td>www.ticktick.com &middot; Google Play e App Store (id 626144601) &middot; desktop, web e extensões</td></tr>
     <tr><th>Escala</th><td>Avaliações entre 4,5 e 4,8 nas lojas de aplicativos</td></tr>
   </table>
-  <p class="fonte">Fontes: página do app na App Store; Crunchbase; ticktick.com/about; Capterra; GetApp; ClickUp (análise comparativa); Kimola (análise de avaliações de loja).</p>
 
-  <h3>7.2&nbsp;&nbsp;Problema que o software resolve</h3>
-  <p><b>Qual problema é solucionado?</b> A proliferação de aplicativos de produtividade. O TickTick parte da observação de que o usuário mantém um app de tarefas, outro de calendário, outro de Pomodoro e outro de hábitos — e propõe substituir os quatro.</p>
-  <p><b>Qual necessidade dos usuários é atendida?</b> Ver o dia inteiro em uma só tela, com tarefas e compromissos de calendário lado a lado, e ainda acompanhar hábitos e sessões de foco.</p>
-  <p><b>Quem são os principais usuários?</b> Estudantes e profissionais sensíveis a preço, que consideram o custo somado de várias assinaturas.</p>
-  <p><b>Em qual contexto é utilizado?</b> Como painel diário de referência, consultado várias vezes ao dia.</p>
-  <p><b>Qual é a proposta de valor?</b> Consolidação por um preço muito baixo: com aproximadamente US$ 3 mensais, o usuário substitui duas ou três assinaturas.</p>
+  <h3>Problema que resolve</h3>
+  <p>A proliferação de aplicativos de produtividade: o usuário mantém um app de tarefas, outro de calendário, outro de Pomodoro e outro de hábitos, e o TickTick substitui os quatro por cerca de US$ 3 mensais. É o concorrente que <b>compartilha a tese do MinhaVida</b>. A diferença é o eixo: ele consolida o tempo; o projeto consolida tempo e dinheiro.</p>
 
-  <div class="caixa destaque">
-    <div class="caixa-titulo">O concorrente conceitualmente mais próximo</div>
-    De todos os analisados, o TickTick é o que compartilha a <b>tese</b> do MinhaVida: consolidar em um app o que hoje está espalhado. A diferença é o eixo da consolidação. O TickTick consolida o <b>tempo</b> — tarefas, calendário, foco, hábitos. O MinhaVida consolida <b>tempo e dinheiro</b>. Nenhum dos quatro módulos do TickTick trata de valores monetários, e é exatamente aí que reside o espaço do projeto.
-  </div>
-
-  <h3>7.3&nbsp;&nbsp;Funcionalidades</h3>
+  <h3>Funcionalidades</h3>
   <table>
-    <thead><tr><th style="width:32%">Funcionalidade</th><th style="width:44%">Descrição</th><th style="width:24%">Também prevista no MinhaVida?</th></tr></thead>
+    <thead><tr><th style="width:36%">Funcionalidade</th><th>Descrição</th><th style="width:21%">No MinhaVida?</th></tr></thead>
     <tbody>
-      <tr><td>CRUD de tarefas com listas</td><td>Organização por listas, com subtarefas</td><td><span class="pos">Sim</span> — por categorias</td></tr>
-      <tr><td>Visão de calendário</td><td>Tarefas e eventos em visão diária, semanal e mensal</td><td><span class="neg">Parcial</span> — há agenda do dia, sem calendário completo</td></tr>
-      <tr><td>Temporizador Pomodoro</td><td>Sessões de foco cronometradas com estatísticas</td><td><span class="neg">Não</span> — candidato interessante ao roadmap</td></tr>
-      <tr><td>Rastreador de hábitos</td><td>Acompanhamento de hábitos diários com sequências</td><td><span class="neg">Não no MVP</span></td></tr>
+      <tr><td>CRUD de tarefas com listas</td><td>Organização por listas, com subtarefas</td><td><span class="pos">Sim</span> &mdash; por categorias</td></tr>
       <tr><td>Recorrência e lembretes</td><td>Repetição flexível e múltiplos lembretes por tarefa</td><td><span class="pos">Sim</span></td></tr>
-      <tr><td>Listas inteligentes</td><td>Filtros dinâmicos configuráveis pelo usuário</td><td><span class="neg">Parcial</span></td></tr>
-      <tr><td>Integração com Google Calendar</td><td>Sincronização bidirecional de eventos</td><td><span class="neg">Não no MVP</span></td></tr>
-      <tr><td>Colaboração</td><td>Compartilhamento de listas</td><td><span class="neg">Não</span></td></tr>
-      <tr><td>Gestão financeira</td><td>—</td><td><span class="pos">Exclusivo do MinhaVida</span></td></tr>
+      <tr><td>Visão de calendário</td><td>Tarefas e eventos em visão diária, semanal e mensal</td><td><span class="neg">Parcial</span> &mdash; agenda do dia</td></tr>
+      <tr><td>Pomodoro e hábitos</td><td>Sessões de foco cronometradas e acompanhamento de hábitos</td><td><span class="neg">Não no MVP</span></td></tr>
+      <tr><td>Listas inteligentes, Google Calendar e colaboração</td><td>Filtros dinâmicos, sincronização de eventos e compartilhamento</td><td><span class="neg">Parcial / não</span></td></tr>
     </tbody>
   </table>
 
-  <h3>7.4&nbsp;&nbsp;Modelo de monetização</h3>
-  <p>Modelo <b>freemium</b> com um único plano pago, notavelmente barato, e um plano gratuito cujos limites são numéricos e explícitos.</p>
+  <h3>Modelo de monetização</h3>
+  <p>Freemium com um único plano pago e limites gratuitos numéricos e explícitos: até <b>9 listas, 99 tarefas por lista, 19 subtarefas e 1 calendário</b>. O <b>Premium</b> custa <b>US$ 35,99/ano</b> (≈ US$ 3/mês) ou US$ 2,99/mês, elevando para 299 listas e 999 tarefas, com múltiplos calendários e listas inteligentes. O preço é o argumento central: menos da metade do Pro do Todoist, com calendário, Pomodoro e hábitos no pacote.</p>
+
+  <h3>Tecnologias e plataformas</h3>
+  <p>Android e iOS com widgets e assistentes de voz, clientes Windows e macOS, web e extensões. Integrações públicas com Google Calendar, Outlook, Slack, Zapier, IFTTT e Siri. Sincronização geralmente confiável, com falhas pontuais no calendário. Banco de dados e linguagens não divulgados.</p>
+
+  <h3>Avaliações dos usuários</h3>
   <table>
-    <thead><tr><th style="width:22%">Plano</th><th style="width:24%">Valor</th><th>Limites e recursos</th></tr></thead>
+    <thead><tr><th style="width:50%">Elogios frequentes</th><th>Críticas recorrentes</th></tr></thead>
     <tbody>
-      <tr><td>Gratuito</td><td class="num">US$ 0</td><td>Até 9 listas, 99 tarefas por lista, 19 subtarefas por tarefa e 1 calendário</td></tr>
-      <tr><td>Premium</td><td class="num">US$ 35,99/ano<br>(≈ US$ 3/mês)<br>ou US$ 2,99/mês</td><td>Até 299 listas, 999 tarefas por lista, 199 subtarefas, múltiplos calendários, listas inteligentes personalizadas e temas adicionais</td></tr>
-    </tbody>
-  </table>
-  <p class="nota">O posicionamento de preço é o argumento central do produto: o Premium do TickTick custa menos da metade do Pro do Todoist e entrega calendário, Pomodoro e hábitos no pacote.</p>
-
-  <h3>7.5&nbsp;&nbsp;Tecnologias e plataformas</h3>
-  <table>
-    <thead><tr><th style="width:34%">Dimensão</th><th>O que é público</th></tr></thead>
-    <tbody>
-      <tr><td>Aplicativos móveis</td><td>Android e iOS, com widgets e integração com assistentes de voz</td></tr>
-      <tr><td>Desktop e web</td><td>Windows, macOS, aplicação web e extensões de navegador</td></tr>
-      <tr><td>Integrações</td><td>Google Calendar, Outlook, Slack, Zapier e IFTTT; integração com Siri no iOS</td></tr>
-      <tr><td>Sincronização</td><td>Sincronização multiplataforma, apontada pelos usuários como geralmente confiável, com falhas pontuais na visão de calendário</td></tr>
-      <tr><td>Banco de dados / linguagens</td><td class="nota">Não divulgado publicamente — não inferido</td></tr>
+      <tr><td>Plano gratuito generoso e excelente custo-benefício do Premium</td><td><b>Falhas de sincronização no calendário</b> &mdash; eventos que não aparecem e erros de data</td></tr>
+      <tr><td>Amplitude de recursos: calendário, Pomodoro e hábitos em um só app</td><td><b>Recursos essenciais atrás do paywall</b>, sobretudo calendário e Siri</td></tr>
+      <tr><td>Personalização e recorrência flexível bem avaliadas</td><td><b>Suporte lento</b>, de 5 a 14 dias e só por e-mail; e <b>dúvidas sobre privacidade</b> ligadas à origem da empresa</td></tr>
     </tbody>
   </table>
 
-  <h3>7.6&nbsp;&nbsp;Avaliações e comentários dos usuários</h3>
-  <table>
-    <thead><tr><th style="width:50%">Aspectos positivos frequentes</th><th style="width:50%">Críticas e dificuldades relatadas</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>Plano gratuito considerado generoso em relação ao dos concorrentes</td>
-        <td><b>Falhas de sincronização na visão de calendário</b> — eventos que não aparecem corretamente, e erros de exibição de datas</td>
-      </tr>
-      <tr>
-        <td>Excelente relação custo-benefício do plano Premium</td>
-        <td><b>Recursos essenciais atrás do paywall</b> — calendário e integração com Siri são os alvos mais frequentes da crítica</td>
-      </tr>
-      <tr>
-        <td>Conjunto de recursos amplo: calendário, Pomodoro e hábitos em um só app</td>
-        <td><b>Suporte lento</b> — relatos de espera de 5 a 14 dias por resposta, apenas por e-mail</td>
-      </tr>
-      <tr>
-        <td>Personalização, listas inteligentes e recorrência flexível bem avaliadas</td>
-        <td><b>Preocupações com privacidade</b> associadas à origem da empresa, mencionadas por parte dos usuários como fator de desconforto ao armazenar informações pessoais</td>
-      </tr>
-    </tbody>
-  </table>
-  <p><b>Sugestões recorrentes dos usuários:</b> estabilizar a sincronização do calendário, ampliar o canal de suporte e esclarecer as políticas de tratamento de dados.</p>
-
-  <h3>7.7&nbsp;&nbsp;Diferenciais</h3>
+  <h3>Diferenciais</h3>
   <ul>
-    <li><b>Consolidação de quatro categorias de app em um.</b> Tarefas, calendário, foco e hábitos.</li>
-    <li><b>Preço agressivo.</b> Aproximadamente US$ 3 mensais, o mais baixo entre os concorrentes analisados com esse nível de recurso.</li>
-    <li><b>Plano gratuito com limites numéricos claros.</b> O usuário sabe exatamente o que tem e o que ganha ao pagar.</li>
-    <li><b>Visão de calendário integrada às tarefas</b>, recurso que o Todoist só entrega de forma limitada.</li>
+    <li><b>Consolidação de quatro categorias de app em um</b>: tarefas, calendário, foco e hábitos.</li>
+    <li><b>Preço agressivo</b> &mdash; o mais baixo entre os analisados com esse nível de recurso.</li>
+    <li><b>Plano gratuito com limites numéricos claros</b> e calendário integrado às tarefas.</li>
   </ul>
 
-  <h3>7.8&nbsp;&nbsp;Relação com o projeto da equipe</h3>
-  <ol class="perguntas">
-    <li><b>Quais funcionalidades do concorrente também estão previstas no projeto?</b>
-    CRUD de tarefas com organização por categorias, recorrência flexível, múltiplos lembretes, filtros por período e status, e uma visão consolidada do dia.</li>
-
-    <li><b>Quais funcionalidades do concorrente não estão previstas no projeto?</b>
-    Calendário completo em visões semanal e mensal, temporizador Pomodoro, rastreador de hábitos, listas inteligentes configuráveis pelo usuário, integração com Google Calendar e clientes desktop.</li>
-
-    <li><b>Quais funcionalidades do projeto não foram identificadas no concorrente?</b>
-    Todo o domínio financeiro e a quitação integrada. Vale registrar o ponto com precisão: o TickTick permite criar a tarefa recorrente &ldquo;pagar internet todo dia 10&rdquo; e marcá-la como concluída, mas o app não sabe que aquilo custou R$ 99,90, não debita conta alguma e não compõe nenhum relatório financeiro.</li>
-
-    <li><b>Quais características do concorrente podem servir de referência?</b>
-    Duas, ambas diretamente aplicáveis: (i) o <b>desenho do plano gratuito com limites numéricos explícitos</b> — nove listas, noventa e nove tarefas — que é honesto com o usuário e fácil de comunicar; e (ii) a <b>tese de consolidação como argumento de venda</b>: &ldquo;substitua três assinaturas por uma&rdquo; é precisamente o discurso que o MinhaVida pode adotar, trocando o eixo de tempo para tempo e dinheiro.</li>
-
-    <li><b>Quais problemas identificados no concorrente podem ser evitados?</b>
-    Três: (i) <b>não colocar atrás do paywall aquilo que define o produto</b> — se o MinhaVida se vende como painel único do dia, esse painel precisa estar no plano gratuito; (ii) <b>tratar sincronização como requisito crítico</b>, já que a falha de sincronização do calendário é a reclamação número um do TickTick e a arquitetura do projeto é <i>offline-first</i>, com os mesmos riscos; (iii) <b>não deixar o suporte apenas em e-mail com resposta em duas semanas</b>.</li>
-
-    <li><b>Quais oportunidades de diferenciação podem ser exploradas?</b>
-    A preocupação com privacidade relatada por usuários do TickTick abre uma oportunidade concreta para um produto brasileiro: <b>dados hospedados no Brasil, conformidade explícita com a LGPD e política de privacidade compreensível</b>. Essa é uma vantagem que o MinhaVida já tem por construção — a arquitetura prevê hospedagem em território nacional — e que basta comunicar.</li>
-  </ol>
+  <h3>Relação com o projeto da equipe</h3>
+  <table>
+    <tbody>
+      <tr><th style="width:27%">Funcionalidades em comum</th><td>CRUD de tarefas por categorias, recorrência flexível, múltiplos lembretes, filtros e visão consolidada do dia.</td></tr>
+      <tr><th>O que ele tem e o projeto não</th><td>Calendário completo, Pomodoro, hábitos, listas inteligentes, Google Calendar e clientes desktop.</td></tr>
+      <tr><th>O que o projeto tem e ele não</th><td>Todo o domínio financeiro. É possível criar a tarefa recorrente &ldquo;pagar internet todo dia 10&rdquo; e concluí-la, mas o app não sabe que custou R$ 99,90 nem debita conta alguma.</td></tr>
+      <tr><th>O que serve de referência</th><td>O plano gratuito com limites numéricos explícitos, honesto e fácil de comunicar, e a tese de consolidação como argumento de venda.</td></tr>
+      <tr><th>Problemas a evitar</th><td>Não colocar atrás do paywall aquilo que define o produto: se o projeto se vende como painel único do dia, esse painel precisa estar no gratuito. E tratar sincronização como requisito crítico.</td></tr>
+      <tr><th>Oportunidade a explorar</th><td>As dúvidas de privacidade abrem espaço para um produto brasileiro: <b>dados hospedados no Brasil e conformidade explícita com a LGPD</b>, vantagem que o projeto já tem por construção.</td></tr>
+    </tbody>
+  </table>
 </section>
 
-<!-- ============================= CONCORRENTE 5 — NOTION ============================= -->
-<section class="pagina">
-  <div class="abre-conc">
+<!-- ============================= 5 — NOTION ============================= -->
+<section>
+  <div class="abre-conc" style="margin-top:4mm">
     <div class="ordem">Concorrente 5 de 5</div>
-    <h2>8&nbsp;&nbsp;Notion</h2>
+    <h2>5&nbsp;&nbsp;Notion</h2>
     <div class="papel">Espaço de trabalho tudo-em-um &middot; global &middot; a alternativa genérica, montada pelo próprio usuário</div>
   </div>
 
-  <h3>8.1&nbsp;&nbsp;Identificação do software</h3>
+  <h3>Identificação</h3>
   <table class="ficha">
-    <tr><th>Nome</th><td>Notion</td></tr>
-    <tr><th>Empresa responsável</th><td>Notion Labs, Inc.</td></tr>
-    <tr><th>Ano de criação</th><td>Fundada em 2013 por Ivan Zhao e cofundadores; o produto na forma atual consolidou-se a partir de 2016</td></tr>
-    <tr><th>Público-alvo</th><td>Do usuário individual que organiza a vida pessoal a equipes e empresas inteiras</td></tr>
-    <tr><th>Região de atuação</th><td>Global, com interface em português</td></tr>
-    <tr><th>Sede</th><td>São Francisco, Estados Unidos</td></tr>
-    <tr><th>Site oficial</th><td>www.notion.so</td></tr>
-    <tr><th>Lojas de aplicativos</th><td>Google Play, App Store, além de clientes desktop e web</td></tr>
+    <tr><th>Empresa e ano</th><td>Notion Labs, Inc., fundada em 2013 por Ivan Zhao e cofundadores; o produto consolidou-se na forma atual a partir de 2016. Sede em São Francisco, EUA.</td></tr>
+    <tr><th>Público e região</th><td>Do usuário individual a equipes e empresas inteiras; global, com interface em português</td></tr>
+    <tr><th>Site e lojas</th><td>www.notion.so &middot; Google Play, App Store, clientes desktop e web</td></tr>
     <tr><th>Escala</th><td>Mais de 30 milhões de usuários e mais de 4 milhões de clientes reportados</td></tr>
   </table>
-  <p class="fonte">Fontes: Wikipédia; Productmint; Latka; Capterra.</p>
 
-  <h3>8.2&nbsp;&nbsp;Problema que o software resolve</h3>
-  <p><b>Qual problema é solucionado?</b> A rigidez das ferramentas especializadas. O Notion parte da premissa oposta à dos outros quatro concorrentes: em vez de entregar um produto que resolve um problema específico, entrega <b>blocos de construção</b> — páginas, bancos de dados, visões, fórmulas e relações — com os quais o usuário monta a ferramenta de que precisa.</p>
-  <p><b>Qual necessidade dos usuários é atendida?</b> Ter um sistema pessoal que espelhe exatamente o modo como aquela pessoa pensa, sem se submeter às decisões de outro produto.</p>
-  <p><b>Quem são os principais usuários?</b> Usuários com alta disposição a configurar. É comum encontrarem-se templates comunitários que implementam justamente o que o MinhaVida propõe: um painel com tarefas do dia e controle de gastos na mesma página.</p>
-  <p><b>Em qual contexto é utilizado?</b> Em desktop, predominantemente. O uso móvel é secundário e, segundo os próprios usuários, insatisfatório.</p>
-  <p><b>Qual é a proposta de valor?</b> Flexibilidade total: um espaço em que notas, tarefas, bancos de dados e documentação convivem.</p>
+  <h3>Problema que resolve</h3>
+  <p>A rigidez das ferramentas especializadas. Em vez de um produto que resolve um problema específico, o Notion entrega <b>blocos de construção</b> &mdash; páginas, bancos de dados, visões e fórmulas &mdash; com os quais o usuário monta a ferramenta de que precisa. É comum encontrar templates comunitários que implementam exatamente o que o MinhaVida propõe: tarefas do dia e gastos na mesma página.</p>
 
-  <div class="caixa">
-    <div class="caixa-titulo">Por que o Notion é o concorrente mais relevante para a tese do projeto</div>
-    O Notion é a prova de que <b>existe demanda real pela integração que o MinhaVida propõe</b>: milhares de usuários montam manualmente painéis que juntam tarefas e finanças. Mas é também a prova de que <b>essa demanda está mal atendida</b> — porque atendê-la no Notion exige horas de configuração, conhecimento de bancos de dados relacionais e tolerância a um aplicativo móvel que os usuários descrevem como quase somente leitura. O MinhaVida entrega pronto, e no celular, o que o Notion entrega como material de construção para o desktop.
-  </div>
-
-  <h3>8.3&nbsp;&nbsp;Funcionalidades</h3>
+  <h3>Funcionalidades</h3>
   <table>
-    <thead><tr><th style="width:32%">Funcionalidade</th><th style="width:44%">Descrição</th><th style="width:24%">Também prevista no MinhaVida?</th></tr></thead>
+    <thead><tr><th style="width:36%">Funcionalidade</th><th>Descrição</th><th style="width:21%">No MinhaVida?</th></tr></thead>
     <tbody>
-      <tr><td>Páginas e documentos</td><td>Editor por blocos com hierarquia infinita</td><td><span class="neg">Não</span> — fora do escopo</td></tr>
-      <tr><td>Bancos de dados</td><td>Tabelas com tipos de campo, visões, filtros, ordenação e relações</td><td><span class="neg">Não</span> — o modelo do MinhaVida é fixo e especializado</td></tr>
-      <tr><td>Gestão de tarefas</td><td>Possível, por meio de banco de dados configurado pelo usuário</td><td><span class="pos">Sim</span> — pronta, sem configuração</td></tr>
-      <tr><td>Controle financeiro</td><td>Possível, por banco de dados com fórmulas e agregações</td><td><span class="pos">Sim</span> — pronto, com regras de negócio</td></tr>
-      <tr><td>Dashboards</td><td>Montados pelo usuário a partir de visões vinculadas</td><td><span class="pos">Sim</span> — painel inicial pronto</td></tr>
-      <tr><td>Colaboração</td><td>Edição simultânea, comentários e permissões</td><td><span class="neg">Não</span></td></tr>
-      <tr><td>Inteligência artificial</td><td>Notion AI para redação, resumo e consulta ao conteúdo</td><td><span class="neg">Não</span></td></tr>
-      <tr><td>Templates</td><td>Galeria oficial e comunitária</td><td><span class="neg">Não</span></td></tr>
-      <tr><td>API pública</td><td>Sim, com integrações de terceiros</td><td><span class="neg">Não no MVP</span></td></tr>
-      <tr><td>Notificações de vencimento</td><td>Limitadas; não há alerta financeiro nativo</td><td><span class="pos">Sim</span> — push agendado por antecedência</td></tr>
+      <tr><td>Gestão de tarefas</td><td>Possível, por banco de dados configurado pelo usuário</td><td><span class="pos">Sim</span> &mdash; pronta</td></tr>
+      <tr><td>Controle financeiro</td><td>Possível, por banco de dados com fórmulas e agregações</td><td><span class="pos">Sim</span> &mdash; com regras</td></tr>
+      <tr><td>Dashboards</td><td>Montados pelo usuário a partir de visões vinculadas</td><td><span class="pos">Sim</span> &mdash; painel pronto</td></tr>
+      <tr><td>Páginas e bancos de dados</td><td>Editor por blocos, tabelas com tipos de campo, visões e relações</td><td><span class="neg">Não</span> &mdash; modelo fixo</td></tr>
+      <tr><td>Colaboração, IA, templates e API</td><td>Edição simultânea, Notion AI, galeria e integrações</td><td><span class="neg">Não</span></td></tr>
     </tbody>
   </table>
 
-  <h3>8.4&nbsp;&nbsp;Modelo de monetização</h3>
-  <p>Modelo <b>freemium por assento</b>, com camada de inteligência artificial embutida no plano intermediário-alto e créditos vendidos à parte.</p>
-  <table>
-    <thead><tr><th style="width:22%">Plano</th><th style="width:30%">Valor por membro</th><th>Observações</th></tr></thead>
-    <tbody>
-      <tr><td>Free</td><td class="num">US$ 0</td><td>Uso individual amplo; IA apenas em avaliação limitada</td></tr>
-      <tr><td>Plus</td><td class="num">US$ 10/mês no anual<br>US$ 12/mês no mensal</td><td>Uploads e histórico ampliados; IA ainda limitada</td></tr>
-      <tr><td>Business</td><td class="num">US$ 20/mês no anual<br>US$ 24/mês no mensal</td><td>Inclui a IA completa e créditos disponíveis</td></tr>
-      <tr><td>Enterprise</td><td class="num">Sob consulta</td><td>Controles corporativos e termos específicos</td></tr>
-    </tbody>
-  </table>
-  <p class="nota">Créditos de IA são vendidos separadamente, a cerca de US$ 10 por mil créditos mensais. O modelo migrou de um adicional de IA de valor fixo para a inclusão da IA completa no plano Business — movimento relevante para quem analisa tendências de precificação: a IA deixou de ser um complemento vendido à parte e passou a ser o argumento de subida de plano.</p>
+  <h3>Modelo de monetização</h3>
+  <p>Freemium <b>por assento</b>. O <b>Free</b> é amplo para uso individual; o <b>Plus</b> custa US$ 10 por membro/mês no anual (US$ 12 no mensal) e o <b>Business</b>, US$ 20 por membro/mês no anual (US$ 24 no mensal), já com a IA completa. Créditos de IA são vendidos à parte, a cerca de US$ 10 por mil mensais. O modelo migrou de um adicional de IA de valor fixo para a inclusão da IA no Business: a IA deixou de ser complemento e virou argumento de subida de plano.</p>
 
-  <h3>8.5&nbsp;&nbsp;Tecnologias e plataformas</h3>
+  <h3>Tecnologias e plataformas</h3>
+  <p>Aplicação web como plataforma principal, clientes Windows e macOS, Android e iOS. Possui <b>API pública documentada</b> com ecossistema de integrações e a camada Notion AI. O funcionamento offline existe, mas é relatado como não confiável. Banco de dados e linguagens não divulgados.</p>
+
+  <h3>Avaliações dos usuários</h3>
   <table>
-    <thead><tr><th style="width:34%">Dimensão</th><th>O que é público</th></tr></thead>
+    <thead><tr><th style="width:50%">Elogios frequentes</th><th>Críticas recorrentes</th></tr></thead>
     <tbody>
-      <tr><td>Aplicação web</td><td>Sim — é a plataforma principal do produto</td></tr>
-      <tr><td>Desktop</td><td>Windows e macOS</td></tr>
-      <tr><td>Aplicativos móveis</td><td>Android e iOS</td></tr>
-      <tr><td>Inteligência artificial</td><td>Notion AI, integrada ao produto e comercializada por plano e por créditos</td></tr>
-      <tr><td>API pública</td><td>Sim, documentada, com ecossistema de integrações</td></tr>
-      <tr><td>Funcionamento offline</td><td>Existe, mas é relatado pelos usuários como não confiável</td></tr>
-      <tr><td>Banco de dados / linguagens</td><td class="nota">Não divulgado de forma oficial — não inferido</td></tr>
+      <tr><td>Flexibilidade e poder de modelagem sem paralelo entre os concorrentes</td><td><b>Desempenho:</b> lentidão com bases grandes, em cerca de 84% de 170 avaliações sobre o tema</td></tr>
+      <tr><td>Plano gratuito muito generoso para uso individual</td><td><b>App móvel</b> descrito como &ldquo;visualizador somente leitura&rdquo;, em cerca de 49% de 140 avaliações</td></tr>
+      <tr><td>Comunidade ativa e vasta galeria de templates</td><td><b>Curva de aprendizado</b> e <b>offline não confiável</b>, este em cerca de 77% de 81 avaliações</td></tr>
     </tbody>
   </table>
 
-  <h3>8.6&nbsp;&nbsp;Avaliações e comentários dos usuários</h3>
-  <p>O padrão descrito de forma recorrente pelas fontes é o de uma <b>relação de amor e ódio</b>: os usuários reconhecem a potência da ferramenta e, ao mesmo tempo, se ressentem do desempenho e da experiência móvel. Levantamentos de avaliações verificadas quantificam esses pontos:</p>
-  <table>
-    <thead><tr><th style="width:50%">Aspectos positivos frequentes</th><th style="width:50%">Críticas e dificuldades relatadas</th></tr></thead>
-    <tbody>
-      <tr>
-        <td>Flexibilidade e poder de modelagem sem paralelo entre os concorrentes</td>
-        <td><b>Desempenho.</b> Lentidão com bases grandes e páginas complexas, mencionada em cerca de 84% de um conjunto de 170 avaliações que tratam do tema</td>
-      </tr>
-      <tr>
-        <td>Plano gratuito muito generoso para uso individual</td>
-        <td><b>Aplicativo móvel.</b> Descrito como &ldquo;um visualizador somente leitura&rdquo; frente ao desktop, com edição lenta e limitada; presente em cerca de 49% de um conjunto de 140 avaliações sobre o tema</td>
-      </tr>
-      <tr>
-        <td>Comunidade ativa e vasta galeria de templates</td>
-        <td><b>Curva de aprendizado.</b> Excesso de recursos e documentação de introdução considerada insuficiente</td>
-      </tr>
-      <tr>
-        <td>Um único produto cobre notas, tarefas, bases de dados e documentação</td>
-        <td><b>Acesso offline não confiável</b>, apontado em cerca de 77% de um conjunto de 81 avaliações que tratam do assunto</td>
-      </tr>
-    </tbody>
-  </table>
-  <p><b>Sugestões recorrentes dos usuários:</b> priorizar desempenho em vez de novos recursos, reescrever a experiência móvel e tornar o modo offline confiável.</p>
-
-  <h3>8.7&nbsp;&nbsp;Diferenciais</h3>
+  <h3>Diferenciais</h3>
   <ul>
-    <li><b>Flexibilidade estrutural.</b> Nenhum concorrente permite modelar o próprio sistema com esse grau de liberdade.</li>
-    <li><b>Comunidade e templates.</b> Rede de conteúdo que funciona como aquisição e retenção.</li>
-    <li><b>Inteligência artificial integrada</b> ao conteúdo do próprio espaço de trabalho.</li>
-    <li><b>Plano gratuito individual amplo</b>, que sustenta a base de entrada.</li>
-    <li><b>Posicionamento de plataforma</b>, com API pública e ecossistema.</li>
+    <li><b>Flexibilidade estrutural</b>: nenhum concorrente permite modelar o próprio sistema com esse grau de liberdade.</li>
+    <li><b>Comunidade e templates</b>, que funcionam como aquisição e retenção.</li>
+    <li><b>IA integrada</b> ao conteúdo do espaço de trabalho e <b>posicionamento de plataforma</b>, com API pública.</li>
   </ul>
 
-  <h3>8.8&nbsp;&nbsp;Relação com o projeto da equipe</h3>
-  <ol class="perguntas">
-    <li><b>Quais funcionalidades do concorrente também estão previstas no projeto?</b>
-    Em termos de resultado final, quase todas as do MinhaVida podem ser reproduzidas no Notion: tarefas, categorias, controle financeiro, painéis e relatórios. A diferença é que no Notion nada disso vem pronto — é o usuário que precisa construir.</li>
-
-    <li><b>Quais funcionalidades do concorrente não estão previstas no projeto?</b>
-    Editor de documentos por blocos, bancos de dados configuráveis pelo usuário, relações entre bases, fórmulas, colaboração, inteligência artificial, galeria de templates e API pública.</li>
-
-    <li><b>Quais funcionalidades do projeto não foram identificadas no concorrente?</b>
-    Regras de negócio financeiras nativas: cálculo automático de saldo com garantia de consistência transacional, alerta de vencimento por proximidade e, novamente, a quitação que gera a transação. No Notion, tudo isso só existe se o usuário escrever as fórmulas — e sem nenhuma garantia de integridade.</li>
-
-    <li><b>Quais características do concorrente podem servir de referência?</b>
-    Duas: (i) o <b>plano gratuito individual generoso</b> como motor de adoção; e (ii) a constatação, extraída da existência de milhares de templates que unem tarefas e finanças, de que <b>a demanda pela integração é real e mensurável</b>. Essa é a evidência de mercado mais forte a favor da tese do projeto encontrada nesta pesquisa.</li>
-
-    <li><b>Quais problemas identificados no concorrente podem ser evitados?</b>
-    Os três principais são diretamente endereçáveis pelas escolhas técnicas da equipe: (i) <b>desempenho móvel</b> — o Flutter compila para código nativo e evita a arquitetura que penaliza o Notion no celular; (ii) <b>offline não confiável</b> — o MinhaVida foi desenhado como <i>offline-first</i>, com base local e fila de sincronização idempotente, o que ataca a reclamação de frente; (iii) <b>curva de aprendizado</b> — a especialização do MinhaVida é uma vantagem: o usuário não configura nada, apenas usa.</li>
-
-    <li><b>Quais oportunidades de diferenciação podem ser exploradas?</b>
-    A oportunidade é explícita: <b>entregar pronto, no celular e com regras de negócio corretas, aquilo que o Notion entrega como material de construção para o desktop</b>. O público que hoje mantém um template de finanças e tarefas no Notion é um segmento já convencido da tese e insatisfeito com a execução. É o público mais barato de conquistar que esta pesquisa identificou.</li>
-  </ol>
-</section>
-<!-- ============================= 9 — QUADRO COMPARATIVO ============================= -->
-<section class="pagina">
-  <h1>9&nbsp;&nbsp;Quadro comparativo consolidado</h1>
-
-  <h3>9.1&nbsp;&nbsp;Identificação e escala</h3>
+  <h3>Relação com o projeto da equipe</h3>
   <table>
-    <thead><tr><th style="width:15%">Software</th><th style="width:13%">Origem</th><th style="width:9%">Ano</th><th style="width:20%">Categoria</th><th>Escala reportada</th></tr></thead>
     <tbody>
-      <tr><td><b>Organizze</b></td><td>Brasil (SC)</td><td>2013</td><td>Finanças pessoais</td><td>≈ 2,3 mi de instalações só na App Store; mais de 6 mi no total</td></tr>
-      <tr><td><b>Mobills</b></td><td>Brasil (CE)</td><td>2014</td><td>Finanças pessoais</td><td>+5 mi de downloads; ≈ 8 mi de usuários cadastrados</td></tr>
-      <tr><td><b>Todoist</b></td><td>EUA / remota</td><td>2007</td><td>Gestão de tarefas</td><td>+30 mi de usuários registrados</td></tr>
-      <tr><td><b>TickTick</b></td><td>Global</td><td>2013</td><td>Tarefas + calendário</td><td>Não divulgada; notas de 4,5 a 4,8 nas lojas</td></tr>
-      <tr><td><b>Notion</b></td><td>EUA (SF)</td><td>2013</td><td>Espaço de trabalho</td><td>+30 mi de usuários; +4 mi de clientes</td></tr>
-      <tr style="background:#EAF1FE"><td><b>MinhaVida</b></td><td>Brasil</td><td>2026</td><td><b>Tarefas + finanças</b></td><td>Em desenvolvimento</td></tr>
+      <tr><th style="width:27%">Funcionalidades em comum</th><td>Em resultado final, quase todas as do MinhaVida podem ser reproduzidas no Notion. A diferença é que nada vem pronto: é o usuário que constrói.</td></tr>
+      <tr><th>O que ele tem e o projeto não</th><td>Editor por blocos, bancos de dados configuráveis, relações, fórmulas, colaboração, IA, templates e API pública.</td></tr>
+      <tr><th>O que o projeto tem e ele não</th><td>Regras de negócio financeiras nativas: saldo com consistência transacional garantida e a quitação que gera a transação. No Notion isso só existe se o usuário escrever as fórmulas, sem garantia de integridade.</td></tr>
+      <tr><th>O que serve de referência</th><td>O plano gratuito individual como motor de adoção; e os milhares de templates que unem tarefas e finanças, prova de que <b>a demanda pela integração é real</b>.</td></tr>
+      <tr><th>Problemas a evitar</th><td><b>Desempenho móvel</b>, atacado pelo Flutter; <b>offline não confiável</b>, atacado pela arquitetura <i>offline-first</i>; e a <b>curva de aprendizado</b>, em que a especialização é vantagem.</td></tr>
+      <tr><th>Oportunidade a explorar</th><td>Entregar pronto e no celular o que o Notion entrega como material de construção para o desktop. Quem mantém esses templates já está convencido da tese.</td></tr>
     </tbody>
   </table>
-
-  <h3>9.2&nbsp;&nbsp;Cobertura funcional frente aos pilares do projeto</h3>
-  <table>
-    <thead><tr><th style="width:26%">Capacidade</th><th class="centro">Organizze</th><th class="centro">Mobills</th><th class="centro">Todoist</th><th class="centro">TickTick</th><th class="centro">Notion</th><th class="centro" style="background:#D8E4FA">MinhaVida</th></tr></thead>
-    <tbody>
-      <tr><td>CRUD de tarefas</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Completo</td><td class="centro">Completo</td><td class="centro">Configurável</td><td class="centro"><b>Completo</b></td></tr>
-      <tr><td>Recorrência de tarefas</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Avançada</td><td class="centro">Avançada</td><td class="centro">Configurável</td><td class="centro"><b>Sim</b></td></tr>
-      <tr><td>Receitas e despesas</td><td class="centro">Completo</td><td class="centro">Completo</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Configurável</td><td class="centro"><b>Completo</b></td></tr>
-      <tr><td>Saldo e múltiplas contas</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Configurável</td><td class="centro"><b>Sim</b></td></tr>
-      <tr><td>Orçamento por categoria</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Configurável</td><td class="centro"><b>Sim</b></td></tr>
-      <tr><td>Contas a pagar com alerta</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Parcial</td><td class="centro">Parcial</td><td class="centro">Limitado</td><td class="centro"><b>Sim</b></td></tr>
-      <tr style="background:#EAF1FE"><td><b>Quitação que gera lançamento</b></td><td class="centro">—</td><td class="centro">—</td><td class="centro">—</td><td class="centro">—</td><td class="centro">—</td><td class="centro"><b>Sim</b></td></tr>
-      <tr><td>Painel único do dia</td><td class="centro">Financeiro</td><td class="centro">Financeiro</td><td class="centro">Tarefas</td><td class="centro">Tarefas</td><td class="centro">Configurável</td><td class="centro"><b>Ambos</b></td></tr>
-      <tr><td>Sincronização bancária</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">—</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Roadmap</td></tr>
-      <tr><td>Calendário completo</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Limitado</td><td class="centro">Sim</td><td class="centro">Configurável</td><td class="centro">Roadmap</td></tr>
-      <tr><td>Colaboração</td><td class="centro">—</td><td class="centro">—</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Fora de escopo</td></tr>
-      <tr><td>Funcionamento offline</td><td class="centro">Parcial</td><td class="centro">Parcial</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Não confiável</td><td class="centro"><b>Prioritário</b></td></tr>
-      <tr><td>Versão web</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Sim</td><td class="centro">Roadmap</td></tr>
-    </tbody>
-  </table>
-
-  <div class="caixa destaque">
-    <div class="caixa-titulo">A linha que justifica o projeto</div>
-    A linha destacada no quadro acima — <b>quitação que gera lançamento financeiro</b> — está vazia para os cinco concorrentes analisados. Nenhum deles fecha o ciclo entre o compromisso e o dinheiro em uma única ação do usuário. É o achado mais relevante desta pesquisa e a confirmação empírica da hipótese central do MinhaVida.
-  </div>
-
-  <h3>9.3&nbsp;&nbsp;Modelos de monetização e faixas de preço</h3>
-  <table>
-    <thead><tr><th style="width:15%">Software</th><th style="width:18%">Modelo</th><th style="width:22%">Plano gratuito</th><th style="width:22%">Plano pago de entrada</th><th>Equivalente mensal em reais</th></tr></thead>
-    <tbody>
-      <tr><td><b>Organizze</b></td><td>Teste de 7 dias + assinatura</td><td>Não permanente</td><td>Manual, a partir de R$ 35/mês</td><td class="num">R$ 35 a R$ 45</td></tr>
-      <tr><td><b>Mobills</b></td><td>Freemium</td><td>Permanente, com limites</td><td>R$ 99,90 a R$ 159,90/ano</td><td class="num">≈ R$ 8 a R$ 13</td></tr>
-      <tr><td><b>Todoist</b></td><td>Freemium + por usuário</td><td>5 projetos ativos</td><td>Pro, US$ 60/ano</td><td class="num">≈ R$ 27</td></tr>
-      <tr><td><b>TickTick</b></td><td>Freemium</td><td>9 listas, 99 tarefas/lista</td><td>Premium, US$ 35,99/ano</td><td class="num">≈ R$ 16</td></tr>
-      <tr><td><b>Notion</b></td><td>Freemium por assento</td><td>Amplo para uso individual</td><td>Plus, US$ 10/membro/mês</td><td class="num">≈ R$ 54</td></tr>
-    </tbody>
-  </table>
-  <p class="nota">Conversão de referência aproximada de US$ 1 = R$ 5,40, apenas para fins de comparação de ordem de grandeza na data da pesquisa. A faixa de preço praticada pelo mercado endereçável ao MinhaVida situa-se, portanto, entre <b>R$ 8 e R$ 45 mensais</b>, com concentração na faixa de R$ 10 a R$ 30.</p>
-
-  <h3>9.4&nbsp;&nbsp;Pontos fortes e fracos percebidos pelos usuários</h3>
-  <table>
-    <thead><tr><th style="width:15%">Software</th><th style="width:42%">Mais elogiado</th><th>Mais criticado</th></tr></thead>
-    <tbody>
-      <tr><td><b>Organizze</b></td><td>Interface limpa, confiabilidade dos relatórios, postura de privacidade</td><td>Preço alto e teste gratuito de apenas 7 dias</td></tr>
-      <tr><td><b>Mobills</b></td><td>Facilidade de uso, plano gratuito generoso, reconhecimento editorial</td><td>Divergências de saldo, erros de cadastro, ausência de suporte efetivo</td></tr>
-      <tr><td><b>Todoist</b></td><td>Velocidade, entrada em linguagem natural, onipresença de plataforma</td><td>Reajuste de preço de dez/2025 e exclusão de planos antigos de novos recursos</td></tr>
-      <tr><td><b>TickTick</b></td><td>Custo-benefício, plano gratuito, amplitude de recursos</td><td>Falhas de sincronização do calendário, suporte lento, dúvidas de privacidade</td></tr>
-      <tr><td><b>Notion</b></td><td>Flexibilidade, comunidade, plano gratuito amplo</td><td>Lentidão com bases grandes, app móvel fraco, offline não confiável</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ============================= 10 — SÍNTESE ============================= -->
-<section class="pagina">
-  <h1>10&nbsp;&nbsp;Síntese dos aprendizados</h1>
-
-  <h2>10.1&nbsp;&nbsp;A lacuna de mercado identificada</h2>
-  <p>A pesquisa confirma que o MinhaVida não disputa um mercado vazio — disputa a <b>interseção de dois mercados maduros</b>. Tanto o domínio financeiro quanto o de produtividade têm concorrentes com anos de operação, milhões de usuários e funcionalidades mais profundas do que o MVP do projeto entregará. Essa constatação exige honestidade: o MinhaVida não vencerá o Organizze em controle financeiro, nem o Todoist em gestão de tarefas.</p>
-
-  <p>O que a pesquisa também mostra, porém, é que <b>a interseção está vazia</b>. Os dois apps financeiros ignoram completamente o tempo do usuário. Os dois gerenciadores de tarefas ignoram completamente o dinheiro. E o Notion, que permite unir os dois, cobra por isso em horas de configuração e entrega uma experiência móvel que os próprios usuários descrevem como precária.</p>
-
-  <p>A existência de milhares de templates comunitários no Notion unindo tarefas e finanças é a evidência mais concreta encontrada: <b>há demanda por essa integração, e ela está sendo atendida por gambiarra</b>. Quem monta um template desses está dizendo, na prática, que gostaria que existisse o produto que o MinhaVida pretende ser.</p>
-
-  <h2>10.2&nbsp;&nbsp;Problemas a evitar</h2>
-  <p>Os defeitos dos concorrentes são o ativo mais valioso desta pesquisa, porque são gratuitos de aprender. Cinco se destacam:</p>
-  <table>
-    <thead><tr><th style="width:22%">Problema observado</th><th style="width:16%">Onde</th><th>Como o MinhaVida evita</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><b>Saldo que não confere</b></td><td>Mobills</td>
-        <td>O saldo é escrito por um único mecanismo — gatilho de banco executado na mesma transação do lançamento — e existe função de reconciliação que o recalcula a partir do saldo inicial somado às transações efetivadas. A consistência é garantia arquitetural, não boa intenção.</td>
-      </tr>
-      <tr>
-        <td><b>Teste curto sem plano gratuito</b></td><td>Organizze</td>
-        <td>Plano gratuito permanente com limites numéricos explícitos, no modelo do TickTick e do Mobills. O valor do produto só aparece após semanas de uso; sete dias não bastam para demonstrá-lo.</td>
-      </tr>
-      <tr>
-        <td><b>Reajuste sem valor novo e castas de usuários</b></td><td>Todoist</td>
-        <td>Política pública de preço: reajuste somente acompanhado de entrega visível, e nenhum usuário antigo excluído de recursos futuros.</td>
-      </tr>
-      <tr>
-        <td><b>Falha de sincronização</b></td><td>TickTick</td>
-        <td>Sincronização tratada como requisito crítico: fila local com identificador de operação por UUID, garantindo idempotência, e resolução explícita de conflito por última escrita, com registro da divergência.</td>
-      </tr>
-      <tr>
-        <td><b>App móvel lento e offline não confiável</b></td><td>Notion</td>
-        <td>Flutter compilando para código nativo e arquitetura <i>offline-first</i>: a tela renderiza primeiro a partir da base local e só depois reconcilia com o servidor.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h2>10.3&nbsp;&nbsp;Oportunidades de diferenciação</h2>
-  <ol>
-    <li><b>A integração entre os domínios.</b> É o diferencial primário e o único que nenhum concorrente oferece. Deve ser o centro de toda a comunicação do produto, não um recurso listado entre outros.</li>
-    <li><b>Confiabilidade do número como promessa verificável.</b> Em um mercado onde o líder brasileiro é acusado de exibir saldo incorreto, prometer e demonstrar consistência é diferenciação defensável.</li>
-    <li><b>Privacidade e soberania de dados.</b> Produto brasileiro, dados hospedados no Brasil, conformidade explícita com a LGPD. Responde tanto ao posicionamento do Organizze quanto às preocupações relatadas por usuários do TickTick.</li>
-    <li><b>Preço abaixo da faixa dos apps financeiros.</b> Sem o custo de Open Finance no MVP, é viável operar bem abaixo dos R$ 35 a R$ 45 mensais do Organizze.</li>
-    <li><b>Simplicidade como recurso.</b> Contra o Notion, o argumento não é ter mais recursos, e sim não exigir configuração alguma.</li>
-    <li><b>O público insatisfeito é identificável.</b> Usuários avaliando migrar do Todoist por preço e usuários mantendo templates de finanças no Notion são dois segmentos já convencidos da tese e mal atendidos.</li>
-  </ol>
-</section>
-
-<section class="pagina">
-  <h2>10.4&nbsp;&nbsp;Implicações para a stack tecnológica</h2>
-  <p>A pesquisa não altera a stack definida pela equipe, mas atribui a cada escolha uma justificativa de mercado — o que é diferente de uma justificativa apenas técnica.</p>
-  <table>
-    <thead><tr><th style="width:24%">Tecnologia</th><th style="width:34%">Papel no projeto</th><th>O que a pesquisa acrescenta</th></tr></thead>
-    <tbody>
-      <tr>
-        <td><b>Flutter</b></td><td>Aplicativo Android e iOS a partir de base única</td>
-        <td>A crítica mais forte ao Notion é o desempenho móvel. O Flutter compila para código nativo, o que ataca diretamente esse ponto. A base única também responde ao fato de que os cinco concorrentes mantêm presença em Android e iOS — paridade de plataforma é expectativa mínima, não diferencial.</td>
-      </tr>
-      <tr>
-        <td><b>Python com FastAPI</b></td><td>API REST do back-end</td>
-        <td>A validação automática de esquema e a documentação OpenAPI gerada pelo próprio framework encurtam o ciclo de integração com o cliente Flutter. Para uma equipe pequena competindo com produtos maduros, velocidade de entrega é vantagem competitiva.</td>
-      </tr>
-      <tr>
-        <td><b>Pydantic</b></td><td>Validação e serialização de dados</td>
-        <td>Responde diretamente ao padrão de defeito observado no Mobills: erros de cadastro e dados inconsistentes. Validação estrita na fronteira da API impede que dado inválido chegue ao domínio.</td>
-      </tr>
-      <tr>
-        <td><b>SQLAlchemy</b></td><td>Mapeamento objeto-relacional</td>
-        <td>Permite implementar o padrão de repositório previsto na arquitetura, mantendo as regras de negócio independentes da tecnologia de persistência. Suporta também o bloqueio pessimista exigido pelo cálculo de saldo.</td>
-      </tr>
-      <tr>
-        <td><b>Alembic</b></td><td>Migrações versionadas e reversíveis</td>
-        <td>Requisito de operação contínua: os concorrentes atualizam seus produtos sem interromper o serviço, e um app financeiro não pode perder dado em migração. Migração versionada é pré-requisito para isso.</td>
-      </tr>
-      <tr>
-        <td><b>PostgreSQL</b></td><td>Banco de dados relacional</td>
-        <td>É o componente que sustenta o principal diferencial de confiabilidade. A garantia transacional é o que permite que quitar uma importância, criar a despesa e atualizar o saldo aconteçam de forma atômica — e é exatamente a falha desse tipo de garantia que gera as reclamações de divergência de saldo no concorrente líder.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="caixa">
-    <div class="caixa-titulo">Ajuste recomendado à arquitetura a partir da pesquisa</div>
-    A base local do aplicativo, prevista na arquitetura para o funcionamento <i>offline-first</i>, deve ser implementada com uma solução do ecossistema Flutter — <b>Drift</b> ou <b>sqflite</b> sobre SQLite — com fila de operações pendentes identificadas por UUID. Essa decisão, antes puramente técnica, ganha justificativa de mercado: é a resposta simultânea à reclamação de offline não confiável do Notion, às falhas de sincronização do TickTick e aos erros de conexão no cadastro do Mobills.
-  </div>
-
-  <h2>10.5&nbsp;&nbsp;Implicações para o modelo de monetização</h2>
-  <p>A comparação de preços sugere um posicionamento específico, e não apenas &ldquo;mais barato&rdquo;. Três conclusões orientam a proposta:</p>
-  <ul>
-    <li>O <b>plano gratuito permanente</b> é o padrão vencedor: três dos cinco concorrentes o adotam, e o único que não adota — o Organizze — é criticado exatamente por isso.</li>
-    <li>Os limites do plano gratuito devem ser <b>numéricos e explícitos</b>, no modelo do TickTick, e nunca restringir aquilo que define o produto. Se o MinhaVida se vende pela integração entre tarefas e finanças, essa integração precisa estar no plano gratuito.</li>
-    <li>A faixa de preço praticada equivale a <b>R$ 8 a R$ 45 mensais</b>. Um posicionamento entre R$ 10 e R$ 15 mensais, ou entre R$ 90 e R$ 120 anuais, situa o MinhaVida abaixo dos apps financeiros e próximo ao TickTick, coerente com um produto sem Open Finance no MVP.</li>
-  </ul>
-  <p class="nota">Proposta preliminar, a ser validada com pesquisa junto ao público-alvo: plano gratuito com limite de atividades e lançamentos por mês e uma conta financeira; plano pago removendo limites e habilitando relatórios avançados, orçamento por categoria e exportação de dados.</p>
-</section>
-
-<!-- ============================= 11, 12, 13 ============================= -->
-<section class="pagina">
-  <h1>11&nbsp;&nbsp;Decisões incorporadas ao projeto</h1>
-  <p>A pesquisa produziu decisões concretas, e não apenas observações. As de maior impacto estão registradas abaixo, com a origem que as motivou, para rastreabilidade futura.</p>
-  <table>
-    <thead><tr><th style="width:6%">#</th><th style="width:34%">Decisão</th><th style="width:20%">Origem</th><th>Impacto no projeto</th></tr></thead>
-    <tbody>
-      <tr><td>D1</td><td>Manter a quitação integrada como funcionalidade central da comunicação do produto</td><td>Ausência em todos os 5 concorrentes</td><td>Posicionamento e prioridade máxima de qualidade nesse fluxo</td></tr>
-      <tr><td>D2</td><td>Adotar plano gratuito permanente com limites numéricos explícitos</td><td>Mobills, TickTick, Todoist; crítica ao Organizze</td><td>Modelo de negócio e definição de limites no MVP</td></tr>
-      <tr><td>D3</td><td>Tratar a consistência do saldo como requisito crítico verificável</td><td>Reclamações de divergência no Mobills</td><td>Confirma o gatilho de fonte única e a função de reconciliação</td></tr>
-      <tr><td>D4</td><td>Implementar base local com Drift ou sqflite e fila idempotente por UUID</td><td>Notion, TickTick, Mobills</td><td>Especificação técnica da camada offline no Flutter</td></tr>
-      <tr><td>D5</td><td>Publicar política de preço: sem reajuste sem valor novo e sem exclusão de usuários antigos</td><td>Reajuste do Todoist em dez/2025</td><td>Política de produto documentada antes do lançamento</td></tr>
-      <tr><td>D6</td><td>Comunicar hospedagem no Brasil e conformidade com a LGPD como diferencial</td><td>Organizze; preocupações sobre o TickTick</td><td>Posicionamento e reforço das decisões de infraestrutura</td></tr>
-      <tr><td>D7</td><td>Incluir entrada em linguagem natural no roadmap pós-MVP</td><td>Principal elogio ao Todoist</td><td>Backlog de produto</td></tr>
-      <tr><td>D8</td><td>Manter Open Finance fora do MVP, com o modelo de dados preparado</td><td>Organizze e Mobills; custo e complexidade regulatória</td><td>Escopo do MVP e desenho das entidades financeiras</td></tr>
-      <tr><td>D9</td><td>Avaliar conteúdo próprio como canal de aquisição de baixo custo</td><td>Estratégia de conteúdo do Mobills</td><td>Plano de lançamento</td></tr>
-      <tr><td>D10</td><td>Oferecer canal de suporte com tempo de resposta publicado</td><td>Reclamações contra Mobills e TickTick</td><td>Operação pós-lançamento</td></tr>
-    </tbody>
-  </table>
-
-  <h1 style="margin-top:9mm">12&nbsp;&nbsp;Considerações finais</h1>
-  <p>A pesquisa cumpriu dois objetivos. O primeiro, previsto na proposta da atividade, foi compreender o mercado em que o projeto pretende atuar: cinco soluções analisadas segundo oito dimensões uniformes, com dados coletados em fontes públicas e limitações declaradas.</p>
-
-  <p>O segundo objetivo, que decorre do primeiro, foi submeter a hipótese do projeto a um teste. A conclusão é que a hipótese <b>se sustenta, mas com ressalvas que a equipe precisa assumir</b>.</p>
-
-  <p>Ela se sustenta porque a integração entre a gestão do tempo e a gestão do dinheiro não é oferecida por nenhum dos cinco concorrentes, e porque há evidência de demanda reprimida — visível nos templates que usuários do Notion constroem manualmente para obter exatamente isso.</p>
-
-  <p>As ressalvas são três e devem ser ditas com clareza. Primeira: o MinhaVida entrará em um mercado onde cada metade do seu escopo é disputada por produtos com mais de uma década de maturidade; competir por profundidade funcional seria um erro estratégico. Segunda: funcionalidades de alto valor percebido, como a sincronização bancária via Open Finance, estão fora do alcance do MVP e serão sentidas como ausência por quem vem dos apps financeiros. Terceira: a qualidade de execução dos concorrentes em desempenho, estabilidade e sincronização é alta, e a tolerância do usuário a falhas em um app que lida com dinheiro é baixa.</p>
-
-  <p>A resposta a essas ressalvas não é ampliar o escopo — é estreitá-lo e executá-lo melhor. O MinhaVida deve fazer poucas coisas, fazê-las de forma integrada e fazê-las de maneira confiável. A arquitetura já desenhada pela equipe, com garantia transacional na atualização de saldos, funcionamento <i>offline-first</i> e validação estrita na fronteira da API, está alinhada a esse caminho. A contribuição desta pesquisa foi mostrar que essas decisões, tomadas inicialmente por critério técnico, também são as decisões corretas do ponto de vista competitivo.</p>
-
-  <h1 style="margin-top:9mm">13&nbsp;&nbsp;Referências</h1>
-  <p class="nota" style="margin-bottom:4mm">Fontes consultadas em 30 de setembro de 2026. Os valores de assinatura, notas e quantidades de avaliação são dinâmicos e refletem a data da consulta.</p>
-
-  <h4>Páginas oficiais e lojas de aplicativos</h4>
-  <p class="ref">ORGANIZZE. <i>Organizze — Finanças pessoais</i>. Disponível em: www.organizze.com.br e App Store (id 677699286).</p>
-  <p class="ref">MOBILLS. <i>Mobills — Controle Financeiro</i>. Disponível em: www.mobills.com.br e App Store (id 921838244).</p>
-  <p class="ref">TODOIST. <i>Todoist plans, pricing and billing FAQ</i> e <i>Todoist Pro pricing update in 2025</i>. Disponível em: www.todoist.com/help.</p>
-  <p class="ref">TICKTICK (APPEST INC.). <i>TickTick — To Do List &amp; Calendar</i>. Disponível em: www.ticktick.com e App Store (id 626144601). Perfil da empresa em: www.crunchbase.com/organization/appest.</p>
-  <p class="ref">NOTION LABS. <i>Notion — pricing</i>. Disponível em: www.notion.so.</p>
-  <p class="ref">DOIST. <i>Our History — Doist Handbook</i>. Disponível em: handbook.doist.com.</p>
-
-  <h4>Sites especializados em análise de software</h4>
-  <p class="ref">CAPTERRA. <i>Todoist Reviews 2026</i>; <i>TickTick Reviews 2026</i>; <i>Notion Reviews 2026</i>. Disponível em: www.capterra.com.</p>
-  <p class="ref">GETAPP. <i>TickTick — reviews</i>. Disponível em: www.getapp.com.</p>
-  <p class="ref">CLICKUP. <i>TickTick for Task Management: Full Review (2026)</i>. Disponível em: clickup.com/learn.</p>
-  <p class="ref">KIMOLA. <i>TickTick app review analysis — Google Play e App Store</i>. Disponível em: kimola.com/reports.</p>
-  <p class="ref">CB INSIGHTS. <i>About Organizze</i>. Disponível em: www.cbinsights.com/company/organizze.</p>
-  <p class="ref">APPGOBLIN. <i>Organizze Budget Planner — app statistics</i>. Disponível em: appgoblin.info.</p>
-
-  <h4>Imprensa de tecnologia e negócios</h4>
-  <p class="ref">CANALTECH. <i>Organizze ou Mobills: qual aplicativo é melhor para controlar gastos</i>; <i>Como usar o Organizze</i>. Disponível em: canaltech.com.br.</p>
-  <p class="ref">TECNOBLOG. <i>O que é Organizze e como o app pode organizar finanças</i>. Disponível em: tecnoblog.net.</p>
-  <p class="ref">TECMUNDO. <i>Como usar o aplicativo Organizze para controlar finanças</i>. Disponível em: www.tecmundo.com.br.</p>
-  <p class="ref">SHOWMETECH. <i>Mobills: app brasileiro que se destacou na Play Store</i>; <i>Melhores apps de controle financeiro</i>. Disponível em: www.showmetech.com.br.</p>
-  <p class="ref">MOBILETIME. <i>Mobills aposta em expansão internacional para 2021</i>. Disponível em: www.mobiletime.com.br.</p>
-  <p class="ref">DIÁRIO DO NORDESTE. <i>App de finanças de startup cearense é o mais baixado do segmento em 2020</i>. Disponível em: diariodonordeste.verdesmares.com.br.</p>
-  <p class="ref">ANDROID AUTHORITY. <i>Best Todoist alternatives after the price hike</i>. Disponível em: www.androidauthority.com.</p>
-  <p class="ref">SERASA. <i>Organize suas finanças com a parceria Organizze</i>. Disponível em: www.serasa.com.br/premium/blog.</p>
-
-  <h4>Plataformas de reclamação de consumidores</h4>
-  <p class="ref">RECLAME AQUI. <i>Problemas recorrentes no aplicativo Mobills: divergências de saldo, erro de cadastro e falta de suporte efetivo</i>. Disponível em: www.reclameaqui.com.br.</p>
-
-  <h4>Documentação interna do projeto</h4>
-  <p class="ref">SILVA, José Antonio de Almeida. <i>MinhaVida — Arquitetura e Modelagem UML</i>: documento de requisitos, diagramas de classes, interação e implantação, dicionário de dados e contrato da API REST. 2026.</p>
 </section>
 
 </body>

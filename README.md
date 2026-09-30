@@ -18,7 +18,7 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 | O roteiro de fala do **Paulo** (2min46) | [`apresentacao/roteiro-paulo-6min.txt`](apresentacao/roteiro-paulo-6min.txt) |
 | O roteiro de fala do **Júlio César** (2min53) | [`apresentacao/roteiro-julio-cesar-6min.txt`](apresentacao/roteiro-julio-cesar-6min.txt) |
 | Criar o banco de dados agora | [`banco/schema.sql`](banco/schema.sql) |
-| **A análise de concorrentes** (atividade avaliativa, 40 páginas) | [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) |
+| **A análise de concorrentes** (atividade avaliativa, 10 páginas) | [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) |
 
 > ⏱️ **A apresentação foi calibrada para 6 minutos** — 9 slides, Paulo nos slides 1 a 5 e Júlio César nos 6 a 9.
 > Os roteiros longos (`roteiro-paulo.txt` e `roteiro-julio-cesar.txt`, ~20 min) continuam no repositório como material de estudo e preparo para a arguição.
@@ -43,8 +43,9 @@ Documentação completa de arquitetura derivada das 8 telas do protótipo de alt
 
 | Arquivo | Descrição |
 |---|---|
-| [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) | Análise de 5 concorrentes (Organizze, Mobills, Todoist, TickTick, Notion) — identificação, problema, funcionalidades, monetização, tecnologias, avaliações, diferenciais e relação com o projeto |
-| [`pesquisa/analise-concorrentes.html`](pesquisa/analise-concorrentes.html) | Fonte do documento; o PDF é gerado a partir dele |
+| [`pesquisa/Analise-de-Concorrentes-MinhaVida.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida.pdf) | **Documento entregue** — análise de 5 concorrentes (Organizze, Mobills, Todoist, TickTick, Notion): identificação, problema, funcionalidades, monetização, tecnologias, avaliações, diferenciais e relação com o projeto |
+| [`pesquisa/analise-concorrentes.html`](pesquisa/analise-concorrentes.html) | Fonte do documento entregue; o PDF é gerado a partir dele |
+| [`pesquisa/Analise-de-Concorrentes-MinhaVida-completa.pdf`](pesquisa/Analise-de-Concorrentes-MinhaVida-completa.pdf) | Versão longa (40 páginas), com sumário, quadro comparativo, síntese e referências — material de apoio |
 
 ## 🗄️ Banco de dados
 
